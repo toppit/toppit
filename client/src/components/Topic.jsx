@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Topic = ({topic, handleClick}) => (
+export const Topic = ({topic, handleClick}) => (
 
-  <div onClick=>
+  <div onClick={handleClick()}>
     <div>{topic.title}</div>
     <div>{topic.upvotes}
     <div>{topic.numberOfComments}</div>
@@ -10,5 +10,3 @@ const Topic = ({topic, handleClick}) => (
   </div>
   )
 
-
-export default Topic;

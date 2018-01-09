@@ -19,7 +19,8 @@ export class TopicList extends React.Component {
   }
 
   renderTopicDetailedView () {
-
+    //react router something?
+    console.log('clicked!');
   }
 
   render() {
