@@ -1,13 +1,20 @@
-# Project Name
+# Topick
 
-> Pithy project description
+> Toppit gives everyone a voice. With toppit users can post topicks and get feedback from their community through upvotes and other users' comments. Topick can be used within organizations to get a real-time feed of the voice of the employees or just as a distributed ideation tool.
+
+Key Features:
+  - Upvote/Downvote topicks
+  - Add comments to topicks
+  - Share topics with other uses
+  - Create topicks arounds themes
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - James Evans
+  - Jessica Thompson
+  - Stephen Choe
+  - Jarrod Powell
+  - Michael Sutherland
 
 ## Table of Contents
 
