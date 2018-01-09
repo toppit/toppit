@@ -1,12 +1,12 @@
-# Topick
+# Toppit
 
-> Toppit gives everyone a voice. With toppit users can post topicks and get feedback from their community through upvotes and other users' comments. Topick can be used within organizations to get a real-time feed of the voice of the employees or just as a distributed ideation tool.
+> Toppit gives everyone a voice. With toppit users can post topics and get feedback from their community through upvotes and other users' comments. Toppit can be used within organizations to get a real-time feed of the voice of the employees or just as a distributed ideation tool.
 
 Key Features:
-  - Upvote/Downvote topicks
-  - Add comments to topicks
+  - Upvote/Downvote a topic
+  - Add comments to a topic
   - Share topics with other uses
-  - Create topicks arounds themes
+  - Create topics arounds themes
 
 ## Team
 
