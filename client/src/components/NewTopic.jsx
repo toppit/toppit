@@ -5,57 +5,50 @@ class NewTopic extends React.Component {
     super(props);
     this.state = {
         title: '',
-        text: ''
+        description: ''
     }
   }
 
-  onInputChange(e) {
+  onTitleChange(e) {
     // console.log('on change', $('.newTopicInput').val())
-    this.setState({title: $('.newTopicInput').val()})
-    console.log($('.newTopicInput').val())
-    console.log(this.state.title, 'title')
+    this.setState({
+        title: e.target.value
+    });
+
+    console.log(e.target.value, 'title')
   }
 
-    onTextareaChange(e) {
+  onDescriptionChange(e) {
     // console.log('on change', $('.newTopicInput').val())
-    this.setState({text: $('.newTextareaInput').val()})
-    console.log($('.newTextareaInput').val())
+    this.setState({
+        text: e.target.value
+    });
+
+    console.log(e.target.value, 'description')
   }
 
-    postNewTopic(title, text) {
-    let data = {
+  postNewTopic() {
+    let topic = {
         title: this.state.title,
-        text: this.state.text
-    }
-    componentDidMount(data)
-    }
+        description: this.state.description
+    };
 
-      componentDidMount(data) {
-    $.ajax({
-        type: "POST",
-        url: "/topics",
-        data: data,
-        success: () => {
-            console.log('success')
-        },
-        error: () => {
-            console.log('failed')
-        }
-    })
+    this.props.onNewTopic(topic);
   }
+    
 
   render() {
         return (
             <div className="topic">
                 <div className="titleDiv">
                     <h3>Title</h3>
-                    <input className="newTopicInput" type="text" value={this.state.title} onChange={() => this.onInputChange()} />
+                    <input className="newTopicInput" type="text" value={this.state.title} onChange={this.onTitleChange.bind(this)} />
                 </div>
                 <div className="textDiv">
                     <h3>Text</h3>
-                    <textarea className="newTextareaInput" value={this.state.text} onChange={() => this.onTextareaChange()} />
+                    <textarea className="newTextareaInput" value={this.state.text} onChange={this.onDescriptionChange.bind(this)} />
                 </div>
-                <input type="submit" value="Submit" onClick={() => this.postNewTopic()}/>
+                <input type="submit" value="Submit" onClick={this.postNewTopic.bind(this)}/>
             </div>
         )
     }
