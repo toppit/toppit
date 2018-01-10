@@ -1,4 +1,5 @@
 import React from 'react';
+import {Card, Button, Icon} from 'semantic-ui-react';
 
 class Topic extends React.Component {
   constructor(props) {
@@ -32,23 +33,22 @@ class Topic extends React.Component {
 
   render() {
     return (
-      <div className='topic-container'>
-          <div onClick={ () => this.renderTopicDetailedView()}>{this.props.topic.headline}</div>
-          <div>{this.props.topic.description}</div>
-          <div>upvotes: {this.state.upvotes} </div>
-          <div>comments: {this.props.topic.numberOfComments}</div>
-          <button 
-            type="button" 
-            name="upvote"
-            onClick={ () => this.increaseUpvoteCount(this.props.topic)}
-            >Upvote
-          </button>
-      </div>
-      )
+      <Card fluid>
+        <Card.Content header={this.props.topic.headline} />
+        <Card.Content description={this.props.topic.description} />
+        <Card.Content extra>
+          <Button
+            content='UpVote'
+            icon='heart'
+            label={{ as: 'a', basic: true, content: this.props.topic.votes || 0}}
+            labelPosition='right'
+          />
+          <Icon name='comments' />
+          {this.props.topic.comments || 0} comments
+        </Card.Content>
+      </Card>
+    );
   }  
 }
 
 export default Topic;
-
-
-

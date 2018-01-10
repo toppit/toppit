@@ -1,53 +1,74 @@
 import React from 'react';
+import {Form} from 'semantic-ui-react';
+
+
+const options = [
+  { key: 'h', text: '🤩 happy', value: '🤩 happy' },
+  { key: 'v', text: '🤮 vomit', value: '🤮 vomit' },
+  { key: 'a', text: '🤬 angry', value: '🤬 angry' },
+  { key: 'm', text: '🤯 mindblown', value: '🤯 mindblown' }
+];
 
 class NewTopic extends React.Component {
-  
   constructor(props) {
     super(props);
 
     this.state = {
-      title: '',
-      description: ''
+      headline: '',
+      description: '',
+      emotion: ''
     };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onEmotion = this.onEmotion.bind(this);
   }
 
-  onTitleChange(e) {
+  onChange(e, { value }) {
+
+    const name = e.target.name;
+
     this.setState({
-      title: e.target.value
+      [name]: value
     });
   }
 
-  onDescriptionChange(e) {
+  onEmotion(e, {value}) {
     this.setState({
-        description: e.target.value
+      emotion: value
     });
   }
 
-  postNewTopic() {
-    let topic = {
-        headline: this.state.title,
-        description: this.state.description
-    };
+  onSubmit(e, { value }) {
 
-    this.props.onNewTopic(topic);
+    console.log('Headline: ', this.state.headline);
+    console.log('Description ', this.state.description);
+    console.log('Emotion', this.state.emotion);
+
+    if (this.state.headline.length > 0 && this.state.description.length > 0) {
+
+      this.props.onNewTopic({
+        headline: this.state.headline,
+        description: this.state.description,
+        emotion: this.state.emotion,
+        timestamp: Date.now()
+      });
+    }
   }
     
 
   render() {
-        return (
-            <div className="topic">
-                <div className="titleDiv">
-                    <h3>Title</h3>
-                    <input className="newTopicInput" type="text" value={this.state.title} onChange={this.onTitleChange.bind(this)} />
-                </div>
-                <div className="textDiv">
-                    <h3>Text</h3>
-
-                    <textarea className="newTextareaInput" value={this.state.description} onChange={this.onDescriptionChange.bind(this)} />
-                </div>
-                <input type="submit" value="Submit" onClick={this.postNewTopic.bind(this)}/>
-            </div>
-        )
-    }
+    console.log(this.state.headline);
+    return (
+      <Form onSubmit={this.onSubmit}>
+        <Form.Input label='Topic Headline' name='headline' onChange={this.onChange} value={this.state.headline} placeholder='Enter the headline of your topic' />
+        <Form.TextArea label='Short Descriptin' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' /> 
+        <Form.Group inline>
+          <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={options} placeholder='Emotion' />
+          <Form.Button>Submit</Form.Button>
+        </Form.Group>
+      </Form>
+    );
+  }
 }
 export default NewTopic;

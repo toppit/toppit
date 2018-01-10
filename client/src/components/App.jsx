@@ -2,7 +2,11 @@
 import React from 'react';
 import TopicList from './TopicList.jsx';
 import NewTopic from './NewTopic.jsx';
+import Login from './Login.jsx';
+import NavBar from './NavBar.jsx';
 import http from 'axios';
+
+import {Button, Container, Header} from 'semantic-ui-react';
 
 class App extends React.Component {
   constructor() {
@@ -17,8 +21,6 @@ class App extends React.Component {
     http.get('/topics')
 
       .then(({data}) => {
-        console.log(data);
-        console.log('this',this);
         this.setState({
           topicList: data
         });
@@ -56,12 +58,13 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div><h1>Toppit</h1></div>
-        <nav>Login Goes Here</nav>
-        <NewTopic onNewTopic={this.onNewTopic.bind(this)} />
-        <TopicList topicList={this.state.topicList} />
-    </div>
-    )
+        <NavBar/>
+        <Container>
+          <NewTopic onNewTopic={this.onNewTopic.bind(this)} />
+          <TopicList topicList={this.state.topicList} />
+        </Container>
+      </div>
+    );
   }
 }
 
