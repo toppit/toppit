@@ -5,7 +5,7 @@ export class Topic extends React.Component {
     super(props);
 
     this.state = {
-      upvotes: this.props.topic.upvotes
+      upvotes: this.props.topic.upvotes,
       upvoteState: false
     }
   } 

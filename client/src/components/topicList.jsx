@@ -14,8 +14,9 @@ export class TopicList extends React.Component {
   render() {
     return (
       <div>
-        {this.state.topicList.map( (topic) => <Topic 
+        {this.state.topicList.map( (topic, index) => <Topic 
           topic={topic} 
+          key={index}
           />)
         }
       </div>  
@@ -23,3 +24,5 @@ export class TopicList extends React.Component {
   }
 
 }
+
+module.exports = TopicList;
