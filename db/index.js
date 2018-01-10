@@ -14,13 +14,12 @@ let topicSchema = mongoose.Schema({
   timeStamp:     Date
 });
 
-
-
 let Topic = db.model('Topic', topicSchema);
 //let Comment = db.model('Comment, commentSchema);
 //let List = db.model('List, listchema);
 //let User = db.model('User', userSchema);
 //let Organization = db.model('Organization', sessionSchema);
+
 let getTopics = (callback) => {
 
   Topic.find({}, function(err, result) {
