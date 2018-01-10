@@ -1,4 +1,5 @@
 import React from 'react';
+
 class NewTopic extends React.Component {
   constructor(props) {
     super(props);
@@ -9,21 +10,15 @@ class NewTopic extends React.Component {
   }
 
   onTitleChange(e) {
-    // console.log('on change', $('.newTopicInput').val())
     this.setState({
         title: e.target.value
     });
-
-    console.log(e.target.value, 'title')
   }
 
   onDescriptionChange(e) {
-    // console.log('on change', $('.newTopicInput').val())
     this.setState({
-        text: e.target.value
+        description: e.target.value
     });
-
-    console.log(e.target.value, 'description')
   }
 
   postNewTopic() {
@@ -45,7 +40,8 @@ class NewTopic extends React.Component {
                 </div>
                 <div className="textDiv">
                     <h3>Text</h3>
-                    <textarea className="newTextareaInput" value={this.state.text} onChange={this.onDescriptionChange.bind(this)} />
+
+                    <textarea className="newTextareaInput" value={this.state.description} onChange={this.onDescriptionChange.bind(this)} />
                 </div>
                 <input type="submit" value="Submit" onClick={this.postNewTopic.bind(this)}/>
             </div>
