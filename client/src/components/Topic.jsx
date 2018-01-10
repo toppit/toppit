@@ -19,7 +19,7 @@ export class Topic extends React.Component {
       plusOrMinusCount = -1;
      }
     // http PUT request to server to increase/decrease upvote count
-    
+    //use axios
     this.setState({
       upvotes: topic.upvotes++
     })
