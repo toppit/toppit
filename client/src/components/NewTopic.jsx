@@ -19,8 +19,6 @@ class NewTopic extends React.Component {
     this.setState({
         description: e.target.value
     });
-
-    console.log(e.target.value, 'description')
   }
 
   postNewTopic() {
