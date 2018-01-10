@@ -5,7 +5,7 @@ const database = 'toppit';
 const uri = process.env.MONGODB_URI || `mongodb://localhost/${database}`;
 mongoose.connect(uri);
 
-const db = mongoose.createConnection(uri, options);
+const db = mongoose.createConnection(uri);
 
 
 let topicSchema = mongoose.Schema({
