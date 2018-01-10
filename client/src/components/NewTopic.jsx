@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from "jquery";
 class NewTopic extends React.Component {
   constructor(props) {
     super(props);
