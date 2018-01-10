@@ -1,28 +1,11 @@
 import React from 'react';
-import {Topic} from './Topic.jsx';
-import {exampleData} from '../exampleData.js';
+import Topic from './Topic.jsx';
 
-export class TopicList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      topicList: exampleData
-    }
-  }
-
-  render() {
-    return (
+const TopicList = (props) => (
       <div>
-        {this.state.topicList.map( (topic, index) => <Topic 
-          topic={topic} 
-          key={index}
-          />)
-        }
+        {props.topicList.map((topic, index) => 
+        <Topic topic={topic} key={index} />)}
       </div>  
-        )
-  }
+);
 
-}
-
-module.exports = TopicList;
+export default TopicList;

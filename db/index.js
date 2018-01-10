@@ -36,13 +36,13 @@ let saveTopic = (topic, callback) => {
   let newTopic = new Topic(topic);
   console.log('New Topci: ',newTopic);
 
-  Topic.create(newTopic, (err, name) => {
+  Topic.create(newTopic, (err, result) => {
     if (err) {
       callback(err, null);
       console.log(err.message);
       return;
     }
-    callback(null, true);
+    callback(null, newTopic);
   });
 };
 
