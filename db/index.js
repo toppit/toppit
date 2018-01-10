@@ -7,7 +7,8 @@ db.connect(uri);
 let topicSchema = db.Schema({
   headline:      String,
   description:   String,
-  timeStamp:     Date
+  timeStamp:     Date,
+  upvotes:     Number
 });
 
 let Topic = db.model('Topic', topicSchema);
@@ -34,7 +35,7 @@ let saveTopic = (topic, callback) => {
 
   // for each topic object in topics array
   let newTopic = new Topic(topic);
-  console.log('New Topci: ',newTopic);
+  console.log('New Topic: ',newTopic);
 
   Topic.create(newTopic, (err, result) => {
     if (err) {
@@ -46,9 +47,30 @@ let saveTopic = (topic, callback) => {
   });
 };
 
+const updateVoteCount = (id, plusOrMinus, callback) => {
+
+  Topic.findOneAndUpdate({_id: id}, {$inc: {'upvotes': plusOrMinus} }, (err, doc) => {
+    if (err) {
+      console.log('Something wrong with updating vote! ', err)
+      callback(err, null);
+    }
+    console.log('doc??', doc);
+    callback(null, doc);
+  })
+
+}
+
 module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
+module.exports.updateVoteCount = updateVoteCount;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;
 // module.exports.organizations = Organizatoin;
+
+
+var obj = {
+  count: 2
+}
+
+obj['count']+= 1
