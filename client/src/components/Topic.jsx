@@ -6,10 +6,20 @@ export class Topic extends React.Component {
 
     this.state = {
       upvotes: this.props.topic.upvotes
+      upvoteState: false
     }
   } 
 
   increaseUpvoteCount (topic) {
+    //if neutral state
+    var plusOrMinusCount = 0
+    if (!this.state.upVoteState) {
+      plusOrMinusCount = 1;
+    } else {
+      plusOrMinusCount = -1;
+     }
+    // http PUT request to server to increase/decrease upvote count
+    
     this.setState({
       upvotes: topic.upvotes++
     })
