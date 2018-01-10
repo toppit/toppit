@@ -1,14 +1,18 @@
 import React from 'react';
-
+import {TopicList} from './topicList.jsx'
 class App extends React.Component {
   constructor() {
     super();
   }
 
   render() {
-    console.log('Hello');
+    // console.log('Hello');
     return (
-      <div><h1>Hello World</h1></div>
+      <div>
+      <div><h1>Toppit</h1></div>
+      <nav>Login Goes Here</nav>
+      <TopicList />
+      </div>
     );
   }
 }
