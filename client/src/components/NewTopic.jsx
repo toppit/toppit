@@ -1,17 +1,19 @@
 import React from 'react';
 
 class NewTopic extends React.Component {
+  
   constructor(props) {
     super(props);
+
     this.state = {
-        title: '',
-        description: ''
-    }
+      title: '',
+      description: ''
+    };
   }
 
   onTitleChange(e) {
     this.setState({
-        title: e.target.value
+      title: e.target.value
     });
   }
 
@@ -23,7 +25,7 @@ class NewTopic extends React.Component {
 
   postNewTopic() {
     let topic = {
-        title: this.state.title,
+        headline: this.state.title,
         description: this.state.description
     };
 

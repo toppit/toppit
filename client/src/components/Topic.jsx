@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-export class Topic extends React.Component {
+class Topic extends React.Component {
   constructor(props) {
     super(props);
 
@@ -32,8 +32,9 @@ export class Topic extends React.Component {
 
   render() {
     return (
-      <div>
-          <div onClick={ () => this.renderTopicDetailedView()}>{this.props.topic.title}</div>
+      <div className='topic-container'>
+          <div onClick={ () => this.renderTopicDetailedView()}>{this.props.topic.headline}</div>
+          <div>{this.props.topic.description}</div>
           <div>upvotes: {this.state.upvotes} </div>
           <div>comments: {this.props.topic.numberOfComments}</div>
           <button 
@@ -46,6 +47,8 @@ export class Topic extends React.Component {
       )
   }  
 }
+
+export default Topic;
 
 
 
