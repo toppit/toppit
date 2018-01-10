@@ -1,14 +1,15 @@
 import React from 'react';
-
+import NewTopic from './NewTopic.jsx'
 class App extends React.Component {
   constructor() {
     super();
   }
 
   render() {
-    console.log('Hello');
     return (
-      <div><h1>Hello World</h1></div>
+      <div><h1>Hello World</h1>
+      <NewTopic />
+      </div>
     );
   }
 }
