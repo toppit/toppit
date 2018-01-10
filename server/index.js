@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const morgan = require('morgan');
 const db = require('../db');
 
+
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -21,10 +22,6 @@ app.get('/topics', (req, res) => {
     res.statusCode(200).send(result);
   });
 });
-
-
-
-
 
 
 app.listen(port, () => console.log(`listening on port ${port}!`));
