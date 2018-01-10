@@ -7,7 +7,6 @@ mongoose.connect(uri);
 
 const db = mongoose.createConnection(uri);
 
-
 let topicSchema = mongoose.Schema({
   id:            Number,
   headline:      String,
@@ -32,19 +31,19 @@ let getTopics = (callback) => {
 
 // Save Topics to MongoDB
 let save = (topics) => {
-  
+  // 'topics' is an array of objects
+
   // for each topic object in topics array
   topics.forEach((topic) => {
-
-    let name = topic.name;
-    name = new Topic({ 
-      id:           topic.owner.id,
+    let topicId = Schema.Types.ObjectId; // might need to declare a ObjectId variable
+    topicId = new Topic({ 
+      id:           topicId,
       headline:     topic.headline,
       description:  topic.description,
       timeStamp:    topic.timeStamp
     });
 
-    Topic.update({ id: topic.id }, name, { upsert: true }, (err, name) => {
+    Topic.update({ id: topicId }, name, { upsert: true }, (err, name) => {
       if (err) {
         return console.error(err);
       }
