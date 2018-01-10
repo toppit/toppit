@@ -21,8 +21,6 @@ class App extends React.Component {
     http.get('/topics')
 
       .then(({data}) => {
-        console.log(data);
-        console.log('this',this);
         this.setState({
           topicList: data
         });
@@ -62,13 +60,8 @@ class App extends React.Component {
       <div>
         <NavBar/>
         <Container>
-          <Login />
-          <div>
-            <div><h1>Toppit</h1></div>
-            <nav>Login Goes Here</nav>
-            <NewTopic onNewTopic={this.onNewTopic.bind(this)} />
-            <TopicList topicList={this.state.topicList} />
-          </div>
+          <NewTopic onNewTopic={this.onNewTopic.bind(this)} />
+          <TopicList topicList={this.state.topicList} />
         </Container>
       </div>
     );

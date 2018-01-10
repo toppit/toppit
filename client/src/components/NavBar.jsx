@@ -18,7 +18,7 @@ export default class NavBar extends React.Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu primary>
+      <Menu >
         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
         <Menu.Menu position='right'>
           <Menu.Item>

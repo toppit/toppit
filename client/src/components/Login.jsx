@@ -7,6 +7,6 @@ const Login = () => (
     <Divider horizontal>Or</Divider>
     <Button secondary fluid>Sign Up Now</Button>
   </Segment>
-)
+);
 
-export default Login
+export default Login;
