@@ -34,7 +34,7 @@ class Topic extends React.Component {
   render() {
     return (
       <Card fluid>
-        <Card.Content header={this.props.topic.description} />
+        <Card.Content header={this.props.topic.headline} />
         <Card.Content description={this.props.topic.description} />
         <Card.Content extra>
           <Button
