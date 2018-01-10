@@ -1,14 +1,10 @@
 // Using Node.js `require()`
-const mongoose = require('mongoose');
+const db = require('mongoose');
+const uri = process.env.MONGODB_URI || `mongodb://localhost/toppit`;
+db.connect(uri);
 
-const database = 'toppit';
-const uri = process.env.MONGODB_URI || `mongodb://localhost/${database}`;
-mongoose.connect(uri);
 
-const db = mongoose.createConnection(uri);
-
-let topicSchema = mongoose.Schema({
-  id:            Number,
+let topicSchema = db.Schema({
   headline:      String,
   description:   String,
   timeStamp:     Date
@@ -23,43 +19,35 @@ let Topic = db.model('Topic', topicSchema);
 let getTopics = (callback) => {
 
   Topic.find({}, function(err, result) {
-    if (err) throw err;
+    if (err) {
+      console.log(err.message);
+      callback(err, null);
+    }
+
     callback(null, result);
   });
 };
 
 // Save Topics to MongoDB
-let save = (topics) => {
+let saveTopic = (topic, callback) => {
   // 'topics' is an array of objects
 
   // for each topic object in topics array
-  topics.forEach((topic) => {
-    let topicId = Schema.Types.ObjectId; // might need to declare a ObjectId variable
-    topicId = new Topic({ 
-      id:           topicId,
-      headline:     topic.headline,
-      description:  topic.description,
-      timeStamp:    topic.timeStamp
-    });
+  let newTopic = new Topic(topic);
+  console.log('New Topci: ',newTopic);
 
-    Topic.update({ id: topicId }, name, { upsert: true }, (err, name) => {
-      if (err) {
-        return console.error(err);
-      }
-        console.log("Success")
-    });
-  
-    // name.save(function (err, name) {
-    //   if (err) {
-    //     return console.error(err);
-    //   }
-    // });
+  Topic.create(newTopic, (err, name) => {
+    if (err) {
+      callback(err, null);
+      console.log(err.message);
+      return;
+    }
+    callback(null, true);
   });
 };
 
-module.exports.save = save;
+module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
-module.exports.topics = Topic;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;
