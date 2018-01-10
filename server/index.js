@@ -11,7 +11,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 
-
 // GET all topics from the server
 app.get('/topics', (req, res) => {
   db.getTopics((error, result) => {
