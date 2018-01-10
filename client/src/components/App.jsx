@@ -53,6 +53,11 @@ class App extends React.Component {
     //do server request to add new topic to database 
     //then get new topic and render new list to topic list.
     console.log('post request to servet to add topic', topic);
+
+    this.setState({
+      displayNewTopic: false
+    });
+    
     http.post('/topic', topic)
 
       .then(({data}) => {
