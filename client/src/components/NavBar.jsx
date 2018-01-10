@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Menu } from 'semantic-ui-react';
+import { Input, Menu, Button } from 'semantic-ui-react';
 
 export default class NavBar extends React.Component {
   constructor() {
@@ -20,8 +20,10 @@ export default class NavBar extends React.Component {
     return (
       <Menu secondary>
         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-        <Menu.Item name='newtopic' active={activeItem === 'newtopic'} onClick={this.handleItemClick} />
         <Menu.Menu position='right'>
+          <Menu.Item>
+            <Button primary>Create Topic</Button>
+          </Menu.Item>
           <Menu.Item>
             <Input icon='search' placeholder='Search...' />
           </Menu.Item>
