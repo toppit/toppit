@@ -15,10 +15,15 @@ export class Topic extends React.Component {
     })
   }
 
+  renderTopicDetailedView () {
+    //react router something?
+    console.log('clicked Topic! Goes to topicView page');
+  }  
+
   render() {
     return (
       <div>
-          <div onClick={ () => this.props.handleClick()}>{this.props.topic.title}</div>
+          <div onClick={ () => this.renderTopicDetailedView()}>{this.props.topic.title}</div>
           <div>upvotes: {this.state.upvotes} </div>
           <div>comments: {this.props.topic.numberOfComments}</div>
           <button 
