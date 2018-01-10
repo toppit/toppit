@@ -1,35 +1,25 @@
-import React from 'react'
+import React from 'react';
+import {Topic} from './Topic.jsx';
+import {exampleData} from '../exampleData.js';
 
 export class TopicList extends React.Component {
   constructor(props) {
     super(props);
-  }
 
-  this.state = {
-    topicList: [{
-      title: 'Bathrooms need coffee machines',
-      upvotes: 30,
-      numberOfComments: 10
-    }, {
-      title: 'More tapouts',
-      upvotes: 2,
-      numberOfComments: 34
-    }],
-
-  }
-
-  renderTopicDetailedView () {
-    //react router something?
-    console.log('clicked!');
+    this.state = {
+      topicList: exampleData
+    }
   }
 
   render() {
     return (
-      {this.state.topicList.map( (topic) => {
-        return <Topic topic={topic} handleClick={this.renderTopicDetailedView.bind(this)}/>
-
-      })}
-
-      )
+      <div>
+        {this.state.topicList.map( (topic) => <Topic 
+          topic={topic} 
+          />)
+        }
+      </div>  
+        )
   }
+
 }
