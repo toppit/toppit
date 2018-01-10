@@ -19,12 +19,17 @@ class App extends React.Component {
     this.createNewTopic = this.createNewTopic.bind(this);
     this.onNewTopic = this.onNewTopic.bind(this);
     this.closeNewTopic = this.closeNewTopic.bind(this);
+    this.getAllTopics = this.getAllTopics.bind(this);
   }
 
   componentDidMount() {
+    this.getAllTopics();
+  }
+
+  getAllTopics() {
     http.get('/topics')
 
-      .then(({data}) => {
+      .then(({ data }) => {
         this.setState({
           topicList: data
         });
@@ -78,7 +83,7 @@ class App extends React.Component {
 
     return (
       <div>
-        <NavBar createNewTopic={this.createNewTopic}/>
+        <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
         <Container>
           {this.state.displayNewTopic ?
             <NewTopic

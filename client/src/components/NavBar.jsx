@@ -20,7 +20,7 @@ export default class NavBar extends React.Component {
 
     return (
       <Menu >
-        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.props.home} />
         <Menu.Menu position='right'>
           <Menu.Item>
             <Button primary onClick={this.props.createNewTopic}>Create Topic</Button>
