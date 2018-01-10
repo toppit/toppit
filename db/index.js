@@ -18,7 +18,7 @@ let Topic = db.model('Topic', topicSchema);
 
 let getTopics = (callback) => {
 
-  Topic.find({}, function(err, result) {
+  Topic.find({}, null, {sort: '-timeStamp'}, function(err, result) {
     if (err) {
       console.log(err.message);
       callback(err, null);
