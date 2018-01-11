@@ -10,6 +10,7 @@ class Login extends React.Component {
 
   onSignIn(userProfile, accessToken) {
     console.log(userProfile);
+    console.log(accessToken);
   }
 
   signOut() {
