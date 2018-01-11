@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Dimmer, Button, Segment, Container, Grid, Header, Icon} from 'semantic-ui-react';
-
+import {Link} from 'react-router-dom';
 
 const options = [
   { key: '1', text: '😃 happy', value: '😃 happy' },
@@ -16,7 +16,7 @@ const options = [
 class NewTopic extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log(props);
     this.state = {
       headline: '',
       description: '',
@@ -50,7 +50,8 @@ class NewTopic extends React.Component {
     console.log('Emotion', this.state.emotion);
 
     if (this.state.headline.length > 0 && this.state.description.length > 0) {
-
+      console.log('On New Topic');
+      this.props.history.push('/');
       this.props.onNewTopic({
         headline: this.state.headline,
         description: this.state.description,
@@ -81,7 +82,9 @@ class NewTopic extends React.Component {
                   </Header>
                 </Grid.Column>
                 <Grid.Column width={2}>
-                  <Button circular icon='remove' onClick={this.props.closeNewTopic} />
+                  <Link to='/'>
+                    <Button circular icon='remove' onClick={this.props.closeNewTopic} />
+                  </Link>
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row>
