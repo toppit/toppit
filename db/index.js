@@ -48,13 +48,12 @@ let saveTopic = (topic, callback) => {
 };
 
 const updateVoteCount = (id, plusOrMinus, callback) => {
-
-  Topic.findOneAndUpdate({_id: id}, {$inc: {'upvotes': plusOrMinus} }, (err, doc) => {
+  console.log('plusorminus', plusOrMinus)
+  Topic.findOneAndUpdate({_id: id}, {$inc: {'upvotes': plusOrMinus} }, {'new': true}, (err, doc) => {
     if (err) {
-      console.log('Something wrong with updating vote! ', err)
       callback(err, null);
     }
-    console.log('doc??', doc);
+    console.log('after increment: ', doc)
     callback(null, doc);
   })
 
@@ -67,10 +66,3 @@ module.exports.updateVoteCount = updateVoteCount;
 // module.exports.comments = Comment;
 // module.exports.lists = List;
 // module.exports.organizations = Organizatoin;
-
-
-var obj = {
-  count: 2
-}
-
-obj['count']+= 1
