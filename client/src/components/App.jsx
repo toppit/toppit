@@ -58,6 +58,22 @@ class App extends React.Component {
     });
   }
 
+  onFilterSortTopic(criteria) {
+    http.get('/selectTopics', {params: criteria})
+
+    .then(({data}) => {
+      console.log(data);
+      this.setState({
+        topicList: data
+      });
+    })
+
+    .catch((err) => {
+      console.log(err.message);
+    });
+  }
+
+  
   onNewTopic (topic) {
     //do server request to add new topic to database 
     //then get new topic and render new list to topic list.
@@ -108,7 +124,7 @@ class App extends React.Component {
     return (
       <div>
         <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
-        <UtilsBar />
+        <UtilsBar onFilterSort={this.onFilterSortTopic.bind(this)}/>
         <Container>
           {this.state.displayNewTopic ?
             <NewTopic
