@@ -29,6 +29,7 @@ class Login extends React.Component {
           onSuccess={this.onSignIn.bind(this)}
         />
         <Button onClick={this.signOut.bind(this)}>Sign Out</Button>
+        <a href="/auth/google"> Sign In with Google</a>
  
       </Segment>
     );
