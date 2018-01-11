@@ -17,6 +17,9 @@ class App extends React.Component {
     };
 
     this.getAllTopics = this.getAllTopics.bind(this);
+    this.createNewTopic = this.createNewTopic.bind(this);
+    this.onNewTopic = this.onNewTopic.bind(this);
+    this.closeNewTopic = this.closeNewTopic.bind(this);
   }
 
   componentDidMount() {
@@ -37,8 +40,18 @@ class App extends React.Component {
       });
   }
 
-  renderNewTopicView() {
-    console.log('clicked new topic! This will show new topic view page')
+
+  createNewTopic() {
+    console.log('create new topic');
+    this.setState({
+      displayNewTopic: true
+    });
+  }
+
+  closeNewTopic() {
+    this.setState({
+      displayNewTopic: false
+    });
   }
 
   onNewTopic (topic) {
@@ -62,11 +75,17 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
       <div>
-        <NavBar home={this.getAllTopics}/>
+        <NavBar createNewTopic={this.createNewTopic} home={this.getAllTopics}/>
         <Container>
-          <NewTopic onNewTopic={this.onNewTopic.bind(this)} />
+          {this.state.displayNewTopic ?
+            <NewTopic
+              onNewTopic={this.onNewTopic}
+              active={this.state.displayNewTopic}
+              closeNewTopic={this.closeNewTopic}
+            /> : ''}
           <TopicList topicList={this.state.topicList} />
         </Container>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form} from 'semantic-ui-react';
+import {Form, Dimmer, Button, Segment, Container, Grid, Header, Icon} from 'semantic-ui-react';
 
 
 const options = [
@@ -60,15 +60,66 @@ class NewTopic extends React.Component {
   render() {
     console.log(this.state.headline);
     return (
+      <Dimmer.Dimmable as={Form} blurring dimmed={this.props.active}>
+        <Dimmer active={this.props.active} inverted page>
+          <Container>
+            <Grid columns={3}>
+              <Grid.Row>
+                <Grid.Column width={2}>
+                </Grid.Column>
+                <Grid.Column width={12}>
+                  <Header as='h2' icon>
+                    <Icon name='idea' />
+                    Share a new idea
+                    <Header.Subheader>
+                      Share an idea, inspiration or frustration and gather reactions from others
+                    </Header.Subheader>
+                  </Header>
+                </Grid.Column>
+                <Grid.Column width={2}>
+                  <Button circular icon='remove' onClick={this.props.closeNewTopic} />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column width={2}>
+                </Grid.Column>
+                <Grid.Column width={12}>
+                  <Form onSubmit={this.onSubmit}>
+                    <Form.Input label='Topic Headline' name='headline' onChange={this.onChange} value={this.state.headline} placeholder='Enter the headline of your topic' />
+                    <Form.TextArea label='Short Description' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' />
+                    <Form.Group inline>
+                      <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={options} placeholder='Emotion' />
+                      <Form.Button>Submit</Form.Button>
+                    </Form.Group>
+                  </Form>
+                </Grid.Column>
+                <Grid.Column width={2}>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+        </Dimmer>
+      </Dimmer.Dimmable>
+    );
+  }
+}
+export default NewTopic;
+
+/*
+<Dimmer.Dimmable className='newtopic-dimmer' as={Segment} blurring dimmed={this.props.active}>
+  <Dimmer className='newtopic-dimmer' active={this.props.active} inverted page>
+    <Container>
+      <Button circular icon='remove' onClick={this.props.closeNewTopic} />
       <Form onSubmit={this.onSubmit}>
-        <Form.Input label='Topic Headline' name='headline' onChange={this.onChange} value={this.state.headline} placeholder='Enter the headline of your topic' />
-        <Form.TextArea label='Short Descriptin' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' /> 
+        <Form.Input textAlign='left' label='Topic Headline' name='headline' onChange={this.onChange} value={this.state.headline} placeholder='Enter the headline of your topic' />
+        <Form.TextArea label='Short Description' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' />
         <Form.Group inline>
           <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={options} placeholder='Emotion' />
           <Form.Button>Submit</Form.Button>
         </Form.Group>
       </Form>
-    );
-  }
-}
-export default NewTopic;
+    </Container>
+  </Dimmer>
+</Dimmer.Dimmable>
+
+*/
