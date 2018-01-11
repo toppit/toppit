@@ -34,12 +34,12 @@ let getTopics = (callback) => {
 let getSelectTopics = (query, callback) => {
   var sortParams = {};
   var filterParams = {};
+  console.log('Query ' + query);
   if (query.sortBy.length > 0) {
     sortParams[query.sortBy] = -1;
   }
   if (query.filterBy.length > 0) {
-    // edit later
-    filterParams[query.filterBy] = /* emoji filter*/ hi;
+    filterParams['emotion'] = query.filterBy;
   }
   Topic.find(filterParams).sort().exec(function (err, results) {
     callback(null, results);
