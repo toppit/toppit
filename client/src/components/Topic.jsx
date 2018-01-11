@@ -13,34 +13,29 @@ class Topic extends React.Component {
   } 
 
   increaseUpvoteCount (topic) {
-    //if neutral state
-    var plusOrMinusCount = 0
+
+    var plusOrMinusCount = -1
+    var upvoteState = false;
+    //change above values depending on current state
     if (!this.state.upvoteState) {
       plusOrMinusCount = 1;
-      this.setState({
-        upvoteState: true
+      upvoteState = true;
+    }
+      http.patch('/topic', {
+        _id: topic._id,
+        upvote: plusOrMinusCount
       })
-    } else {
-      plusOrMinusCount = -1;
-       this.setState({
-        upvoteState: false
-      })     
-     }
-    // http PUT request to server to increase/decrease upvote count
-    //use axios
-    http.patch('/topic', {
-      _id: topic._id,
-      upvote: plusOrMinusCount
-    })
-      .then( ({data}) => {
-        console.log('where is my data', data);
-        this.setState({
-          upvotes: data.upvotes
+        .then( ({data}) => {
+          console.log('where is my data', data);
+          this.setState({
+            upvotes: data.upvotes,
+            upvoteState: upvoteState
+          })
         })
-      })
-      .catch( (error) => {
-        console.log(error);
-      })
+        .catch( (error) => {
+          console.log(error);
+        })
+    
   }
 
   renderTopicDetailedView () {
@@ -49,16 +44,21 @@ class Topic extends React.Component {
   }  
 
   render() {
-    // if (this.s)
+    var upvoteStateColor = 'blue';
+     if (!this.state.upvoteState) {
+      upvoteStateColor = 'grey';
+     }
+
     return (
       <Card fluid>
         <Card.Content header={this.props.topic.headline} />
         <Card.Content description={this.props.topic.description} />
         <Card.Content extra>
           <Button
-            content='UpVote'
+            color={upvoteStateColor} 
+            content="UpVote"
             icon='heart'
-            label={{ as: 'a', basic: true, content: this.props.topic.upvotes || 0}}
+            label={{ as: 'a', basic: true, content: this.state.upvotes || 0}}
             labelPosition='right'
             onClick={ () => this.increaseUpvoteCount(this.props.topic)}
           />
