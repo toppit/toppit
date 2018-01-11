@@ -5,14 +5,15 @@ import NewTopic from './NewTopic.jsx';
 import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
 import UtilsBar from './UtilsBar.jsx';
+import TopicListDetailed from './TopicDetailed.jsx';
 import http from 'axios';
 
 import {Link, Redirect, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Button, Container, Header} from 'semantic-ui-react';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       topicList: [],
@@ -81,15 +82,12 @@ class App extends React.Component {
 
 
   createNewTopic() {
-    console.log('create new topic');
-
     this.setState({
       displayNewTopic: true
     });
   }
 
   closeNewTopic() {
-    console.log('New Topic');
     this.setState({
       displayNewTopic: false
     });
@@ -99,7 +97,6 @@ class App extends React.Component {
   onNewTopic (topic) {
     //do server request to add new topic to database 
     //then get new topic and render new list to topic list.
-    console.log('post request to servet to add topic', topic);
 
     this.setState({
       displayNewTopic: false
@@ -132,7 +129,6 @@ class App extends React.Component {
       upvotes: 1
     })      
       .then( ({data}) => {
-        console.log(data);
         // function to be implemented to get all topics
         this.getSelectTopics();
       })
@@ -147,23 +143,19 @@ class App extends React.Component {
   }  
 
   render() {
-    console.log(this.state.displayNewTopic);
     return (
       <div>
-        <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
         <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
+        <NavBar history={this.props.history} home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
         <Container>
           <Switch>
-            <Route path='/share' render={(props) => {
-
-              return (<NewTopic
-                {...props}
+            <Route path='/share' render={(props) => (
+              <NewTopic {...props}
                 onNewTopic={this.onNewTopic}
                 active={this.state.displayNewTopic}
                 closeNewTopic={this.closeNewTopic}
-              />
-              )}}/>
-            <Route path='/' render={(props) => (
+              />)}/>
+            <Route exact path='/' render={(props) => (
               <TopicList {...props} upVote={this.upVote} onDetailedTopic={this.onDetailedTopic} topicList={this.state.topicList} />
             )}/>
             <Route path='/topic/:topicId' render={(props) => (
