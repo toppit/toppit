@@ -8,12 +8,12 @@ const SortList = (props) => {
     {value: 'upvotes', text: 'Most Popular'}
                 ];
   
-  let changeHandler = (e, {value}) => {
-    props.onFilterSort(value);
+  let handleChange = (e, {value}) => {
+    props.onSortChange(value);
   }
 
   return (
-    <Dropdown placeholder='Sort by' selection search options={options} onChange={changeHandler}/>
+    <Dropdown placeholder='Sort by' selection search options={options} onChange={handleChange}/>
   );
 }
 

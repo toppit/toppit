@@ -42,6 +42,21 @@ class App extends React.Component {
         console.log(err.message);
       });
   }
+  
+  getSelectTopics(query) {
+    http.get('/selectTopics', {params: query})
+
+    .then(({data}) => {
+      console.log(data);
+      this.setState({
+        topicList: data
+      });
+    })
+
+    .catch((err) => {
+      console.log(err.message);
+    });
+  }
 
 
   createNewTopic() {
@@ -56,21 +71,6 @@ class App extends React.Component {
     console.log('New Topic');
     this.setState({
       displayNewTopic: false
-    });
-  }
-
-  onFilterSortTopic(criteria) {
-    http.get('/selectTopics', {params: criteria})
-
-    .then(({data}) => {
-      console.log(data);
-      this.setState({
-        topicList: data
-      });
-    })
-
-    .catch((err) => {
-      console.log(err.message);
     });
   }
 
@@ -124,7 +124,7 @@ class App extends React.Component {
     return (
       <div>
         <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
-        <UtilsBar onFilterSort={this.onFilterSortTopic.bind(this)}/>
+        <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
         <Container>
           <Switch>
             <Route path='/share' render={(props) => {
