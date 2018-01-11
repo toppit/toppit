@@ -3,11 +3,13 @@ import { Dropdown } from 'semantic-ui-react';
 
 const SortList = (props) => {
 
-  let options = [{value: 'timeStamp', text: 'Most Recent'},
-                 {value: 'upvotes', text: 'Most Popular'}];
+  let options = [
+    {value: 'timeStamp', text: 'Most Recent'},
+    {value: 'upvotes', text: 'Most Popular'}
+                ];
   
   let changeHandler = (e, {value}) => {
-    console.log(value);
+    props.onFilterSort(value);
   }
 
   return (
