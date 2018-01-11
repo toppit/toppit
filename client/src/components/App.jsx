@@ -4,7 +4,9 @@ import TopicList from './TopicList.jsx';
 import NewTopic from './NewTopic.jsx';
 import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
+import UtilsBar from './UtilsBar.jsx';
 import http from 'axios';
+
 
 import {Button, Container, Header} from 'semantic-ui-react';
 
@@ -41,6 +43,21 @@ class App extends React.Component {
         console.log(err.message);
       });
   }
+  
+  getSelectTopics(query) {
+    http.get('/selectTopics', {params: query})
+
+    .then(({data}) => {
+      console.log(data);
+      this.setState({
+        topicList: data
+      });
+    })
+
+    .catch((err) => {
+      console.log(err.message);
+    });
+  }
 
 
   createNewTopic() {
@@ -56,6 +73,7 @@ class App extends React.Component {
     });
   }
 
+  
   onNewTopic (topic) {
     //do server request to add new topic to database 
     //then get new topic and render new list to topic list.
@@ -106,6 +124,7 @@ class App extends React.Component {
     return (
       <div>
         <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
+        <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
         <Container>
           {this.state.displayNewTopic ?
             <NewTopic
