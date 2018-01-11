@@ -95,7 +95,9 @@ class NewTopic extends React.Component {
                     <Form.TextArea label='Short Description' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' />
                     <Form.Group inline>
                       <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={options} placeholder='Emotion' />
-                      <Form.Button>Submit</Form.Button>
+                      <Link to='/'>
+                        <Form.Button>Submit</Form.Button>
+                      </Link>
                     </Form.Group>
                   </Form>
                 </Grid.Column>
