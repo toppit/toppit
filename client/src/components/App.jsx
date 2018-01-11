@@ -16,11 +16,10 @@ class App extends React.Component {
       topicList: []
     };
 
-
-    this.getAllTopics = this.getAllTopics.bind(this);
     this.createNewTopic = this.createNewTopic.bind(this);
     this.onNewTopic = this.onNewTopic.bind(this);
     this.closeNewTopic = this.closeNewTopic.bind(this);
+    this.getAllTopics = this.getAllTopics.bind(this);
   }
 
   componentDidMount() {
