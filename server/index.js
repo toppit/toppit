@@ -43,10 +43,8 @@ app.patch('/topic', (req, res) => {
   db.updateVoteCount(req.body._id, req.body.upvote, (error, result) => {
     if (error) {
       res.status(503).end();
-      console.log('uhoh, error running updatevot function', error);
       return;
     }
-    console.log('the result!', result)
     res.status(200).send(result);
     
   })
