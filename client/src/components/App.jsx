@@ -4,6 +4,7 @@ import TopicList from './TopicList.jsx';
 import NewTopic from './NewTopic.jsx';
 import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
+import UtilsBar from './UtilsBar.jsx';
 import http from 'axios';
 
 import {Link, Redirect, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -107,6 +108,7 @@ class App extends React.Component {
     return (
       <div>
         <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
+        <UtilsBar />
         <Container>
           <Switch>
             <Route path='/share' render={(props) => {
