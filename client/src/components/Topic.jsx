@@ -48,6 +48,7 @@ class Topic extends React.Component {
           />
           <Icon name='comments' />
           {this.props.topic.comments || 0} comments
+          {this.props.topic.emotion}
         </Card.Content>
       </Card>
     );
