@@ -48,7 +48,7 @@ let saveTopic = (topic, callback) => {
 };
 
 const updateVoteCount = (id, plusOrMinus, callback) => {
-  console.log('plusorminus', plusOrMinus)
+  console.log('upvote', plusOrMinus)
   Topic.findOneAndUpdate({_id: id}, {$inc: {'upvotes': plusOrMinus} }, {'new': true}, (err, doc) => {
     if (err) {
       callback(err, null);
