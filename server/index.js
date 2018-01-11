@@ -37,10 +37,13 @@ app.post('/topic', (req, res) => {
   });
 });
 
-app.patch('/topic', (req, res) => {
+app.patch('/topic/:topicId', (req, res) => {
   console.log('req body', req.body);
+  console.log(req.params);
+// { vote: decrement}
 
-  db.updateVoteCount(req.body._id, req.body.upvote, (error, result) => {
+
+  db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
     if (error) {
       res.status(503).end();
       return;
