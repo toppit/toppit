@@ -83,7 +83,7 @@ class App extends React.Component {
 
     return (
       <div>
-        <NavBar createNewTopic={this.createNewTopic} home={this.getAllTopics}/>
+        <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
         <Container>
           {this.state.displayNewTopic ?
             <NewTopic
