@@ -1,5 +1,9 @@
 import React from 'react';
+
 import {Form, Dimmer, Button, Segment, Container, Grid, Header, Icon} from 'semantic-ui-react';
+
+import Moment from 'react-moment';
+
 
 
 const options = [
@@ -31,7 +35,6 @@ class NewTopic extends React.Component {
   onChange(e, { value }) {
 
     const name = e.target.name;
-
     this.setState({
       [name]: value
     });
@@ -54,15 +57,13 @@ class NewTopic extends React.Component {
       this.props.onNewTopic({
         headline: this.state.headline,
         description: this.state.description,
-        emotion: this.state.emotion,
-        timestamp: Date.now()
+        emotion: this.state.emotion
       });
     }
   }
-    
 
   render() {
-    console.log(this.state.headline);
+
     return (
       <Dimmer.Dimmable as={Form} blurring dimmed={this.props.active}>
         <Dimmer active={this.props.active} inverted page>

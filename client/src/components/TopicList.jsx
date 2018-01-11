@@ -5,7 +5,7 @@ import {Container} from 'semantic-ui-react';
 const TopicList = (props) => (
   <Container>
     {props.topicList.map((topic, index) => (
-      <Topic topic={topic} key={index} />))}
+      <Topic onTimeStamp={topic.onTimeStamp} topic={topic} key={index} />))}
   </Container>  
 );
 
