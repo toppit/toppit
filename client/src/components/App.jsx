@@ -15,6 +15,10 @@ class App extends React.Component {
     this.state = {
       topicList: []
     };
+
+    this.createNewTopic = this.createNewTopic.bind(this);
+    this.onNewTopic = this.onNewTopic.bind(this);
+    this.closeNewTopic = this.closeNewTopic.bind(this);
   }
 
   componentDidMount() {
@@ -31,14 +35,29 @@ class App extends React.Component {
       });
   }
 
-  renderNewTopicView() {
-    console.log('clicked new topic! This will show new topic view page')
+
+  createNewTopic() {
+    console.log('create new topic');
+    this.setState({
+      displayNewTopic: true
+    });
+  }
+
+  closeNewTopic() {
+    this.setState({
+      displayNewTopic: false
+    });
   }
 
   onNewTopic (topic) {
     //do server request to add new topic to database 
     //then get new topic and render new list to topic list.
     console.log('post request to servet to add topic', topic);
+
+    this.setState({
+      displayNewTopic: false
+    });
+    
     http.post('/topic', topic)
 
       .then(({data}) => {
@@ -56,11 +75,17 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
       <div>
-        <NavBar/>
+        <NavBar createNewTopic={this.createNewTopic}/>
         <Container>
-          <NewTopic onNewTopic={this.onNewTopic.bind(this)} />
+          {this.state.displayNewTopic ?
+            <NewTopic
+              onNewTopic={this.onNewTopic}
+              active={this.state.displayNewTopic}
+              closeNewTopic={this.closeNewTopic}
+            /> : ''}
           <TopicList topicList={this.state.topicList} />
         </Container>
       </div>
