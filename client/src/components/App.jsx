@@ -15,7 +15,9 @@ class App extends React.Component {
     super();
 
     this.state = {
-      topicList: []
+      topicList: [],
+      filterBy: '',
+      sortBy: 'timeStamp'
     };
 
     this.createNewTopic = this.createNewTopic.bind(this);
@@ -44,6 +46,20 @@ class App extends React.Component {
   }
   
   getSelectTopics(query) {
+    console.log('hello' + query)
+    if (query) {
+      this.setState({
+        filterBy: query.filterBy,
+        sortBy: query.sortBy
+      })
+    } else {
+      console.log('hello state' + this.state);
+      query = {
+        filterBy: this.state.filterBy,
+        sortBy: this.state.sortBy
+      }
+      console.log('hello query again' + query);
+    }
     http.get('/selectTopics', {params: query})
 
     .then(({data}) => {
@@ -107,7 +123,7 @@ class App extends React.Component {
       .then( ({data}) => {
         console.log(data);
         // function to be implemented to get all topics
-        this.getAllTopics();
+        this.getSelectTopics();
       })
       .catch( (error) => {
         console.log(error);
