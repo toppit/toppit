@@ -12,30 +12,15 @@ class Topic extends React.Component {
     }
   } 
 
-  increaseUpvoteCount (topic) {
-
-    var plusOrMinusCount = -1
-    var upvoteState = false;
-    //change above values depending on current state
+  handleClick() {
+    var newUpvoteState = false
     if (!this.state.upvoteState) {
-      plusOrMinusCount = 1;
-      upvoteState = true;
+      newUpvoteState = true
     }
-      http.patch('/topic', {
-        _id: topic._id,
-        upvote: plusOrMinusCount
-      })
-        .then( ({data}) => {
-          console.log('where is my data', data);
-          this.setState({
-            upvotes: data.upvotes,
-            upvoteState: upvoteState
-          })
-        })
-        .catch( (error) => {
-          console.log(error);
-        })
-    
+    this.setState({
+      upvoteState: newUpvoteState
+    })
+    this.props.upVote(this.props.topic._id)
   }
 
   renderTopicDetailedView () {
@@ -60,7 +45,7 @@ class Topic extends React.Component {
             icon='heart'
             label={{ as: 'a', basic: true, content: this.state.upvotes || 0}}
             labelPosition='right'
-            onClick={ () => this.increaseUpvoteCount(this.props.topic)}
+            onClick={ this.handleClick.bind(this)}
           />
           <Icon name='comments' />
           {this.props.topic.comments || 0} comments
