@@ -88,7 +88,7 @@ class App extends React.Component {
         .then( ({data}) => {
           console.log(data);
           // function to be implemented to get all topics
-          // this.getAllTopics();
+           this.getAllTopics();
         })
         .catch( (error) => {
           console.log(error);
