@@ -1,16 +1,17 @@
 import React from 'react';
+import { Dropdown } from 'semantic-ui-react';
 
-const SortList = () => {
+const SortList = (props) => {
+
+  let options = [{value: 'timeStamp', text: 'Most Recent'},
+                 {value: 'upvotes', text: 'Most Popular'}];
   
-  let changeHandler = (e) => {
-    console.log(e.value.target);
+  let changeHandler = (e, {value}) => {
+    console.log(value);
   }
 
   return (
-    <select onChange={changeHandler}>
-      <option value="timeStamp">Most Recent</option>
-      <option value="upvotes">Most Popular</option>
-    </select>
+    <Dropdown placeholder='Sort by' selection search options={options} onChange={changeHandler}/>
   );
 }
 
