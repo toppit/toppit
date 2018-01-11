@@ -20,6 +20,7 @@ class App extends React.Component {
     this.onNewTopic = this.onNewTopic.bind(this);
     this.closeNewTopic = this.closeNewTopic.bind(this);
     this.getAllTopics = this.getAllTopics.bind(this);
+    this.upVote = this.upVote.bind(this)
   }
 
   componentDidMount() {
@@ -79,6 +80,26 @@ class App extends React.Component {
       });
   }
 
+  upVote (topicId) {
+
+      http.patch(`/topic/${topicId}`, {
+        upvotes: 1
+      })      
+        .then( ({data}) => {
+          console.log(data);
+          // function to be implemented to get all topics
+           this.getAllTopics();
+        })
+        .catch( (error) => {
+          console.log(error);
+        })
+    
+  }
+
+  downVote (topicId) {
+
+  }  
+
   render() {
 
     return (
@@ -91,7 +112,7 @@ class App extends React.Component {
               active={this.state.displayNewTopic}
               closeNewTopic={this.closeNewTopic}
             /> : ''}
-          <TopicList topicList={this.state.topicList} />
+          <TopicList upVote={this.upVote} topicList={this.state.topicList} />
         </Container>
       </div>
     );

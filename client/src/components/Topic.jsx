@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, Button, Icon} from 'semantic-ui-react';
+import http from 'axios';
 
 class Topic extends React.Component {
   constructor(props) {
@@ -11,19 +12,15 @@ class Topic extends React.Component {
     }
   } 
 
-  increaseUpvoteCount (topic) {
-    //if neutral state
-    var plusOrMinusCount = 0
-    if (!this.state.upVoteState) {
-      plusOrMinusCount = 1;
-    } else {
-      plusOrMinusCount = -1;
-     }
-    // http PUT request to server to increase/decrease upvote count
-    //use axios
+  handleClick() {
+    var newUpvoteState = false
+    if (!this.state.upvoteState) {
+      newUpvoteState = true
+    }
     this.setState({
-      upvotes: topic.upvotes++
+      upvoteState: newUpvoteState
     })
+    this.props.upVote(this.props.topic._id)
   }
 
   renderTopicDetailedView () {
@@ -32,16 +29,23 @@ class Topic extends React.Component {
   }  
 
   render() {
+    var upvoteStateColor = 'blue';
+     if (!this.state.upvoteState) {
+      upvoteStateColor = 'grey';
+     }
+
     return (
       <Card fluid>
         <Card.Content header={this.props.topic.headline} />
         <Card.Content description={this.props.topic.description} />
         <Card.Content extra>
           <Button
-            content='UpVote'
+            color={upvoteStateColor} 
+            content="UpVote"
             icon='heart'
-            label={{ as: 'a', basic: true, content: this.props.topic.votes || 0}}
+            label={{ as: 'a', basic: true, content: this.state.upvotes || 0}}
             labelPosition='right'
+            onClick={ this.handleClick.bind(this)}
           />
           <Icon name='comments' />
           {this.props.topic.comments || 0} comments

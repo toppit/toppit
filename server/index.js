@@ -5,7 +5,6 @@ const port = process.env.PORT || 3000;
 const morgan = require('morgan');
 const db = require('../db');
 
-
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -38,5 +37,19 @@ app.post('/topic', (req, res) => {
   });
 });
 
+app.patch('/topic/:topicId', (req, res) => {
+  console.log('req body', req.body);
+  console.log(req.params);
+// { vote: decrement}
 
+
+  db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
+    if (error) {
+      res.status(503).end();
+      return;
+    }
+    res.status(200).send(result);
+    
+  })
+})
 app.listen(port, () => console.log(`listening on port ${port}!`));
