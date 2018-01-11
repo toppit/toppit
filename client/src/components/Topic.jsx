@@ -7,9 +7,8 @@ class Topic extends React.Component {
     super(props);
 
     this.state = {
-      upvotes: this.props.topic.upvotes,
       upvoteState: false
-    }
+    };
   } 
 
   handleClick() {
@@ -34,6 +33,7 @@ class Topic extends React.Component {
       upvoteStateColor = 'grey';
      }
 
+     console.log(`Topic ${this.props.topic._id} votes: ${this.props.topic.upvotes}`);
     return (
       <Card fluid>
         <Card.Content header={this.props.topic.headline} />
@@ -43,7 +43,7 @@ class Topic extends React.Component {
             color={upvoteStateColor} 
             content="UpVote"
             icon='heart'
-            label={{ as: 'a', basic: true, content: this.state.upvotes || 0}}
+            label={{ as: 'a', basic: true, content: this.props.topic.upvotes || 0}}
             labelPosition='right'
             onClick={ this.handleClick.bind(this)}
           />
