@@ -16,7 +16,7 @@ const options = [
 class NewTopic extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log(props);
     this.state = {
       headline: '',
       description: '',
@@ -50,7 +50,8 @@ class NewTopic extends React.Component {
     console.log('Emotion', this.state.emotion);
 
     if (this.state.headline.length > 0 && this.state.description.length > 0) {
-
+      console.log('On New Topic');
+      this.props.history.push('/');
       this.props.onNewTopic({
         headline: this.state.headline,
         description: this.state.description,
@@ -95,9 +96,7 @@ class NewTopic extends React.Component {
                     <Form.TextArea label='Short Description' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' />
                     <Form.Group inline>
                       <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={options} placeholder='Emotion' />
-                      <Link to='/'>
-                        <Form.Button>Submit</Form.Button>
-                      </Link>
+                      <Form.Button>Submit</Form.Button>
                     </Form.Group>
                   </Form>
                 </Grid.Column>

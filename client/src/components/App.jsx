@@ -109,15 +109,17 @@ class App extends React.Component {
         <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
         <Container>
           <Switch>
-            <Route path='/share' render={() => {
+            <Route path='/share' render={(props) => {
+
               return (<NewTopic
+                {...props}
                 onNewTopic={this.onNewTopic}
                 active={this.state.displayNewTopic}
                 closeNewTopic={this.closeNewTopic}
               />
               )}}/>
-            <Route path='/' render={() => (
-              <TopicList upVote={this.upVote} topicList={this.state.topicList} />
+            <Route path='/' render={(props) => (
+              <TopicList {...props} upVote={this.upVote} topicList={this.state.topicList} />
             )}/>
           </Switch>    
         </Container>
