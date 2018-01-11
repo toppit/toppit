@@ -12,7 +12,7 @@ var GOOGLE_CONSUMER_SECRET = process.env.GOOGLE_CONSUMER_SECRET || GoogleCredent
 passport.use(new GoogleStrategy({
   consumerKey: '28722236365-jq47qgutedd4mfviu1fiitdmqfc1voug.apps.googleusercontent.com',
   consumerSecret: '28722236365-jq47qgutedd4mfviu1fiitdmqfc1voug',
-  callbackURL: "http://www.example.com/auth/google/callback"
+  callbackURL: "http://localhost:3000/auth/google/callback"
 },
 function (token, tokenSecret, profile, done) {
   User.findOrCreate({ googleId: profile.id }, function (err, user) {
