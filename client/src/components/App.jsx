@@ -24,7 +24,8 @@ class App extends React.Component {
     this.onNewTopic = this.onNewTopic.bind(this);
     this.closeNewTopic = this.closeNewTopic.bind(this);
     this.getAllTopics = this.getAllTopics.bind(this);
-    this.upVote = this.upVote.bind(this)
+    this.upVote = this.upVote.bind(this);
+    this.onDetailedTopic = this.onDetailedTopic.bind(this);
   }
 
   componentDidMount() {
@@ -119,6 +120,12 @@ class App extends React.Component {
       });
   }
 
+  onDetailedTopic(topic) {
+    this.setState({
+      selectedTopic: topic
+    });
+  }
+
   upVote (topicId) {
 
     http.patch(`/topic/${topicId}`, {
@@ -157,7 +164,10 @@ class App extends React.Component {
               />
               )}}/>
             <Route path='/' render={(props) => (
-              <TopicList {...props} upVote={this.upVote} topicList={this.state.topicList} />
+              <TopicList {...props} upVote={this.upVote} onDetailedTopic={this.onDetailedTopic} topicList={this.state.topicList} />
+            )}/>
+            <Route path='/topic/:topicId' render={(props) => (
+              <TopicListDetailed {...props} topic={this.selectedTopic} />
             )}/>
           </Switch>    
         </Container>
