@@ -31,6 +31,7 @@ class App extends React.Component {
     http.get('/topics')
 
       .then(({ data }) => {
+        console.log(data);
         this.setState({
           topicList: data
         });
@@ -82,17 +83,17 @@ class App extends React.Component {
 
   upVote (topicId) {
 
-      http.patch(`/topic/${topicId}`, {
-        upvotes: 1
-      })      
-        .then( ({data}) => {
-          console.log(data);
-          // function to be implemented to get all topics
-           this.getAllTopics();
-        })
-        .catch( (error) => {
-          console.log(error);
-        })
+    http.patch(`/topic/${topicId}`, {
+      upvotes: 1
+    })      
+      .then( ({data}) => {
+        console.log(data);
+        // function to be implemented to get all topics
+        this.getAllTopics();
+      })
+      .catch( (error) => {
+        console.log(error);
+      });
     
   }
 
