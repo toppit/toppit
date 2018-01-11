@@ -3,14 +3,14 @@ import {Form, Dimmer, Button, Segment, Container, Grid, Header, Icon} from 'sema
 
 
 const options = [
-  { key: 'h', text: '😃 happy', class:'emoji', value: '😃 happy' },
-  { key: 'h', text: '🤩 impressed', class: 'emoji', value: '🤩 impressed' },
-  { key: 'h', text: '🤪 party', class: 'emoji', value: '🤪 party' },
-  { key: 'h', text: '😒 meh', class: 'emoji', value: '😒 meh' },
-  { key: 'v', text: '🤮 disgusted', class: 'emoji', value: '🤮 disgusted' },
-  { key: 'a', text: '🤬 angry', class: 'emoji', value: '🤬 angry' },
-  { key: 'm', text: '🤯 mindblown', class: 'emoji', value: '🤯 mindblown' },
-  { key: 'm', text: '🤯 excited', class: 'emoji', value: '🤯 excited' }
+  { key: '1', text: '😃 happy', value: '😃 happy' },
+  { key: '2', text: '🤩 impressed', value: '🤩 impressed' },
+  { key: '3', text: '🤪 party', value: '🤪 party' },
+  { key: '4', text: '😒 meh', value: '😒 meh' },
+  { key: '5', text: '🤮 disgusted', value: '🤮 disgusted' },
+  { key: '6', text: '🤬 angry', value: '🤬 angry' },
+  { key: '7', text: '🤯 mindblown', value: '🤯 mindblown' },
+  { key: '8', text: '🤯 excited', value: '🤯 excited' }
 ];
 
 class NewTopic extends React.Component {
