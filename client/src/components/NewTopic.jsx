@@ -55,7 +55,7 @@ class NewTopic extends React.Component {
         headline: this.state.headline,
         description: this.state.description,
         emotion: this.state.emotion,
-        timestamp: Date.now()
+        timeStamp: Date.now()
       });
     }
   }

@@ -8,7 +8,9 @@ let topicSchema = db.Schema({
   headline:      String,
   description:   String,
   timeStamp:     Date,
-  upvotes:     Number
+  upvotes:     Number,
+  emotion:       String
+
 });
 
 let Topic = db.model('Topic', topicSchema);
@@ -26,6 +28,21 @@ let getTopics = (callback) => {
     }
 
     callback(null, result);
+  });
+};
+
+let getSelectTopics = (query, callback) => {
+  var sortParams = {};
+  var filterParams = {};
+  if (query.sortBy.length > 0) {
+    sortParams[query.sortBy] = -1;
+  }
+  if (query.filterBy.length > 0) {
+    // edit later
+    filterParams[query.filterBy] = /* emoji filter*/ hi;
+  }
+  Topic.find(filterParams).sort().exec(function (err, results) {
+    callback(null, results);
   });
 };
 
@@ -62,6 +79,7 @@ const updateVoteCount = (id, plusOrMinus, callback) => {
 module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
+module.exports.getSelectTopics = getSelectTopics;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;

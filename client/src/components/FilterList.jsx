@@ -11,12 +11,12 @@ const FilterList = (props) => {
     { key: 'm', text: '🤯 mindblown', value: '🤯 mindblown' }
   ];
   
-  let changeHandler = (e, {value}) => {
-    props.onFilterSort(null, value);
+  let handleChange = (e, {value}) => {
+    props.onFilterChange(value);
   }
 
   return (
-      <Dropdown button floating placeholder='Filter Topics' selection search options={options} onChange={changeHandler}/>
+      <Dropdown button floating placeholder='Filter Topics' selection search options={options} onChange={handleChange}/>
   );
 }
 

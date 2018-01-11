@@ -24,16 +24,15 @@ app.get('/topics', (req, res) => {
 });
 
 app.get('/selectTopics', (req, res) => {
-  console.log(req.query.sortCriteria);
-  // db.getSelectTopics((error, result) => {
-  //   if (error) {
-  //     re.status(503).end();
-  //     console.log(error.message);
-  //     return;
-  //   }
-    // res.status(200).send(result);
-  // })
-})
+  db.getSelectTopics(req.query, (error, result) => {
+    if (error) {
+      res.status(503).end();
+      console.log(error.message);
+      return;
+    }
+    res.status(200).send(result);
+  });
+});
 
 // Post topic from the server
 app.post('/topic', (req, res) => {
