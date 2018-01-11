@@ -6,6 +6,7 @@ import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
 import http from 'axios';
 
+import {Link, Redirect, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Button, Container, Header} from 'semantic-ui-react';
 
 class App extends React.Component {
@@ -31,7 +32,6 @@ class App extends React.Component {
     http.get('/topics')
 
       .then(({ data }) => {
-        console.log(data);
         this.setState({
           topicList: data
         });
@@ -45,12 +45,14 @@ class App extends React.Component {
 
   createNewTopic() {
     console.log('create new topic');
+
     this.setState({
       displayNewTopic: true
     });
   }
 
   closeNewTopic() {
+    console.log('New Topic');
     this.setState({
       displayNewTopic: false
     });
@@ -68,7 +70,6 @@ class App extends React.Component {
     http.post('/topic', topic)
 
       .then(({data}) => {
-        console.log(data);
         let list = this.state.topicList;
         list.push(data);
         this.setState({
@@ -102,18 +103,23 @@ class App extends React.Component {
   }  
 
   render() {
-
+    console.log(this.state.displayNewTopic);
     return (
       <div>
         <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
         <Container>
-          {this.state.displayNewTopic ?
-            <NewTopic
-              onNewTopic={this.onNewTopic}
-              active={this.state.displayNewTopic}
-              closeNewTopic={this.closeNewTopic}
-            /> : ''}
-          <TopicList upVote={this.upVote} topicList={this.state.topicList} />
+          <Switch>
+            <Route path='/share' render={() => {
+              return (<NewTopic
+                onNewTopic={this.onNewTopic}
+                active={this.state.displayNewTopic}
+                closeNewTopic={this.closeNewTopic}
+              />
+              )}}/>
+            <Route path='/' render={() => (
+              <TopicList upVote={this.upVote} topicList={this.state.topicList} />
+            )}/>
+          </Switch>    
         </Container>
       </div>
     );

@@ -33,7 +33,6 @@ class Topic extends React.Component {
       upvoteStateColor = 'grey';
      }
 
-     console.log(`Topic ${this.props.topic._id} votes: ${this.props.topic.upvotes}`);
     return (
       <Card fluid>
         <Card.Content header={this.props.topic.headline} />

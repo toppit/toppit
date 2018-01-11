@@ -1,6 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App.jsx';
+import Login from './components/Login.jsx';
 import './styles/styles.css';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
+ReactDOM.render((
+  <Router>
+    <Switch>
+      <Route path='/login' component={Login}/>
+      <Route path='/' component={App}/>
+    </Switch>
+  </Router>
+), document.getElementById('app'));

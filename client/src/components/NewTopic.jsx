@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Dimmer, Button, Segment, Container, Grid, Header, Icon} from 'semantic-ui-react';
-
+import {Link} from 'react-router-dom';
 
 const options = [
   { key: '1', text: '😃 happy', value: '😃 happy' },
@@ -81,7 +81,9 @@ class NewTopic extends React.Component {
                   </Header>
                 </Grid.Column>
                 <Grid.Column width={2}>
-                  <Button circular icon='remove' onClick={this.props.closeNewTopic} />
+                  <Link to='/'>
+                    <Button circular icon='remove' onClick={this.props.closeNewTopic} />
+                  </Link>
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row>
