@@ -5,8 +5,12 @@ import NewTopic from './NewTopic.jsx';
 import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
 import http from 'axios';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 import {Button, Container, Header} from 'semantic-ui-react';
+
+import FacebookAuth from 'react-facebook-auth';
 
 class App extends React.Component {
   constructor() {
@@ -57,7 +61,6 @@ class App extends React.Component {
   onNewTopic (topic) {
     //do server request to add new topic to database 
     //then get new topic and render new list to topic list.
-    console.log('post request to servet to add topic', topic);
 
     this.setState({
       displayNewTopic: false
@@ -80,6 +83,17 @@ class App extends React.Component {
   }
 
   render() {
+    //facebook auth//
+    const MyFacebookButton = ({ onClick }) => (
+      <button onClick={onClick}>
+        Login with facebook
+      </button>
+    );
+
+    const authenticate = (response) => {
+      console.log(response);
+    };
+    /////////////////
 
     return (
       <div>
@@ -91,6 +105,13 @@ class App extends React.Component {
               active={this.state.displayNewTopic}
               closeNewTopic={this.closeNewTopic}
             /> : ''}
+          <FacebookAuth
+            className="facebookAuthButton"
+            appId="A2001932130081706"
+            callback={authenticate}
+            component={MyFacebookButton}
+          />
+          <NewTopic onNewTopic={this.onNewTopic.bind(this)} />
           <TopicList topicList={this.state.topicList} />
         </Container>
       </div>
