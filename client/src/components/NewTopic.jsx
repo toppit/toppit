@@ -3,10 +3,14 @@ import {Form, Dimmer, Button, Segment, Container, Grid, Header, Icon} from 'sema
 
 
 const options = [
-  { key: 'h', text: '🤩 happy', value: '🤩 happy' },
-  { key: 'v', text: '🤮 vomit', value: '🤮 vomit' },
-  { key: 'a', text: '🤬 angry', value: '🤬 angry' },
-  { key: 'm', text: '🤯 mindblown', value: '🤯 mindblown' }
+  { key: 'h', text: '😃 happy', class:'emoji', value: '😃 happy' },
+  { key: 'h', text: '🤩 impressed', class: 'emoji', value: '🤩 impressed' },
+  { key: 'h', text: '🤪 party', class: 'emoji', value: '🤪 party' },
+  { key: 'h', text: '😒 meh', class: 'emoji', value: '😒 meh' },
+  { key: 'v', text: '🤮 disgusted', class: 'emoji', value: '🤮 disgusted' },
+  { key: 'a', text: '🤬 angry', class: 'emoji', value: '🤬 angry' },
+  { key: 'm', text: '🤯 mindblown', class: 'emoji', value: '🤯 mindblown' },
+  { key: 'm', text: '🤯 excited', class: 'emoji', value: '🤯 excited' }
 ];
 
 class NewTopic extends React.Component {
@@ -104,22 +108,3 @@ class NewTopic extends React.Component {
   }
 }
 export default NewTopic;
-
-/*
-<Dimmer.Dimmable className='newtopic-dimmer' as={Segment} blurring dimmed={this.props.active}>
-  <Dimmer className='newtopic-dimmer' active={this.props.active} inverted page>
-    <Container>
-      <Button circular icon='remove' onClick={this.props.closeNewTopic} />
-      <Form onSubmit={this.onSubmit}>
-        <Form.Input textAlign='left' label='Topic Headline' name='headline' onChange={this.onChange} value={this.state.headline} placeholder='Enter the headline of your topic' />
-        <Form.TextArea label='Short Description' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' />
-        <Form.Group inline>
-          <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={options} placeholder='Emotion' />
-          <Form.Button>Submit</Form.Button>
-        </Form.Group>
-      </Form>
-    </Container>
-  </Dimmer>
-</Dimmer.Dimmable>
-
-*/

@@ -1,11 +1,12 @@
 .topic-container {
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 50px;
 }
 
 .ui.inverted.dimmer {
   background-color: rgba(255,255,255,1.0);
 }
+
 .newtopic-dimmer {
   background-color: rgb(0, 0, 0, 0.1);
 }
