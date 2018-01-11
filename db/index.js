@@ -40,8 +40,7 @@ let getSelectTopics = (query, callback) => {
   if (query.filterBy.length > 0) {
     filterParams['emotion'] = query.filterBy;
   }
-  console.log('sorting by' + sortParams);
-  Topic.find(filterParams).sort().exec(function (err, results) {
+  Topic.find(filterParams).sort(sortParams).exec(function (err, results) {
     callback(null, results);
     console.log(results);
   });

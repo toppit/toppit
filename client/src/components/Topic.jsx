@@ -46,9 +46,12 @@ class Topic extends React.Component {
             labelPosition='right'
             onClick={ this.handleClick.bind(this)}
           />
+          &nbsp;
           <Icon name='comments' />
           {this.props.topic.comments || 0} comments
-          {this.props.topic.emotion}
+          &nbsp;&nbsp;
+          {this.props.topic.emotion ?
+            <Button compact color="blue" content={this.props.topic.emotion}/> : ''}
         </Card.Content>
       </Card>
     );
