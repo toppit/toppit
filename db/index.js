@@ -41,8 +41,12 @@ let getSelectTopics = (query, callback) => {
     filterParams['emotion'] = query.filterBy;
   }
   Topic.find(filterParams).sort(sortParams).exec(function (err, results) {
-    callback(null, results);
-    console.log(results);
+    if (err) {
+      console.log(err.message);
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
   });
 };
 
@@ -56,9 +60,8 @@ let saveTopic = (topic, callback) => {
 
   Topic.create(newTopic, (err, result) => {
     if (err) {
-      callback(err, null);
       console.log(err.message);
-      return;
+      callback(err, null);
     }
     callback(null, newTopic);
   });
