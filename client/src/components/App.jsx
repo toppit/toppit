@@ -17,7 +17,7 @@ class App extends React.Component {
     this.state = {
       topicList: [],
       filterBy: '',
-      sortBy: 'timeStamp'
+      sortBy: ''
     };
 
     this.createNewTopic = this.createNewTopic.bind(this);
@@ -32,6 +32,10 @@ class App extends React.Component {
   }
 
   getAllTopics() {
+    this.setState({
+      filterBy: '',
+      sortBy: 'timeStamp'
+    });
     http.get('/topics')
 
       .then(({ data }) => {
