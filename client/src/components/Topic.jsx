@@ -63,7 +63,7 @@ class Topic extends React.Component {
             <Button compact color="blue" content={this.props.topic.emotion}/> : ''}
         </Card.Content>
       </Card>
-        <TopicDetailedView />
+
       </div>
     );
   }  

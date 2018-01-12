@@ -1,10 +1,12 @@
 import React from'react'
 import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import img from '../assets/images/testAvatar.png'
+import img2 from '../assets/images/testpic.png'
 
 const MyComment = (props) => (
 
   <Comment>
-    <Comment.Avatar src='/avatar-159236_960_720.png' />
+    <Comment.Avatar src={img} />
     <Comment.Content>
       <Comment.Author as='a'>{props.comment.username}</Comment.Author>
       <Comment.Metadata>
