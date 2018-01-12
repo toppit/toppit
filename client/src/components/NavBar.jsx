@@ -18,12 +18,12 @@ export default class NavBar extends React.Component {
 
   onHome() {
     this.props.history.push('/');
-    this.props.createNewTopic();
+    this.props.home();
   }
 
   onNewTopic() {
     this.props.history.push('/share');
-    this.props.home();
+    this.props.createNewTopic();
   }
 
   

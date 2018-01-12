@@ -4,16 +4,20 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const morgan = require('morgan');
 const db = require('../db');
+const api = express.Router();
 
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
-app.use('/login', express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.use('/api', apiRouter);
 
 
 
 // GET all topics from the server
-app.get('/topics', (req, res) => {
+apiR.get('/topics', (req, res) => {
   db.getTopics((error, result) => {
     if (error) {
       res.status(503).end();
@@ -52,7 +56,7 @@ app.post('/topic', (req, res) => {
 app.patch('/topic/:topicId', (req, res) => {
   console.log('req body', req.body);
   console.log(req.params);
-// { vote: decrement}
+  // { vote: decrement}
 
 
   db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {

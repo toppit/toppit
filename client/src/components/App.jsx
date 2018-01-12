@@ -118,6 +118,7 @@ class App extends React.Component {
   }
 
   onDetailedTopic(topic) {
+    console.log(topic);
     this.setState({
       selectedTopic: topic
     });
@@ -143,6 +144,7 @@ class App extends React.Component {
   }  
 
   render() {
+    console.log(this.state.selectedTopic);
     return (
       <div>
         <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
@@ -159,7 +161,7 @@ class App extends React.Component {
               <TopicList {...props} upVote={this.upVote} onDetailedTopic={this.onDetailedTopic} topicList={this.state.topicList} />
             )}/>
             <Route path='/topic/:topicId' render={(props) => (
-              <TopicListDetailed {...props} topic={this.selectedTopic} />
+              <TopicListDetailed {...props} topicId={props.match.params.topicId} />
             )}/>
           </Switch>    
         </Container>
