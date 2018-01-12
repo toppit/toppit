@@ -61,8 +61,6 @@ api.post('/topic', (req, res) => {
 
 // Update a topic
 api.patch('/topic/:topicId', (req, res) => {
-  console.log('req body', req.body);
-  console.log(req.params);
 
   db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
     if (error) {
@@ -72,6 +70,22 @@ api.patch('/topic/:topicId', (req, res) => {
     res.status(200).send(result);
 
   });
+});
+
+//Post a comment to a topic
+api.post('/topic/:topicId', (req, res) => {
+  console.log('req body', req.body);
+  console.log('req.params', req.params);
+
+  // db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
+  //   if (error) {
+  //     res.status(503).end();
+  //     return;
+  //   }
+  //   res.status(200).send(result);
+
+  // });
+  res.sendStatus(201);
 });
 
 module.exports = api;
