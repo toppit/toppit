@@ -4,6 +4,7 @@ import TopicList from './TopicList.jsx';
 import NewTopic from './NewTopic.jsx';
 import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
+import UtilsBar from './UtilsBar.jsx';
 import http from 'axios';
 
 import {Link, Redirect, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -14,7 +15,9 @@ class App extends React.Component {
     super();
 
     this.state = {
-      topicList: []
+      topicList: [],
+      filterBy: '',
+      sortBy: ''
     };
 
     this.createNewTopic = this.createNewTopic.bind(this);
@@ -29,6 +32,10 @@ class App extends React.Component {
   }
 
   getAllTopics() {
+    this.setState({
+      filterBy: '',
+      sortBy: 'timeStamp'
+    });
     http.get('/topics')
 
       .then(({ data }) => {
@@ -40,6 +47,35 @@ class App extends React.Component {
       .catch((err) => {
         console.log(err.message);
       });
+  }
+  
+  getSelectTopics(query) {
+    console.log('hello' + query)
+    if (query) {
+      this.setState({
+        filterBy: query.filterBy,
+        sortBy: query.sortBy
+      })
+    } else {
+      console.log('hello state' + this.state);
+      query = {
+        filterBy: this.state.filterBy,
+        sortBy: this.state.sortBy
+      }
+      console.log('hello query again' + query);
+    }
+    http.get('/selectTopics', {params: query})
+
+    .then(({data}) => {
+      console.log(data);
+      this.setState({
+        topicList: data
+      });
+    })
+
+    .catch((err) => {
+      console.log(err.message);
+    });
   }
 
 
@@ -58,6 +94,7 @@ class App extends React.Component {
     });
   }
 
+  
   onNewTopic (topic) {
     //do server request to add new topic to database 
     //then get new topic and render new list to topic list.
@@ -90,7 +127,7 @@ class App extends React.Component {
       .then( ({data}) => {
         console.log(data);
         // function to be implemented to get all topics
-        this.getAllTopics();
+        this.getSelectTopics();
       })
       .catch( (error) => {
         console.log(error);
@@ -107,6 +144,7 @@ class App extends React.Component {
     return (
       <div>
         <NavBar home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
+        <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
         <Container>
           <Switch>
             <Route path='/share' render={(props) => {

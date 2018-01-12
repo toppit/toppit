@@ -8,7 +8,9 @@ let topicSchema = db.Schema({
   headline:      String,
   description:   String,
   timeStamp:     Date,
-  upvotes:     Number
+  upvotes:     Number,
+  emotion:       String
+
 });
 
 let Topic = db.model('Topic', topicSchema);
@@ -29,6 +31,25 @@ let getTopics = (callback) => {
   });
 };
 
+let getSelectTopics = (query, callback) => {
+  var sortParams = {};
+  var filterParams = {};
+  if (query.sortBy.length > 0) {
+    sortParams[query.sortBy] = -1;
+  }
+  if (query.filterBy.length > 0) {
+    filterParams['emotion'] = query.filterBy;
+  }
+  Topic.find(filterParams).sort(sortParams).exec(function (err, results) {
+    if (err) {
+      console.log(err.message);
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 // Save Topics to MongoDB
 let saveTopic = (topic, callback) => {
   // 'topics' is an array of objects
@@ -39,9 +60,8 @@ let saveTopic = (topic, callback) => {
 
   Topic.create(newTopic, (err, result) => {
     if (err) {
-      callback(err, null);
       console.log(err.message);
-      return;
+      callback(err, null);
     }
     callback(null, newTopic);
   });
@@ -62,6 +82,7 @@ const updateVoteCount = (id, plusOrMinus, callback) => {
 module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
+module.exports.getSelectTopics = getSelectTopics;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;
