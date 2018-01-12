@@ -1,19 +1,10 @@
 // Using Node.js `require()`
+import schema from './schemas.js';
 const db = require('mongoose');
 const uri = process.env.MONGODB_URI || `mongodb://localhost/toppit`;
 db.connect(uri);
 
-
-let topicSchema = db.Schema({
-  headline:      String,
-  description:   String,
-  timeStamp:     Date,
-  upvotes:     Number,
-  emotion:       String
-
-});
-
-let Topic = db.model('Topic', topicSchema);
+let Topic = db.model('Topic', schema.topicSchema);
 //let Comment = db.model('Comment, commentSchema);
 //let List = db.model('List, listchema);
 //let User = db.model('User', userSchema);
