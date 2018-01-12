@@ -3,15 +3,34 @@ const db = require('mongoose');
 const uri = process.env.MONGODB_URI || `mongodb://localhost/toppit`;
 db.connect(uri);
 
+const topicSchema = db.Schema({
+    _id:           db.Schema.Types.ObjectId,
+    headline:      String,
+    description:   String,
+    timeStamp:     Date,
+    upvotes:       Number,
+    commentId:     [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }],
+    authorId:      { type: db.Schema.Types.ObjectId, ref: 'User' },
+    emotion:       String
+  });
 
-let topicSchema = db.Schema({
-  headline:      String,
-  description:   String,
-  timeStamp:     Date,
-  upvotes:     Number,
-  emotion:       String
+  const commentSchema = db.Schema({
+    _id:        db.Schema.Types.ObjectId,
+    text:       String,
+    timeStamp:  Date,
+    authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
+    upvotes:    Number
+  });
 
-});
+  const userSchema = db.Schema({
+    _id:         db.Schema.Types.ObjectId,
+    userName:    String,
+    fullName:    String,
+    password:    String,
+    topicId:     [{ type: db.Schema.Types.ObjectId, ref: 'Topic' }],
+    listId:      Number,
+    commentId:   [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }]
+  });
 
 let Topic = db.model('Topic', topicSchema);
 //let Comment = db.model('Comment, commentSchema);
@@ -65,10 +84,12 @@ let getTopicById = (topicId, callback) => {
 
 // Save Topics to MongoDB
 let saveTopic = (topic, callback) => {
+  let id = db.Types.ObjectId();
   // 'topics' is an array of objects
 
   // for each topic object in topics array
   let newTopic = new Topic(topic);
+  newTopic._id = id;
   console.log('New Topic: ',newTopic);
 
   Topic.create(newTopic, (err, result) => {
