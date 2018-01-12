@@ -38,7 +38,7 @@ class App extends React.Component {
       filterBy: '',
       sortBy: 'timeStamp'
     });
-    http.get('/topics')
+    http.get('/api/topics')
 
       .then(({ data }) => {
         this.setState({
@@ -52,32 +52,29 @@ class App extends React.Component {
   }
   
   getSelectTopics(query) {
-    console.log('hello' + query)
     if (query) {
       this.setState({
         filterBy: query.filterBy,
         sortBy: query.sortBy
-      })
+      });
     } else {
-      console.log('hello state' + this.state);
       query = {
         filterBy: this.state.filterBy,
         sortBy: this.state.sortBy
-      }
-      console.log('hello query again' + query);
+      };
     }
-    http.get('/selectTopics', {params: query})
+    http.get('/api/topics', {params: query})
 
-    .then(({data}) => {
-      console.log(data);
-      this.setState({
-        topicList: data
+      .then(({data}) => {
+        console.log(data);
+        this.setState({
+          topicList: data
+        });
+      })
+
+      .catch((err) => {
+        console.log(err.message);
       });
-    })
-
-    .catch((err) => {
-      console.log(err.message);
-    });
   }
 
 
@@ -102,7 +99,7 @@ class App extends React.Component {
       displayNewTopic: false
     });
     
-    http.post('/topic', topic)
+    http.post('/api/topic', topic)
 
       .then(({data}) => {
         let list = this.state.topicList;
@@ -126,7 +123,7 @@ class App extends React.Component {
 
   upVote (topicId) {
 
-    http.patch(`/topic/${topicId}`, {
+    http.patch(`/api/topic/${topicId}`, {
       upvotes: 1
     })      
       .then( ({data}) => {

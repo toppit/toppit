@@ -67,7 +67,7 @@ class NewTopic extends React.Component {
     return (
       <Dimmer.Dimmable as={Form} blurring dimmed={this.props.active}>
         <Dimmer active={this.props.active} inverted page>
-          <Container>
+          <Container textAlign='left'>
             <Grid columns={3}>
               <Grid.Row>
                 <Grid.Column width={2}>

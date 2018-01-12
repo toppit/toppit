@@ -13,11 +13,12 @@ class TopicDetailed extends React.Component {
   }
 
   componentDidMount() {
-    http.get(`/topic/${this.props.topicId}`)
+    http.get(`/api/topic/${this.props.topicId}`)
 
-      .then(({topic}) => {
+      .then(({data}) => {
+        console.log('Topic: ', data);
         this.setState({
-          topic: topic
+          topic: data
         });
       })
 
