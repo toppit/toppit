@@ -9,9 +9,21 @@ export default class NavBar extends React.Component {
     this.state = { activeItem: 'home' };
 
     this.handleItemClick = (e, { name }) => {
-      console.log(name);
       this.setState({ activeItem: name });
     };
+
+    this.onHome = this.onHome.bind(this);
+    this.onNewTopic = this.onNewTopic.bind(this);
+  }
+
+  onHome() {
+    this.props.history.push('/');
+    this.props.home();
+  }
+
+  onNewTopic() {
+    this.props.history.push('/share');
+    this.props.createNewTopic();
   }
 
   
@@ -21,12 +33,10 @@ export default class NavBar extends React.Component {
 
     return (
       <Menu >
-        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.props.home} />
+        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.onHome} />
         <Menu.Menu position='right'>
           <Menu.Item>
-            <Link to='/share'>
-              <Button primary onClick={this.props.createNewTopic}>Create Topic</Button>
-            </Link>
+            <Button primary onClick={this.onNewTopic}>Create Topic</Button>
           </Menu.Item>
           <Menu.Item>
             <Input icon='search' placeholder='Search...' />

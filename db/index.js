@@ -25,6 +25,7 @@ let getTopics = (callback) => {
     if (err) {
       console.log(err.message);
       callback(err, null);
+      return;
     }
 
     callback(null, result);
@@ -50,6 +51,18 @@ let getSelectTopics = (query, callback) => {
   });
 };
 
+let getTopicById = (topicId, callback) => {
+  Topic.findById(topicId, function(err, result) {
+    if (err) {
+      console.log(err.message);
+      callback(err, null);
+      return;
+    }
+    console.log('DB ', result);
+    callback(null, result);
+  });
+};
+
 // Save Topics to MongoDB
 let saveTopic = (topic, callback) => {
   // 'topics' is an array of objects
@@ -72,17 +85,18 @@ const updateVoteCount = (id, plusOrMinus, callback) => {
   Topic.findOneAndUpdate({_id: id}, {$inc: {'upvotes': plusOrMinus} }, {'new': true}, (err, doc) => {
     if (err) {
       callback(err, null);
+      return;
     }
-    console.log('after increment: ', doc)
+    console.log('after increment: ', doc);
     callback(null, doc);
-  })
-
-}
+  });
+};
 
 module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
 module.exports.getSelectTopics = getSelectTopics;
+module.exports.getTopicById = getTopicById;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;

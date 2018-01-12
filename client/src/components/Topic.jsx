@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Button, Icon} from 'semantic-ui-react';
+import { Card, Button, Icon } from 'semantic-ui-react';
 import http from 'axios';
 
 class Topic extends React.Component {
@@ -9,33 +9,40 @@ class Topic extends React.Component {
     this.state = {
       upvoteState: false
     };
-  } 
 
-  handleClick() {
-    var newUpvoteState = false
-    if (!this.state.upvoteState) {
-      newUpvoteState = true
-    }
-    this.setState({
-      upvoteState: newUpvoteState
-    })
-    this.props.upVote(this.props.topic._id)
+    this.renderTopicDetailedView = this.renderTopicDetailedView.bind(this);
   }
+  
+  handleClick () {
 
+    var newUpvoteState = false;
+    if (!this.state.upvoteState) {
+      newUpvoteState = true;
+    }
+    this.setState ({
+      upvoteState: newUpvoteState
+    });
+    this.props.upVote(this.props.topic._id);
+  }
+  
   renderTopicDetailedView () {
     //react router something?
     console.log('clicked Topic! Goes to topicView page');
-  }  
+    this.props.history.push(`/topic/${this.props.topic._id}`)
+    this.props.onDetailedTopic(this.props.topic);
+  }
 
-  render() {
+  render () {
+    
     var upvoteStateColor = 'blue';
-     if (!this.state.upvoteState) {
+    
+    if (!this.state.upvoteState) {
       upvoteStateColor = 'grey';
-     }
+    }
 
     return (
       <Card fluid>
-        <Card.Content header={this.props.topic.headline} />
+        <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} />
         <Card.Content description={this.props.topic.description} />
         <Card.Content extra>
           <Button
