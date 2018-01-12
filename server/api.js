@@ -5,8 +5,9 @@ const db = require('../db');
 // Get all topics
 api.get('/topics', (req, res) => {
 
-  if (req.query) {
+  if (Object.keys(req.query).length) {
     console.log(req.query);
+    
     db.getSelectTopics(req.query, (error, result) => {
       if (error) {
         res.status(503).end();

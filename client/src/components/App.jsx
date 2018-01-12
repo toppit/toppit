@@ -144,24 +144,31 @@ class App extends React.Component {
     console.log(this.state.selectedTopic);
     return (
       <div>
-        <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
         <NavBar history={this.props.history} home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
-        <Container>
-          <Switch>
-            <Route path='/share' render={(props) => (
+        <Switch>
+          <Route path='/share' render={(props) => (
+            <Container>
               <NewTopic {...props}
                 onNewTopic={this.onNewTopic}
                 active={this.state.displayNewTopic}
                 closeNewTopic={this.closeNewTopic}
-              />)}/>
-            <Route exact path='/' render={(props) => (
-              <TopicList {...props} upVote={this.upVote} onDetailedTopic={this.onDetailedTopic} topicList={this.state.topicList} />
-            )}/>
-            <Route path='/topic/:topicId' render={(props) => (
+              />
+            </Container>
+          )}/>
+          <Route exact path='/' render={(props) => (
+            <div>
+              <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
+              <Container>
+                <TopicList {...props} upVote={this.upVote} onDetailedTopic={this.onDetailedTopic} topicList={this.state.topicList} />
+              </Container>
+            </div>
+          )}/>
+          <Route path='/topic/:topicId' render={(props) => (
+            <Container>
               <TopicListDetailed {...props} topicId={props.match.params.topicId} />
-            )}/>
-          </Switch>    
-        </Container>
+            </Container>
+          )}/>
+        </Switch>    
       </div>
     );
   }

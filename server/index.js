@@ -9,7 +9,6 @@ app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use('/topic/:topicId', express.static(path.join(__dirname, '../client/dist')));
-app.use('/api', apiRouter);
 
 // Handle internal API endpoints
 app.use('/api', api);
