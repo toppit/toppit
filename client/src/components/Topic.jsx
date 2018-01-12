@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Button, Icon } from 'semantic-ui-react';
 import http from 'axios';
+import TopicDetailedView from './TopicDetailedView.jsx'
 
 class Topic extends React.Component {
   constructor(props) {
@@ -41,6 +42,7 @@ class Topic extends React.Component {
     }
 
     return (
+      <div>
       <Card fluid>
         <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} />
         <Card.Content description={this.props.topic.description} />
@@ -61,6 +63,8 @@ class Topic extends React.Component {
             <Button compact color="blue" content={this.props.topic.emotion}/> : ''}
         </Card.Content>
       </Card>
+        <TopicDetailedView />
+      </div>
     );
   }  
 }
