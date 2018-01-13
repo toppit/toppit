@@ -11,6 +11,11 @@ class Login extends React.Component {
 
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
+
+    this.state = {
+      signInError: null,
+      signUpError: null
+    };
   }
 
   onSignIn(username, password) {
@@ -26,7 +31,13 @@ class Login extends React.Component {
       })
 
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          this.setState({
+            signInError: 'Incorrect username or password entered'
+          });
+        } else {
+          console.log(err);
+        }
       });
   }
 
@@ -43,8 +54,14 @@ class Login extends React.Component {
       })
 
       .catch((err) => {
-        console.log(err);
-      })
+        if (err.response.status === 409) {
+          this.setState({
+            signUpError: 'username already taken, please choose a different one'
+          });
+        } else {
+          console.log(err);
+        }
+      });
   }
 
   render() {
@@ -61,13 +78,13 @@ class Login extends React.Component {
               <Grid.Column width={2}>
               </Grid.Column>
               <Grid.Column verticalAlign='middle' width={5}>
-                <SignIn onSignIn={this.onSignIn}/>
+                <SignIn onSignIn={this.onSignIn} error={this.state.signInError}/>
               </Grid.Column>
               <Grid.Column width={1}>
                 <Divider vertical>Or</Divider>
               </Grid.Column>
               <Grid.Column verticalAlign='middle' width={5}>
-                <SignUp onSignUp={this.onSignUp}/>
+                <SignUp onSignUp={this.onSignUp} error={this.state.signUpError}/>
               </Grid.Column>
               <Grid.Column width={2}>
               </Grid.Column>

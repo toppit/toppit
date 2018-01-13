@@ -26,14 +26,13 @@ app.use(express.json());
 
 /////////////////////// PUBLIC ENDPOINTS ///////////////////////////////
 
-app.use(auth)
+app.use(auth);
 app.use('/login', express.static(path.join(__dirname, '../client/dist')));
 
 /////////////////////// PRIVATE ENDPOINTS ///////////////////////////////
 
 app.use((req, res, next) => {
   
-  console.log('Session Found: ', req.session);
   if (req.session.passport) {
     if (req.session.passport.user) {
       next();
@@ -41,23 +40,14 @@ app.use((req, res, next) => {
   } else {
     res.redirect('/login');
   }
-})
+});
 
 app.use('/api', api);
 
 
-app.use(express.static(path.join(__dirname, '../client/dist')), (req, res, next) => {
-  console.log('before Topic ', req.url);
-  next();
-});
-app.use('/topic/:topicId', express.static(path.join(__dirname, '../client/dist')), (req, res, next) => {
-  console.log('req url ', req.url);
-  next();
-  });
-app.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/login');
-});
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use('/topic/:topicId', express.static(path.join(__dirname, '../client/dist')));
+
 
 
 

@@ -14,15 +14,15 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 route.post('/login', passport.authenticate('local'), (req, res) => {
-    res.status(200).end(req.user.username);
-  });
+  res.status(200).end(req.user.username);
+});
 
 route.post('/register', function (req, res, next) {
 
   User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
     if (err) {
-      console.log(err.message);
-      res.redirect('/login');
+      res.status(409).send('username already exists, please choose a different username');
+      return;
     }
 
     req.login(user, (err) => {
@@ -33,6 +33,11 @@ route.post('/register', function (req, res, next) {
       res.status(201).end(user.username);
     });
   });
+});
+
+route.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/login');
 });
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Button, Divider, Menu, Form, Progress, Header, Container, Card, Grid } from 'semantic-ui-react';
+import { Segment, Button, Divider, Message, Menu, Form, Progress, Header, Container, Card, Grid } from 'semantic-ui-react';
 import owasp from 'owasp-password-strength-test';
 
 const colors = {
@@ -76,7 +76,7 @@ class SignUp extends React.Component {
     return (
       <Card raised centered>
         <Segment padded size='large'>
-          <Form onSubmit={this.onSignUp}>
+          <Form error={this.props.error ? true : false} onSubmit={this.onSignUp}>
             <Header as='h1'>Sign Up</Header>
             <Form.Input 
               label='username' 
@@ -107,6 +107,10 @@ class SignUp extends React.Component {
               autoComplete='new-password' 
               placeholder='password'
               error={this.state.confirmPasswordError} />
+            <Message
+              error
+              content={this.props.error}
+            />
             <Form.Button primary type='submit'>Sign Up</Form.Button>
           </Form>
         </Segment>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Button, Divider, Menu, Form, Header, Container, Card, Grid } from 'semantic-ui-react';
+import { Segment, Button, Divider, Message, Menu, Form, Header, Container, Card, Grid } from 'semantic-ui-react';
 
 
 class SignIn extends React.Component {
@@ -31,10 +31,14 @@ class SignIn extends React.Component {
     return (
       <Card raised centered>
         <Segment padded size='huge'>
-          <Form onSubmit={this.onSignIn}>
+          <Form error={this.props.error ? true : false} onSubmit={this.onSignIn}>
             <Header as='h1'>Sign In</Header>
             <Form.Input label='username' name='username' value={this.state.username} onChange={this.onChange} autoComplete='username' placeholder='username' />
             <Form.Input type='password' label='password' name='password' value={this.state.password} onChange={this.onChange} autoComplete='current-password' placeholder='password' />
+            <Message
+              error
+              content={this.props.error}
+            />
             <Form.Button primary type='submit'>Sign In</Form.Button>
           </Form>
         </Segment>
