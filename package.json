@@ -25,6 +25,7 @@
     "css-loader": "^0.28.8",
     "express": "^4.16.2",
     "file-loader": "^1.1.6",
+    "moment": "^2.20.1",
     "mongoose": "^4.13.9",
     "morgan": "^1.9.0",
     "react": "^16.2.0",
