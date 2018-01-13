@@ -26,10 +26,10 @@ class UtilsBar extends React.Component {
   render() {
     return (
       <Menu secondary>
-        <Menu.Item>
-          <SortList onSortChange={this.onSortChange.bind(this)}/>
+        <Menu.Item position='right'>
+          <SortList  onSortChange={this.onSortChange.bind(this)}/>
         </Menu.Item>
-        <Menu.Menu position='right'>
+        <Menu.Menu>
           <Menu.Item>
             <FilterList onFilterChange={this.onFilterChange.bind(this)}/>
           </Menu.Item>

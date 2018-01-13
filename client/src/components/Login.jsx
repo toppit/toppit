@@ -50,7 +50,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <Menu>
+        <Menu className='nav'>
           <Menu.Header className='toppit-logo' as='h1'>Toppit</Menu.Header>
         </Menu>
         <Container>

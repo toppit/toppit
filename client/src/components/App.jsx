@@ -143,7 +143,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='mainapp'>
         <NavBar history={this.props.history} home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
         <Switch>
           <Route path='/share' render={(props) => (
@@ -157,8 +157,8 @@ class App extends React.Component {
           )}/>
           <Route exact path='/' render={(props) => (
             <div>
-              <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
               <Container>
+                <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
                 <TopicList {...props} upVote={this.upVote} onDetailedTopic={this.onDetailedTopic} topicList={this.state.topicList} />
               </Container>
             </div>
