@@ -5,7 +5,7 @@ import NewTopic from './NewTopic.jsx';
 import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
 import UtilsBar from './UtilsBar.jsx';
-import TopicListDetailed from './TopicDetailed.jsx';
+import TopicDetailed from './TopicDetailed.jsx';
 import http from 'axios';
 
 import {Link, Redirect, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -115,14 +115,12 @@ class App extends React.Component {
   }
 
   onDetailedTopic(topic) {
-    console.log(topic);
     this.setState({
       selectedTopic: topic
     });
   }
 
   upVote (topicId) {
-
     http.patch(`/api/topic/${topicId}`, {
       upvotes: 1
     })      
@@ -141,7 +139,6 @@ class App extends React.Component {
   }  
 
   render() {
-    console.log(this.state.selectedTopic);
     return (
       <div>
         <NavBar history={this.props.history} home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
@@ -165,7 +162,7 @@ class App extends React.Component {
           )}/>
           <Route path='/topic/:topicId' render={(props) => (
             <Container>
-              <TopicListDetailed {...props} topicId={props.match.params.topicId} />
+              <TopicDetailed {...props} topicId={props.match.params.topicId} upvote={this.upVote}/>
             </Container>
           )}/>
         </Switch>    
