@@ -26,13 +26,12 @@ export default class NavBar extends React.Component {
     this.props.createNewTopic();
   }
 
-  
 
   render() {
     const { activeItem } = this.state;
 
     return (
-      <Menu >
+      <Menu className='nav'>
         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.onHome} />
         <Menu.Menu position='right'>
           <Menu.Item>
@@ -41,7 +40,7 @@ export default class NavBar extends React.Component {
           <Menu.Item>
             <Input icon='search' placeholder='Search...' />
           </Menu.Item>
-          <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick}  />
+          <Menu.Item href='/logout' name='logout' active={activeItem === 'logout'} />
         </Menu.Menu>
       </Menu>
     );

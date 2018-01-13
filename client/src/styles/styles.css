@@ -1,3 +1,11 @@
+body {
+  background-color: #f9f9f9
+}
+
+.ui.menu.nav {
+  border-bottom: 1px solid #2185d0;
+}
+
 .topic-container {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -5,4 +13,10 @@
 
 .ui.inverted.dimmer {
   background-color: rgba(255,255,255,1.0);
+}
+
+.ui.menu.toppit-logo {
+  font-size: 50px;
+  font-style: 'italic';
+  color: '#2185d0';
 }
