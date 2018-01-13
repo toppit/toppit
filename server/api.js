@@ -74,4 +74,18 @@ api.patch('/topic/:topicId', (req, res) => {
   });
 });
 
+
+//Post a comment to a topic
+api.post('/topic/:topicId', (req, res) => {
+  // db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
+  //   if (error) {
+  //     res.status(503).end();
+  //     return;
+  //   }
+  //   res.status(200).send(result);
+
+  // });
+  res.sendStatus(201);
+});
+
 module.exports = api;
