@@ -6,6 +6,8 @@ import './styles/styles.css';
 
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
+console.log('Rendering Main Page');
+
 ReactDOM.render((
   <Router>
     <Switch>

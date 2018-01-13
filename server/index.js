@@ -1,66 +1,60 @@
 const express = require('express');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 3000;
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
 const api = require('./api');
+const auth = require('./auth');
 const db = require('../db');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-// const auth = require('./Auth');
+
 
 
 app.use(morgan('tiny'));
-app.use(express.json());
-app.use(require('express-session')({
+app.use(cookieParser());
+app.use(session({ 
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false 
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.json());
 
+/////////////////////// PUBLIC ENDPOINTS ///////////////////////////////
 
-app.post('/login', passport.authenticate('local'), function (req, res) {
-  res.redirect('/');
-});
-
-app.post('/register', function (req, res) {
-  
-  User.register(new User({ username: req.body.username }), req.body.password, function (err, account) {
-    if (err) {
-      res.redirect('/login');
-    }
-
-    passport.authenticate('local')(req, res, function () {
-      res.redirect('/');
-    });
-  });
-});
-
-
+app.use(auth)
 app.use('/login', express.static(path.join(__dirname, '../client/dist')));
 
-// app.use(passport.authenticate('facebook'));
-app.use(passport.authenticate('local'));
-app.use('/api', api);
+/////////////////////// PRIVATE ENDPOINTS ///////////////////////////////
+
+app.use((req, res, next) => {
+
+  console.log('Session Found: ', req.session);
+  if (req.session.passport) {
+    if (req.session.passport.user) {
+      next();
+    }
+  } else {
+    res.redirect('/login');
+  }
+})
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('/topic/:topicId', express.static(path.join(__dirname, '../client/dist')));
-
+app.use('/api', api);
 app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/login');
 });
 
 
-// passport config
-var User = require('../db').User;
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
+
+
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the

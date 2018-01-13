@@ -6,33 +6,32 @@ const uri = process.env.MONGODB_URI || `mongodb://localhost/toppit`;
 const passportLocalMongoose = require('passport-local-mongoose');
 var db = mongoose.createConnection(uri, options);
 
-const topicSchema = db.Schema({
-  _id:           db.Schema.Types.ObjectId,
+const topicSchema = mongoose.Schema({
+  _id:           mongoose.Schema.Types.ObjectId,
   headline:      String,
   description:   String,
   timeStamp:     Date,
   upvotes:       Number,
-  commentId:     [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }],
-  authorId:      { type: db.Schema.Types.ObjectId, ref: 'User' },
+  commentId:     [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  authorId:      { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   emotion:       String
   });
 
-const commentSchema = db.Schema({
-  _id:        db.Schema.Types.ObjectId,
+const commentSchema = mongoose.Schema({
+  _id:        mongoose.Schema.Types.ObjectId,
   text:       String,
   timeStamp:  Date,
-  authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
+  authorId:   { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   upvotes:    Number
 });
 
-const userSchema = db.Schema({
-  _id:         db.Schema.Types.ObjectId,
+const userSchema = mongoose.Schema({
   username:    String,
   password:    String,
   fullName:    String,
-  topicId:     [{ type: db.Schema.Types.ObjectId, ref: 'Topic' }],
+  topicId:     [{ type: mongoose.Schema.Types.ObjectId, ref: 'Topic' }],
   listId:      Number,
-  commentId:   [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }]
+  commentId:   [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -90,13 +89,12 @@ let getTopicById = (topicId, callback) => {
 
 // Save Topics to MongoDB
 let saveTopic = (topic, callback) => {
-  let id = db.Types.ObjectId();
+  let id = mongoose.Types.ObjectId();
   // 'topics' is an array of objects
 
   // for each topic object in topics array
   let newTopic = new Topic(topic);
   newTopic._id = id;
-  console.log('New Topic: ',newTopic);
 
   Topic.create(newTopic, (err, result) => {
     if (err) {
@@ -108,13 +106,11 @@ let saveTopic = (topic, callback) => {
 };
 
 const updateVoteCount = (id, plusOrMinus, callback) => {
-  console.log('upvote', plusOrMinus)
   Topic.findOneAndUpdate({_id: id}, {$inc: {'upvotes': plusOrMinus} }, {'new': true}, (err, doc) => {
     if (err) {
       callback(err, null);
       return;
     }
-    console.log('after increment: ', doc);
     callback(null, doc);
   });
 };
@@ -124,7 +120,7 @@ module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
 module.exports.getSelectTopics = getSelectTopics;
 module.exports.getTopicById = getTopicById;
-module.exports.User = db.model('User', User);
+module.exports.User = db.model('User', userSchema);
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;

@@ -1,84 +1,80 @@
 import React from 'react';
-import { Segment, Button, Divider, Form, Header, Container, Card, Grid } from 'semantic-ui-react';
+import { Segment, Button, Divider, Menu, Form, Header, Container, Card, Grid } from 'semantic-ui-react';
 import http from 'axios';
+import SignIn from './SignIn.jsx';
+import SignUp from './SignUp.jsx';
 
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.state = {
-      username: '',
-      password: ''
-    };
-
-    this.onChange = this.onChange.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
   }
 
-  onSignIn() {
+  onSignIn(username, password) {
     http.post('/login', {
-      username: this.state.username,
-      password: this.state.password
+      username: username,
+      password: password
     })
 
-      .then((err) => {
-        console.log(err.messagae);
+      .then((response) => {
+        if (response.status === 200) {
+          this.props.history.replace('/');
+        }
+      })
+
+      .catch((err) => {
+        console.log(err);
       });
   }
 
-  onSignUp() {
+  onSignUp(username, password) {
     http.post('/register', {
-      username: this.state.username,
-      password: this.state.password
+      username: username,
+      password: password
     })
 
-      .then((err) => {
-        console.log(err.messagae);
-      });
-  }
+      .then((response) => {
+        if (response.status === 201) {
+          this.props.history.replace('/');
+        }
+      })
 
-  onChange(e, { value }) {
-    const name = e.target.name;
-
-    this.setState({
-      [name]: value
-    });
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   render() {
     return (
-      <Container>
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column width={7}>
-              <Card>
-                <Form onSubmit={this.onSignIn}>
-                  <Header as='h1'>Sign In</Header>
-                  <Form.Input label='username' name='username' value={this.state.username} onChange={this.onChange} autoComplete='username' placeholder='username' />
-                  <Form.Input type='password' label='password' name='password' value={this.state.password} onChange={this.onChange} autoComplete='current-password' placeholder='password' />
-                  <Form.Button type='submit'>Sign In</Form.Button>
-                </Form>
-              </Card>
-            </Grid.Column>
-            <Grid.Column width={2}>
-              <Divider vertical>Or</Divider>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <Card>
-                <Form onSubmit={this.onSignUp}>
-                  <Header as='h1'>Sign Up</Header>
-                  <Form.Input label='username' name='username' value={this.state.username} onChange={this.onChange} autoComplete='username' placeholder='username' />
-                  <Form.Input type='password' label='password' name='password' value={this.state.password} onChange={this.onChange} autoComplete='new-password' placeholder='password' />
-                  <Form.Input type='password' label='confirm password' name='confirmpassword' value={this.state.Confirmpassword} onChange={this.onChange} autoComplete='new-password' placeholder='password' />
-                  <Form.Button type='submit'>Sign Up</Form.Button>
-                </Form>
-              </Card>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
+      <div>
+        <Menu>
+          <Menu.Header className='toppit-logo' as='h1'>Toppit</Menu.Header>
+        </Menu>
+        <Container>
+          <Grid>
+            <Grid.Row height={200}>
+            </Grid.Row>
+            <Grid.Row columns={5}>
+              <Grid.Column width={2}>
+              </Grid.Column>
+              <Grid.Column verticalAlign='middle' width={5}>
+                <SignIn onSignIn={this.onSignIn}/>
+              </Grid.Column>
+              <Grid.Column width={1}>
+                <Divider vertical>Or</Divider>
+              </Grid.Column>
+              <Grid.Column verticalAlign='middle' width={5}>
+                <SignUp onSignUp={this.onSignUp}/>
+              </Grid.Column>
+              <Grid.Column width={2}>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </div>
     );
   }
 }

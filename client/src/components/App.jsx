@@ -6,7 +6,11 @@ import Login from './Login.jsx';
 import NavBar from './NavBar.jsx';
 import UtilsBar from './UtilsBar.jsx';
 import TopicDetailed from './TopicDetailed.jsx';
-import http from 'axios';
+import axios from 'axios';
+
+var http = axios.create({
+  withCredentials: true,
+});
 
 import {Link, Redirect, BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Button, Container, Header} from 'semantic-ui-react';
@@ -66,7 +70,6 @@ class App extends React.Component {
     http.get('/api/topics', {params: query})
 
       .then(({data}) => {
-        console.log(data);
         this.setState({
           topicList: data
         });
