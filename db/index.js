@@ -37,6 +37,7 @@ const userSchema = mongoose.Schema({
 userSchema.plugin(passportLocalMongoose);
 
 let Topic = db.model('Topic', topicSchema);
+let User = db.model('User', userSchema);
 
 //let Comment = db.model('Comment, commentSchema);
 //let List = db.model('List, listchema);
@@ -53,6 +54,18 @@ let getTopics = (callback) => {
     }
 
     callback(null, result);
+  });
+};
+
+//query key should be either username or _id
+let getUser = (query, callback) => {
+  User.findOne(query, (err, user) => {
+    if (err) {
+      console.log(err.message);
+      callback(err, null);
+      return;
+    }
+    callback(null, user);
   });
 };
 
@@ -120,7 +133,8 @@ module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
 module.exports.getSelectTopics = getSelectTopics;
 module.exports.getTopicById = getTopicById;
-module.exports.User = db.model('User', userSchema);
+module.exports.User = User;
+module.exports.getUser = getUser;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;

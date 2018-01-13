@@ -88,4 +88,25 @@ api.post('/topic/:topicId', (req, res) => {
   res.sendStatus(201);
 });
 
+api.get('/user/:userId', (req, res) => {
+
+  let query = {};
+  if (req.params.userId === 'current') {
+    query.username = req.session.passport.user;
+  } else {
+    query[Object.keys(req.params.userId)[0]] = req.params.userId;
+  }
+
+  db.getUser(query, (err, user) => {
+    if (err) {
+      res.status(400).send('Unable to retrieve user');
+      console.log(err.message);
+      return;
+    }
+    console.log(user);
+
+    res.status(200).send(user);
+  });
+});
+
 module.exports = api;
