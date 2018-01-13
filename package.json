@@ -24,6 +24,8 @@
     "babel-preset-stage-1": "^6.24.1",
     "css-loader": "^0.28.8",
     "express": "^4.16.2",
+    "file-loader": "^1.1.6",
+    "moment": "^2.20.1",
     "mongoose": "^4.13.9",
     "morgan": "^1.9.0",
     "react": "^16.2.0",
@@ -31,6 +33,7 @@
     "react-router-dom": "^4.2.2",
     "semantic-ui-react": "^0.77.1",
     "style-loader": "^0.19.1",
+    "url-loader": "^0.6.2",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

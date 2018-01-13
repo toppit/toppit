@@ -122,7 +122,7 @@ class App extends React.Component {
   }
 
   upVote (topicId) {
-
+    console.log('i upvoted!')
     http.patch(`/api/topic/${topicId}`, {
       upvotes: 1
     })      
@@ -165,7 +165,7 @@ class App extends React.Component {
           )}/>
           <Route path='/topic/:topicId' render={(props) => (
             <Container>
-              <TopicListDetailed {...props} topicId={props.match.params.topicId} />
+              <TopicListDetailed {...props} topicId={props.match.params.topicId} upvote={this.upVote} />
             </Container>
           )}/>
         </Switch>    
