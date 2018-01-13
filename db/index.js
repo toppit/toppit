@@ -33,8 +33,8 @@ const topicSchema = db.Schema({
   });
 
 let Topic = db.model('Topic', topicSchema);
-//let Comment = db.model('Comment, commentSchema);
-//let List = db.model('List, listchema);
+let Comment = db.model('Comment', commentSchema);
+//let List = db.model('List', listchema);
 //let User = db.model('User', userSchema);
 //let Organization = db.model('Organization', sessionSchema);
 
@@ -82,13 +82,14 @@ let getTopicById = (topicId, callback) => {
   });
 };
 
-// Save Topics to MongoDB
+// ----------------------
+// SAVE TOPIC TO MONGO DB
+// ----------------------
 let saveTopic = (topic, callback) => {
   let id = db.Types.ObjectId();
-  // 'topics' is an array of objects
 
-  // for each topic object in topics array
   let newTopic = new Topic(topic);
+
   newTopic._id = id;
   console.log('New Topic: ',newTopic);
 
@@ -113,6 +114,65 @@ const updateVoteCount = (id, plusOrMinus, callback) => {
   });
 };
 
+// ------------------------
+// SAVE COMMENT TO MONGO DB
+// ------------------------
+// - Receives comments object and topicId
+// - Saves comment to DB
+// - Places new comment ID into associated topic based on topicId
+// - can create reference to comment object stored in DB
+let saveComment = (commentObj, topicId, callback) => {
+  let id = db.Types.ObjectId();
+
+  let comment = new Comment({
+    _id:        id,
+    text:       commentObj.text,
+    timeStamp:  commentObj.timeStamp,
+  //  authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
+    upvotes:    commentObj.upvotes
+  });
+
+  // - Find topic by topicId  
+  Topic.findById(topicId, function (err, doc){
+    if(err){
+      console.log(err);
+    } else {
+      // - Insert comment._id into Topic
+      doc.commentId.push(comment._id);
+      
+      // - Update Database
+      Topic.update({_id: topicId}, doc, function(err, raw) {
+        if (err) {
+          console.log(err);
+        }
+        console.log("Successful update of topic", raw);
+        
+      });
+    }
+  });
+
+  comment.save(function (err) {
+    if (err) {
+      console.log(err.message);
+      // callback(err, null);
+    } else {
+      // create reference from topic.commentId property to comment object
+      Topic.
+        findById(topicId).
+        populate('commentId').
+        exec(function (err, topic) {
+          if (err) return handleError(err);
+          console.log('The topic commentId Array: ', topic.commentId);
+
+        });
+    }
+    // callback(null, .....);
+    // console.log("Comment Save Success");
+  });
+};
+
+
+module.exports.saveComment = saveComment;
 module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
