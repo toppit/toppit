@@ -83,8 +83,17 @@ api.post('/topic/:topicId', (req, res) => {
   //     return;
   //   }
   //   res.status(200).send(result);
-
+  
   // });
+  db.saveComment(req.body, req.params.topicId, (error, result) => {
+    if (error) {
+      res.status(503).end();
+      return;
+    }
+    console.log('save Comment Results: ', result)
+    res.status(200).send(result);
+  
+  });
   res.sendStatus(201);
 });
 

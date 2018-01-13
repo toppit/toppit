@@ -127,7 +127,7 @@ const updateVoteCount = (id, plusOrMinus, callback) => {
   // should be placed in correct Topic, given a Topic URL
 
 // Save Comments to MongoDB
-let saveComment = (commentObj, callback) => {
+let saveComment = (commentObj, topicId, callback) => {
   let id = db.Types.ObjectId();
 
   let comment = new Comment({
@@ -140,26 +140,48 @@ let saveComment = (commentObj, callback) => {
 
   // find topic by topicId
   Topic.findById(topicId, function (err, doc){
-    // doc is a Document
-    // push comment._id to array
-    doc.commentId.push(comment._id);
+    // add error handling
+    if(err){
+      console.log(err);
+    } else {
+
+          // doc is a Document
+      // push comment._id to array
+      console.log('Topic Comment Id Before: ', doc);
+      doc.commentId.push(comment._id);
+
+      Topic.update({_id: topicId}, doc, function(err, raw) {
+        if (err) {
+          console.log(err);
+        }
+        console.log("Successful update of topic", raw);
+        
+      });
+    }
+
   });
    
   console.log('New Comment: ', comment);
 
   comment.save(function (err) {
-    if (err) return handleError(err);
-    
+    if (err) {
+      console.log(err.message);
+      //callback(err, null);
+    } else {
+      Topic.
+        findById(topicId).
+        populate('commentId').
+        exec(function (err, topic) {
+          if (err) return handleError(err);
+          console.log('The topic commentId Array: ', topic.commentId);
+          // prints the text from the first comment in array
+        });
+    }
+    //callback(null, newTopic);
+    // console.log("Comment Save Success");
   });
 
-  Topic.
-    findById(topicId).
-    populate('commentId').
-    exec(function (err, topic) {
-      if (err) return handleError(err);
-      console.log('The author is %s', topic.commentId[0].text);
-      // prints the text from the first comment in array
-    });
+  
   
   // Create comment. Populate comment 'authorId' with userId Object
   // Comment.create(newComment, (err, result) => {
@@ -198,7 +220,7 @@ let saveComment = (commentObj, callback) => {
     // comment author username
 
 
-
+module.exports.saveComment = saveComment;
 module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
