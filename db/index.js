@@ -82,21 +82,14 @@ let getTopicById = (topicId, callback) => {
   });
 };
 
-// Save Topics to MongoDB
+// ----------------------
+// SAVE TOPIC TO MONGO DB
+// ----------------------
 let saveTopic = (topic, callback) => {
   let id = db.Types.ObjectId();
 
   let newTopic = new Topic(topic);
-  // let newTopic = new Topic({
-  //   _id:           id,
-  //   headline:      topic.headline,
-  //   description:   topic.description,
-  //   timeStamp:     topic.timeStamp,
-  //   upvotes:       0,
-  //   commentId:     [comment._id],
-  //   //authorId:      { user._id },
-  //   emotion:       topic.emotion
-  // });
+
   newTopic._id = id;
   console.log('New Topic: ',newTopic);
 
@@ -121,12 +114,13 @@ const updateVoteCount = (id, plusOrMinus, callback) => {
   });
 };
 
-// Posting comment
-// api.post('/topic/:topicId', (req, res))... Go to specific topicId and place properties in received object
-  // will receive everything in comments object
-  // should be placed in correct Topic, given a Topic URL
-
-// Save Comments to MongoDB
+// ------------------------
+// SAVE COMMENT TO MONGO DB
+// ------------------------
+// - Receives comments object and topicId
+// - Saves comment to DB
+// - Places new comment ID into associated topic based on topicId
+// - can create reference to comment object stored in DB
 let saveComment = (commentObj, topicId, callback) => {
   let id = db.Types.ObjectId();
 
@@ -138,18 +132,15 @@ let saveComment = (commentObj, topicId, callback) => {
     upvotes:    commentObj.upvotes
   });
 
-  // find topic by topicId
+  // - Find topic by topicId  
   Topic.findById(topicId, function (err, doc){
-    // add error handling
     if(err){
       console.log(err);
     } else {
-
-          // doc is a Document
-      // push comment._id to array
-      console.log('Topic Comment Id Before: ', doc);
+      // - Insert comment._id into Topic
       doc.commentId.push(comment._id);
-
+      
+      // - Update Database
       Topic.update({_id: topicId}, doc, function(err, raw) {
         if (err) {
           console.log(err);
@@ -158,66 +149,27 @@ let saveComment = (commentObj, topicId, callback) => {
         
       });
     }
-
   });
-   
-  console.log('New Comment: ', comment);
 
   comment.save(function (err) {
     if (err) {
       console.log(err.message);
-      //callback(err, null);
+      // callback(err, null);
     } else {
+      // create reference from topic.commentId property to comment object
       Topic.
         findById(topicId).
         populate('commentId').
         exec(function (err, topic) {
           if (err) return handleError(err);
           console.log('The topic commentId Array: ', topic.commentId);
-          // prints the text from the first comment in array
+
         });
     }
-    //callback(null, newTopic);
+    // callback(null, .....);
     // console.log("Comment Save Success");
   });
-
-  
-  
-  // Create comment. Populate comment 'authorId' with userId Object
-  // Comment.create(newComment, (err, result) => {
-  //   if (err) {
-  //     console.log(err.message);
-  //     callback(err, null);
-  //   } else {
-  //     // Comment.find({})
-  //     // .populate('authorId')
-  //     // .exec(function(error, data) {
-  //     //   console.log(JSON.stringify(data, null, "\t"))
-  //     //  })
-  //     callback(null, newComment);
-  //   }
-  // });
 };
-
-// Gather All Data
-// Topic Detail
-// On get request:
-// result data should be more than topics object, but comments as well including username
-// modify function that does db query
-// When click on topic
- // Get all info about Topic
-   // Headline
-   // Descript
-   // Timestamp
-   // Number of upvotes
-
-   // Comments object
-     // Text
-     // Author
-     // Timestamp
-
-  // Comment component 
-    // comment author username
 
 
 module.exports.saveComment = saveComment;
