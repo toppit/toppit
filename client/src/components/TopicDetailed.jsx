@@ -2,17 +2,18 @@ import React from 'react';
 import {Container, Header, Card, Icon, Button, Form} from 'semantic-ui-react';
 import http from 'axios';
 import CommentList from './CommentList.jsx'
+import UpvoteButton from './UpvoteButton.jsx'
 import {exampleCommentData} from '../exampleData.js'
 import {exampleData} from '../exampleData.js' 
 
 class TopicDetailed extends React.Component {
   constructor(props) {
     super(props);
-    console.log('Topic Id: ', props.topicId);
 
     this.state = {
       topic: null,
-      commentText: ''
+      commentText: '',
+      upvoteStateColor: 'grey'
     };
   }
 
@@ -20,7 +21,6 @@ class TopicDetailed extends React.Component {
     http.get(`/api/topic/${this.props.topicId}`)
 
       .then(({data}) => {
-        console.log('Topic: ', data);
         this.setState({
           topic: data,
           commentText: '',
@@ -75,13 +75,17 @@ class TopicDetailed extends React.Component {
 
     return (
       <div>
-        <Container>
+        <Container>      
           <Card fluid>
             <Card.Content header={topic.headline} />
             <Card.Content description={topic.description} />
             <Card.Content extra>
+            <UpvoteButton topic={topic} upvote={this.props.upvote} />            
               <Icon name='comments' />
               {topic.comments || 0} comments
+              &nbsp;&nbsp;
+              {topic.emotion ?
+                <Button compact color="blue" content={topic.emotion}/> : ''}                
             </Card.Content>
           </Card>
         </Container>
