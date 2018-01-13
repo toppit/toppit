@@ -1,38 +1,44 @@
-// Using Node.js `require()`
-const db = require('mongoose');
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+const options = { promiseLibrary: require('bluebird') };
+
 const uri = process.env.MONGODB_URI || `mongodb://localhost/toppit`;
-db.connect(uri);
+const passportLocalMongoose = require('passport-local-mongoose');
+var db = mongoose.createConnection(uri, options);
 
 const topicSchema = db.Schema({
-    _id:           db.Schema.Types.ObjectId,
-    headline:      String,
-    description:   String,
-    timeStamp:     Date,
-    upvotes:       Number,
-    commentId:     [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }],
-    authorId:      { type: db.Schema.Types.ObjectId, ref: 'User' },
-    emotion:       String
+  _id:           db.Schema.Types.ObjectId,
+  headline:      String,
+  description:   String,
+  timeStamp:     Date,
+  upvotes:       Number,
+  commentId:     [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }],
+  authorId:      { type: db.Schema.Types.ObjectId, ref: 'User' },
+  emotion:       String
   });
 
-  const commentSchema = db.Schema({
-    _id:        db.Schema.Types.ObjectId,
-    text:       String,
-    timeStamp:  Date,
-    authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
-    upvotes:    Number
-  });
+const commentSchema = db.Schema({
+  _id:        db.Schema.Types.ObjectId,
+  text:       String,
+  timeStamp:  Date,
+  authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
+  upvotes:    Number
+});
 
-  const userSchema = db.Schema({
-    _id:         db.Schema.Types.ObjectId,
-    userName:    String,
-    fullName:    String,
-    password:    String,
-    topicId:     [{ type: db.Schema.Types.ObjectId, ref: 'Topic' }],
-    listId:      Number,
-    commentId:   [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }]
-  });
+const userSchema = db.Schema({
+  _id:         db.Schema.Types.ObjectId,
+  username:    String,
+  password:    String,
+  fullName:    String,
+  topicId:     [{ type: db.Schema.Types.ObjectId, ref: 'Topic' }],
+  listId:      Number,
+  commentId:   [{ type: db.Schema.Types.ObjectId, ref: 'Comment' }]
+});
+
+userSchema.plugin(passportLocalMongoose);
 
 let Topic = db.model('Topic', topicSchema);
+
 //let Comment = db.model('Comment, commentSchema);
 //let List = db.model('List, listchema);
 //let User = db.model('User', userSchema);
@@ -118,6 +124,7 @@ module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
 module.exports.getSelectTopics = getSelectTopics;
 module.exports.getTopicById = getTopicById;
+module.exports.User = db.model('User', User);
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;

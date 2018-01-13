@@ -1,45 +1,86 @@
 import React from 'react';
-import GoogleSignIn from 'react-google-signin';
-import { Segment, Button, Divider } from 'semantic-ui-react';
+import { Segment, Button, Divider, Form, Header, Container, Card, Grid } from 'semantic-ui-react';
+import http from 'axios';
 
 
 class Login extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      username: '',
+      password: ''
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSignIn = this.onSignIn.bind(this);
+    this.onSignUp = this.onSignUp.bind(this);
   }
 
-  onSignIn(userProfile, accessToken) {
-    console.log(userProfile);
-    console.log(accessToken);
+  onSignIn() {
+    http.post('/login', {
+      username: this.state.username,
+      password: this.state.password
+    })
+
+      .then((err) => {
+        console.log(err.messagae);
+      });
   }
 
-  signOut() {
-    this.googleAuth.signOut();
+  onSignUp() {
+    http.post('/register', {
+      username: this.state.username,
+      password: this.state.password
+    })
+
+      .then((err) => {
+        console.log(err.messagae);
+      });
   }
 
-  onFailure(err) {
-    console.log(err);
+  onChange(e, { value }) {
+    const name = e.target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
   render() {
     return (
-      <Segment padded>
-        <GoogleSignIn clientId='28722236365-jq47qgutedd4mfviu1fiitdmqfc1voug'
-          ref={g => this.googleAuth = g}
-          onSuccess={this.onSignIn.bind(this)}
-        />
-        <Button onClick={this.signOut.bind(this)}>Sign Out</Button>
-        <a href="/auth/google"> Sign In with Google</a>
- 
-      </Segment>
+      <Container>
+        <Grid>
+          <Grid.Row columns={3}>
+            <Grid.Column width={7}>
+              <Card>
+                <Form onSubmit={this.onSignIn}>
+                  <Header as='h1'>Sign In</Header>
+                  <Form.Input label='username' name='username' value={this.state.username} onChange={this.onChange} autoComplete='username' placeholder='username' />
+                  <Form.Input type='password' label='password' name='password' value={this.state.password} onChange={this.onChange} autoComplete='current-password' placeholder='password' />
+                  <Form.Button type='submit'>Sign In</Form.Button>
+                </Form>
+              </Card>
+            </Grid.Column>
+            <Grid.Column width={2}>
+              <Divider vertical>Or</Divider>
+            </Grid.Column>
+            <Grid.Column width={7}>
+              <Card>
+                <Form onSubmit={this.onSignUp}>
+                  <Header as='h1'>Sign Up</Header>
+                  <Form.Input label='username' name='username' value={this.state.username} onChange={this.onChange} autoComplete='username' placeholder='username' />
+                  <Form.Input type='password' label='password' name='password' value={this.state.password} onChange={this.onChange} autoComplete='new-password' placeholder='password' />
+                  <Form.Input type='password' label='confirm password' name='confirmpassword' value={this.state.Confirmpassword} onChange={this.onChange} autoComplete='new-password' placeholder='password' />
+                  <Form.Button type='submit'>Sign Up</Form.Button>
+                </Form>
+              </Card>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     );
   }
 }
 
 export default Login;
-
-
-/*        <Button primary fluid>Login</Button>
-        <Divider horizontal>Or</Divider>
-        <Button secondary fluid>Sign Up Now</Button>
-        */
