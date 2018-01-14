@@ -9,7 +9,8 @@ const TopicList = (props) => (
       <Topic {...props} 
         topic={topic} 
         key={index} 
-        upVote={props.upVote} 
+        upVote={props.upVote}
+        currentUser={props.currentUser} 
       />))}
   </Container>);
 

@@ -7,21 +7,24 @@ class UpvoteButton extends React.Component {
 
     this.state = {
       upvoteState: 'grey',
-      numberOfUpvotes: this.props.topic.upvotes
+      numberOfUpvotes: this.props.topic.upvotes,
+      currentUser: this.props.currentUser
     };
   }
 
   handleClick() {
     var newUpvoteState = 'grey';
+    var increment = -1;
     if (this.state.upvoteState === 'grey') {
       newUpvoteState = 'blue';
+      increment = 1;
     }
-    var IncrementUpvote = this.state.numberOfUpvotes + 1;
+    var IncrementUpvote = this.state.numberOfUpvotes + increment;
     this.setState ({
       upvoteState: newUpvoteState,
       numberOfUpvotes: IncrementUpvote
     });
-    this.props.upvote(this.props.topic._id)  
+    this.props.upvote(this.props.topic._id, this.state.currentUser.username)  
   }
 
   render() {
