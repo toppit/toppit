@@ -7,11 +7,48 @@
 const route = require('express').Router();
 const User = require('../db').User;
 const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const googleConfig = require('../config/googleAuth.config');
+const db = require('../db');
 
-
+// Local Strategy (Username & Password)
 passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(function (user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function (id, done) {
+  db.getUser({_id: id}, function (err, user) {
+    done(err, user);
+  });
+});
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
+// Google OAuth2 Strategy
+passport.use(new GoogleStrategy({
+  clientID: googleConfig.id,
+  clientSecret: googleConfig.secret,
+  callbackURL: "http://localhost:3000/auth/google/callback"
+},
+  function (accessToken, refreshToken, profile, done) {
+    console.log('/////////////////////////////////')
+    console.log('Got to here', profile);
+    console.log('/////////////////////////////////')    
+    db.findOrCreateUser({ googleId: profile.id }, {
+      fullName: profile.displayName,
+      photo: profile.photos[0].value
+    }, function (err, user) {
+      if (err) {
+        console.log(err.message);
+      }
+      console.log('User ', user);
+      return done(err, user);
+    });
+  }
+));
+
+
 
 route.post('/login', passport.authenticate('local'), (req, res) => {
   res.status(200).end(req.user.username);
@@ -35,11 +72,26 @@ route.post('/register', function (req, res, next) {
   });
 });
 
+
+
+
+//Google OAuth2 endpoints
+route.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+route.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function (req, res) {
+    console.log('About to redirect');
+    res.redirect('/');
+  });
+
+
+//Logout of current session
 route.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/login');
 });
-
 
 module.exports = route;
 

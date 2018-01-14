@@ -33,6 +33,7 @@ class SignIn extends React.Component {
         <Segment padded size='huge'>
           <Form error={this.props.error ? true : false} onSubmit={this.onSignIn}>
             <Header as='h1'>Sign In</Header>
+            <Button href='/auth/google' color='red'>Sign In with Google</Button>
             <Form.Input label='username' name='username' value={this.state.username} onChange={this.onChange} autoComplete='username' placeholder='username' />
             <Form.Input type='password' label='password' name='password' value={this.state.password} onChange={this.onChange} autoComplete='current-password' placeholder='password' />
             <Message
