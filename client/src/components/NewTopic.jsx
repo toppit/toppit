@@ -56,7 +56,9 @@ class NewTopic extends React.Component {
         headline: this.state.headline,
         description: this.state.description,
         emotion: this.state.emotion,
-        timeStamp: Date.now()
+        timeStamp: Date.now(),
+        authorId: this.props.user._id,
+        upvotes: 0
       });
     }
   }
