@@ -12,11 +12,13 @@ const GitHubStrategy = require('passport-github').Strategy;
 const db = require('../db');
 
 if (process.env.HEROKU_APP_NAME) {
+  console.log('Heroku App Name: ', process.env.HEROKU_APP_NAME);
   process.env.SERVER_IP = `https://${process.env.HEROKU_APP_NAME}`;
 }
 
 const port = 3000;
 const server = process.env.SERVER_IP || `http://localhost:${port}`;
+console.log('Server IP set to: ', server);
 // Local Strategy (Username & Password)
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
