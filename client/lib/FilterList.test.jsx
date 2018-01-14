@@ -23,18 +23,4 @@ describe('<FilterList />', () => {
     let component = render(<FilterList />);
     expect(component.children().children().length).toBe(9);
   })
-  it('should have options in dropdown', function() {
-    let component = render(<FilterList />);
-    expect(component.find('option').exists().toBe(true));
-  })
-  it('should have something or show something', () => {
-    let component = render(<FilterList />);
-    expect(component.instance).toBe(true);
-  });
-
-  it('should have something or show something', () => {
-    let component = shallow(<FilterList />);
-    console.log(component.instance());
-    expect(component.state).toBe(true);
-  });
 });

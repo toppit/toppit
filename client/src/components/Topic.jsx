@@ -21,10 +21,9 @@ class Topic extends React.Component {
   render () {
 
     return (
-      <Card fluid>
-        <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} />
-        <Card.Content description={this.props.topic.description} 
-        meta={moment(this.props.topic.timeStamp).fromNow()}/>
+      <Card color="teal" fluid>
+        <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} meta={moment(this.props.topic.timeStamp).fromNow()}/>
+        <Card.Content description={this.props.topic.description}/>
         <Card.Content extra>
         <UpvoteButton topic={this.props.topic} upvote={this.props.upVote} />
           &nbsp;
