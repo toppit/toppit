@@ -11,7 +11,6 @@ const db = require('../db');
 const passport = require('passport');
 
 
-
 app.use(morgan('tiny'));
 app.use(cookieParser());
 app.use(session({ 
@@ -91,3 +90,4 @@ app.use('/topic/:topicId', express.static(path.join(__dirname, '../client/dist')
 
 
 app.listen(port, () => console.log(`listening on port ${port}!`));
+

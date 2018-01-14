@@ -13,7 +13,6 @@ const db = require('../db');
 
 const port = 3000;
 const server = process.env.SERVER_IP || `http://localhost:${port}`;
-
 // Local Strategy (Username & Password)
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
