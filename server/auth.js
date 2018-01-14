@@ -11,8 +11,6 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 const db = require('../db');
 
-console.log('ENV Vars: ', process.env);
-
 if (process.env.HEROKU_APP_NAME) {
   console.log('Heroku App Name: ', process.env.HEROKU_APP_NAME);
   process.env.SERVER_IP = `https://${process.env.HEROKU_APP_NAME}`;

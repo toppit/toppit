@@ -7,16 +7,16 @@
       "required": true
     },
     "GOOGLE_ID": {
-      "require": true
+      "required": true
     },
     "GOOGLE_SECRET": {
-      "require": true
+      "required": true
     },
     "GITHUB_ID": {
-      "require": true
+      "required": true
     },
     "GITHUB_SECRET": {
-      "require": true
+      "required": true
     }
   },
   "formation": {
