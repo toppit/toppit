@@ -33,7 +33,7 @@ passport.deserializeUser(function (id, done) {
 });
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
-
+console.log('GOOGLE_ID ', process.env.GOOGLE_ID)
 // Google OAuth2 Strategy
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_ID || require('../config/google.config').id,
