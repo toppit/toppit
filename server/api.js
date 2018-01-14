@@ -34,7 +34,7 @@ api.get('/topic/:topicId', (req, res) => {
   console.log('Topic Id: ', req.params.topicId);
   db.getTopicById(req.params.topicId, (error, topic) => {
     if (error) {
-      console.log(err.message);
+      console.log(error.message);
       res.status(503).end();
       return;
     }
@@ -77,6 +77,15 @@ api.patch('/topic/:topicId', (req, res) => {
 
 //Post a comment to a topic
 api.post('/topic/:topicId', (req, res) => {
+  
+  db.saveComment(req.body, req.params.topicId, (error, result) => {
+    if (error) {
+      res.status(503).end();
+      return;
+    }
+    res.status(200); // .send(result);
+  });
+  res.sendStatus(201);
   // db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
   //   if (error) {
   //     res.status(503).end();
@@ -85,7 +94,6 @@ api.post('/topic/:topicId', (req, res) => {
   //   res.status(200).send(result);
 
   // });
-  res.sendStatus(201);
 });
 
 api.get('/user/:userId', (req, res) => {
