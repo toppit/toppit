@@ -22,6 +22,7 @@ const commentSchema = mongoose.Schema({
   text:       String,
   timeStamp:  Date,
   authorId:   { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  username:   String,
   upvotes:    Number
 });
 
@@ -38,10 +39,8 @@ userSchema.plugin(passportLocalMongoose);
 
 let Topic = db.model('Topic', topicSchema);
 let User = db.model('User', userSchema);
-
-//let Comment = db.model('Comment, commentSchema);
-//let List = db.model('List, listchema);
-//let User = db.model('User', userSchema);
+let Comment = db.model('Comment', commentSchema);
+//let List = db.model('List', listchema);
 //let Organization = db.model('Organization', sessionSchema);
 
 let getTopics = (callback) => {
@@ -89,23 +88,25 @@ let getSelectTopics = (query, callback) => {
 };
 
 let getTopicById = (topicId, callback) => {
-  Topic.findById(topicId, function(err, result) {
-    if (err) {
-      console.log(err.message);
-      callback(err, null);
-      return;
-    }
-    console.log('DB ', result);
-    callback(null, result);
-  });
+  // create reference from topic.commentId property to comment objects
+  Topic.
+    findById(topicId).
+    populate('commentId').
+    exec(function (err, topic) {
+      if (err) {
+        console.log(err.message);
+        callback(err, null);
+        return;
+      }
+      console.log('Topic Returned From DB: ', topic);
+      callback(null, topic);
+    });
 };
 
-// Save Topics to MongoDB
+// Save Topic to MongoDB
 let saveTopic = (topic, callback) => {
   let id = mongoose.Types.ObjectId();
-  // 'topics' is an array of objects
 
-  // for each topic object in topics array
   let newTopic = new Topic(topic);
   newTopic._id = id;
 
@@ -128,6 +129,48 @@ const updateVoteCount = (id, plusOrMinus, callback) => {
   });
 };
 
+// - Saves comment to Mongo DB
+let saveComment = (commentObj, topicId, callback) => {
+  let id = mongoose.Types.ObjectId();
+
+  let comment = new Comment({
+    _id:        id,
+    text:       commentObj.description,
+    timeStamp:  commentObj.timeStamp,
+    // authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
+    username:   commentObj.username,
+    upvotes:    commentObj.upvotes
+  });
+
+  // Add 'comment._id' to topic instance for comment-object reference
+  // - Find topic by topicId  
+  Topic.findById(topicId, function (err, doc){
+    if(err){
+      console.log(err);
+    } else {
+      // - Insert comment._id into Topic
+      doc.commentId.push(comment._id);      
+      // - Update Database
+      Topic.update({_id: topicId}, doc, function(err, raw) {
+        if (err) {
+          console.log(err);
+        }
+        console.log("Successful update of topic", raw);       
+      });
+    }
+  });
+
+  Comment.create(comment, (err, result) => {
+    if (err) {
+      console.log(err.message);
+      callback(err, null);
+    }
+    console.log("Comment Save Success");
+    callback(null, comment);
+  });
+};
+
+module.exports.saveComment = saveComment;
 module.exports.saveTopic = saveTopic;
 module.exports.getTopics = getTopics;
 module.exports.updateVoteCount = updateVoteCount;
