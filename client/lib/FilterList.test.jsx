@@ -1,9 +1,14 @@
 import React from 'react';
-import { shallow, render } from 'enzyme';
+import { shallow, mount, render } from 'enzyme';
 import FilterList from '../src/components/FilterList.jsx';
 
-
 describe('<FilterList />', () => {
+
+  var count = 0
+  let handleChange = () => {
+    return count++;
+  }
+
   it('should render a component FilterList', () => {
     let component = shallow(<FilterList />);
     expect(component).toHaveLength(1);
@@ -14,13 +19,20 @@ describe('<FilterList />', () => {
     expect(component.exists('.dropdown')).toBe(true);
   });
 
-  it('should render to static HTML', function() {
-    let component = render(<FilterList />)
-    expect(component.text()).toEqual('Filter TopicsNo Filter😃 happy🤩 impressed🤪 party😒 meh🤮 disgusted🤬 angry🤯 mindblown🤯 excited');
-  });
-
   it('should have length n for n number of emoji options', function() {
     let component = render(<FilterList />);
-    expect(component.children().children().length).toBe(9);
+    expect(component.find('.item').length).toBe(9);
+  })
+
+  it('should contain the option 🤯 excited', function() {
+    let component = mount(<FilterList />);
+    var items = component.find('.item');
+    expect(items.contains('🤯 excited')).toBe(true);
+  })
+
+  it('should trigger the onFilterChange function on click', function() {
+    let component = mount(<FilterList onFilterChange={handleChange}/>);
+    component.find('.item').first().simulate('click');
+    expect(count).toBe(1);
   })
 });
