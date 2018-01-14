@@ -9,6 +9,8 @@ const User = require('../db').User;
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const googleConfig = require('../config/googleAuth.config');
+const GitHubStrategy = require('passport-github').Strategy;
+const githubConfig = require('../config/github.config.js');
 const db = require('../db');
 
 // Local Strategy (Username & Password)
@@ -32,9 +34,6 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:3000/auth/google/callback"
 },
   function (accessToken, refreshToken, profile, done) {
-    console.log('/////////////////////////////////')
-    console.log('Got to here', profile);
-    console.log('/////////////////////////////////')    
     db.findOrCreateUser({ googleId: profile.id }, {
       fullName: profile.displayName,
       photo: profile.photos[0].value
@@ -42,8 +41,23 @@ passport.use(new GoogleStrategy({
       if (err) {
         console.log(err.message);
       }
-      console.log('User ', user);
       return done(err, user);
+    });
+  }
+));
+
+
+passport.use(new GitHubStrategy({
+  clientID: githubConfig.id,
+  clientSecret: githubConfig.secret,
+  callbackURL: "http://localhost:3000/auth/github/callback"
+},
+  function (accessToken, refreshToken, profile, cb) {
+    db.findOrCreateUser({ githubId: profile.id }, {
+      fullName: profile.displayName,
+      photo: profile.photos[0].value
+    }, function (err, user) {
+      return cb(err, user);
     });
   }
 ));
@@ -82,9 +96,20 @@ route.get('/auth/google',
 route.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
-    console.log('About to redirect');
     res.redirect('/');
   });
+
+
+route.get('/auth/github',
+  passport.authenticate('github'));
+
+route.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function (req, res) {
+    // Successful authentication, redirect home. 
+    res.redirect('/');
+  });
+
 
 
 //Logout of current session

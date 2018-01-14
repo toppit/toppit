@@ -26,3 +26,16 @@ body {
   border-bottom-color: rgb(33, 133, 208);
   border-bottom-style: solid;
 }
+
+.ui.google.plus.button {
+  margin-top: 5px;
+  margin-bottom: 10px
+}
+
+.ui.fluid.button.githublogin {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  background-color: #444;
+  color: 'white';
+}
+

@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema({
   username:    String,
   password:    String,
   googleId:    String,
+  githubId:    String,
   fullName:    String,
   photo:       String,
   topicId:     [{ type: mongoose.Schema.Types.ObjectId, ref: 'Topic' }],
@@ -72,14 +73,11 @@ let getUser = (query, callback) => {
 
 let findOrCreateUser = (query, attributes, callback) => {
   User.findOneAndUpdate(query, attributes, { upsert: true }, (err, user) => {
-    console.log(query);
-    console.log(attributes);
     if (err) {
       console.log(err.message);
       callback(err, null);
       return;
     }
-    console.log('Retrieved user ', user);
     callback(null, user);
   });
 }
@@ -114,7 +112,6 @@ let getTopicById = (topicId, callback) => {
         callback(err, null);
         return;
       }
-      console.log('Topic Returned From DB: ', topic);
       callback(null, topic);
     });
 };
