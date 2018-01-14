@@ -8,9 +8,9 @@ class UtilsBar extends React.Component {
     super(props);
 
     this.state = ({
-      filterBy: '',
-      sortBy: ''
-    })
+      filterBy: props.defaultFilter,
+      sortBy: props.defaultSort
+    });
   }
   
   onSortChange(sortBy) {
@@ -27,11 +27,15 @@ class UtilsBar extends React.Component {
     return (
       <Menu secondary>
         <Menu.Item position='right'>
-          <SortList  onSortChange={this.onSortChange.bind(this)}/>
+          <SortList  
+            defaultSort={this.props.defaultSort} 
+            onSortChange={this.onSortChange.bind(this)}/>
         </Menu.Item>
         <Menu.Menu>
           <Menu.Item>
-            <FilterList onFilterChange={this.onFilterChange.bind(this)}/>
+            <FilterList 
+              defaultFilter={this.props.defaultFilter}
+              onFilterChange={this.onFilterChange.bind(this)}/>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
