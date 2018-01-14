@@ -21,8 +21,11 @@ describe('<Topic />', () => {
   
   it('should dynamically render a topic headline', () => {
     let component = mount(<Topic topic={exampleData[0]}/>);
+    let componentTwo = mount(<Topic topic={exampleData[1]}/>);
     let headerElement = component.find('CardContent').first();
+    let headerElementTwo = componentTwo.find('CardContent').first();
     expect(headerElement.props().header).toBe('and another');
+    expect(headerElementTwo.props().header).toBe('Hiya');
   })
 
   it('should dynamically render 2 buttons when there is an emotion', () => {

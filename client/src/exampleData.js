@@ -8,7 +8,7 @@ let exampleData = [
   upvotes: 60,
   commentId: [] },
   { _id: '5a57b72f7089a32e05f3f6b6',
-  headline: 'and nother',
+  headline: 'Hiya',
   description: 'Hello',
   emotion: '',
   timeStamp: '2018-01-11T19:12:47.116Z',
