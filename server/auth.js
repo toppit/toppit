@@ -11,7 +11,6 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 const db = require('../db');
 
-console.log(process.env);
 if (process.env.HEROKU_APP_NAME) {
   console.log('Heroku App Name: ', process.env.HEROKU_APP_NAME);
   process.env.SERVER_IP = `https://${process.env.HEROKU_APP_NAME}`;
@@ -20,8 +19,6 @@ if (process.env.HEROKU_APP_NAME) {
 const port = 3000;
 const server = process.env.SERVER_IP || `http://localhost:${port}`;
 console.log('Server IP set to: ', server);
-console.log('GOOGLE_ID ', process.env.GOOGLE_ID)
-console.log('GITHUB_ID ', process.env.GITHUB_ID)
 // Local Strategy (Username & Password)
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
@@ -36,6 +33,8 @@ passport.deserializeUser(function (id, done) {
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
 // Google OAuth2 Strategy
+
+
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_ID || require('../config/google.config').id,
   clientSecret: process.env.GOOGLE_SECRET || require('../config/google.config').secret,
