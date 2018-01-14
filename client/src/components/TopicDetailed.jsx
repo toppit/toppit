@@ -12,7 +12,7 @@ class TopicDetailed extends React.Component {
     super(props);
 
     this.state = {
-      currentUser: this.props.currentUser.username,
+      currentUser: this.props.currentUser,
       topic: null,
       commentText: '',
       upvoteStateColor: 'grey'
@@ -46,7 +46,7 @@ class TopicDetailed extends React.Component {
 
   submitComment(commentText) {
     var newComment = {
-      username: this.state.currentUser,
+      username: this.state.currentUser.username,
       text: commentText,
       timeStamp: new Date()
     }

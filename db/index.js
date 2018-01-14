@@ -134,15 +134,14 @@ let saveTopic = (topic, callback) => {
 };
 
 const updateVoteCount = (id, plusOrMinus, currentUser, callback) => {
-console.log('id', id);
-console.log('currentUserobj', currentUser);
+
   Topic.update(
     {
       "_id": id,
-      "upvoteUsers": {"$ne": currentUser.id} 
+      "upvoteUsers": {"$ne": currentUser} 
     },
     {
-      '$push': {'likes': currentUser.id},
+      '$push': {'upvoteUsers': currentUser},
       '$inc': {'upvotes': 1}
     }, 
     (err, doc) => {
@@ -151,7 +150,6 @@ console.log('currentUserobj', currentUser);
         callback(err, null);
         return;
       }
-      console.log('doc??', doc)
       callback(null, doc)
     }
   )

@@ -30,14 +30,12 @@ api.get('/topics', (req, res) => {
 
 // Get an individual topic
 api.get('/topic/:topicId', (req, res) => {
-  console.log('Topic Id: ', req.params.topicId);
   db.getTopicById(req.params.topicId, (error, topic) => {
     if (error) {
       console.log(error.message);
       res.status(503).end();
       return;
     }
-    console.log('Topic: ', topic);
     res.status(200).send(topic);
   });
 });
@@ -45,7 +43,6 @@ api.get('/topic/:topicId', (req, res) => {
 
 // Create a new topic
 api.post('/topic', (req, res) => {
-  console.log('Creating new topic ', req.body);
 
   db.saveTopic(req.body, (error, result) => {
     if (error) {
@@ -61,13 +58,11 @@ api.post('/topic', (req, res) => {
 // Update a topic
 api.patch('/topic/:topicId', (req, res) => {
 
-
   db.updateVoteCount(req.params.topicId, req.body.upvotes, req.body.currentUser, (error, result) => {
     if (error) {
       res.status(503).end();
       return;
     }
-    console.log('resultsss, ', result)
     res.status(200).send(result);
 
   });

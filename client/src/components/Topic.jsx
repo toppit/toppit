@@ -19,7 +19,9 @@ colors[emojis[7].value] = 'purple';
 class Topic extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      currentUser: this.props.currentUser
+    }
     this.renderTopicDetailedView = this.renderTopicDetailedView.bind(this);
   }
   
@@ -40,7 +42,7 @@ class Topic extends React.Component {
           description={this.props.topic.description} 
           meta={moment(this.props.topic.timeStamp).fromNow()}/>
         <Card.Content extra>
-        <UpvoteButton topic={this.props.topic} upvote={this.props.upVote} currentUser={this.props.currentUser}/>
+        <UpvoteButton topic={this.props.topic} upvote={this.props.upVote} currentUser={this.state.currentUser}/>
           &nbsp;
           <Icon name='comments' />
           {this.props.topic.comments || 0} comments
