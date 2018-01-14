@@ -5,10 +5,10 @@ import {Container} from 'semantic-ui-react';
 
 const TopicList = (props) => (
   <Container>
-    {props.topicList.map((topic, index) => (
+    {props.topicList.map((topic) => (
       <Topic {...props} 
         topic={topic} 
-        key={index} 
+        key={topic._id} 
         upVote={props.upVote}
         currentUser={props.currentUser} 
       />))}
