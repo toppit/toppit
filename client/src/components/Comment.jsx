@@ -10,7 +10,7 @@ const MyComment = (props) => (
       <Comment.Metadata>
         <div>{props.comment.timestamp}</div>
       </Comment.Metadata>
-      <Comment.Text>{props.comment.description}</Comment.Text>
+      <Comment.Text>{props.comment.text}</Comment.Text>
     </Comment.Content>
   </Comment>
   )

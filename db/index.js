@@ -163,7 +163,7 @@ let saveComment = (commentObj, topicId, callback) => {
 
   let comment = new Comment({
     _id:        id,
-    text:       commentObj.description,
+    text:       commentObj.text,
     timeStamp:  commentObj.timeStamp,
     // authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
     username:   commentObj.username,

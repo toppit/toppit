@@ -23,11 +23,11 @@ class TopicDetailed extends React.Component {
     http.get(`/api/topic/${this.props.topicId}`)
 
       .then(({data}) => {
+        console.log('getting topic', data);
         this.setState({
           topic: data,
           commentText: '',
-          username: 'NathanForYou',
-          comments: []          
+          comments: data.commentId          
 
         });
       })
@@ -47,14 +47,15 @@ class TopicDetailed extends React.Component {
   submitComment(commentText) {
     var newComment = {
       username: this.state.currentUser,
-      description: commentText,
+      text: commentText,
       timeStamp: new Date()
     }
     //http request to database to add comment to topic
-    // http.get(`/api/topic/${this.props.topicId}`)
+
     http.post(`/api/topic/${this.props.topicId}`, newComment)
-      .then( () => {
-        console.log('success!')
+      .then( (result) => {
+        console.log('success!', result);
+        newComment.description = result.data.text;
       })
       .catch( (error) => {
         console.log(error)

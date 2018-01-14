@@ -82,17 +82,8 @@ api.post('/topic/:topicId', (req, res) => {
       res.status(503).end();
       return;
     }
-    res.status(200); // .send(result);
+    res.send(result); // .send(result);
   });
-  res.sendStatus(201);
-  // db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
-  //   if (error) {
-  //     res.status(503).end();
-  //     return;
-  //   }
-  //   res.status(200).send(result);
-
-  // });
 });
 
 api.get('/user/:userId', (req, res) => {
