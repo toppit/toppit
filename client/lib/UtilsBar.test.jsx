@@ -31,7 +31,6 @@ describe('<UtilsBar />', () => {
 
   it('should have a SortList component', () => {
     let component = mount(<UtilsBar />);
-    console.log(component.state());
     expect(component.containsMatchingElement(<SortList />)).toBe(true);
   })
 

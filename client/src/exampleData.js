@@ -1,6 +1,6 @@
-export const exampleData = [
+let exampleData = [
   { _id: '5a57b72f7089a32e05f3f6b6',
-  headline: 'and nother',
+  headline: 'and another',
   description: 'happy',
   emotion: '😃 happy',
   timeStamp: '2018-01-11T19:12:47.116Z',
@@ -9,8 +9,8 @@ export const exampleData = [
   commentId: [] },
   { _id: '5a57b72f7089a32e05f3f6b6',
   headline: 'and nother',
-  description: 'happy',
-  emotion: '😃 happy',
+  description: 'Hello',
+  emotion: '',
   timeStamp: '2018-01-11T19:12:47.116Z',
   __v: 0,
   upvotes: 60,
@@ -18,7 +18,7 @@ export const exampleData = [
   { _id: '5a57b72f7089a32e05f3f6b6',
   headline: 'and nother',
   description: 'happy',
-  emotion: '😃 happy',
+  emotion: '🤬 angry',
   timeStamp: '2018-01-11T19:12:47.116Z',
   __v: 0,
   upvotes: 60,
@@ -39,3 +39,5 @@ export const exampleData = [
   __v: 0,
   upvotes: 60,
   commentId: [] }]
+
+  export default exampleData;

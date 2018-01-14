@@ -11,7 +11,7 @@
     "start:debug": "nodemon --inspect server/index.js",
     "start": "node server/index.js",
     "react:dev": "webpack -d --watch",
-    "test": "jest",
+    "test": "jest --watch",
     "postinstall": "webpack -p"
   },
   "dependencies": {
