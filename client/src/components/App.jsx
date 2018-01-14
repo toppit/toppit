@@ -35,6 +35,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getAllTopics();
+    this.getCurrentUser();
   }
 
   getAllTopics() {
@@ -47,6 +48,21 @@ class App extends React.Component {
       .then(({ data }) => {
         this.setState({
           topicList: data
+        });
+      })
+
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
+  getCurrentUser() {
+    http.get('/api/user/current')
+
+      .then(({data}) => {
+        console.log('Current User ', data.username);
+        this.setState({ 
+          currentUser: data 
         });
       })
 
@@ -149,6 +165,7 @@ class App extends React.Component {
           <Route path='/share' render={(props) => (
             <Container>
               <NewTopic {...props}
+                currentUser={this.state.currentUser}
                 onNewTopic={this.onNewTopic}
                 active={this.state.displayNewTopic}
                 closeNewTopic={this.closeNewTopic}
@@ -159,13 +176,20 @@ class App extends React.Component {
             <div>
               <Container>
                 <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
-                <TopicList {...props} upVote={this.upVote} onDetailedTopic={this.onDetailedTopic} topicList={this.state.topicList} />
+                <TopicList {...props} 
+                  currentUser={this.state.currentUser}
+                  upVote={this.upVote} 
+                  onDetailedTopic={this.onDetailedTopic} 
+                  topicList={this.state.topicList} />
               </Container>
             </div>
           )}/>
           <Route path='/topic/:topicId' render={(props) => (
             <Container>
-              <TopicDetailed {...props} topicId={props.match.params.topicId} upvote={this.upVote}/>
+              <TopicDetailed {...props} 
+                currentUser={this.state.currentUser}
+                topicId={props.match.params.topicId} 
+                upvote={this.upVote}/>
             </Container>
           )}/>
         </Switch>    

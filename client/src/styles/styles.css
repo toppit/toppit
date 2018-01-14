@@ -20,3 +20,9 @@ body {
   font-style: 'italic';
   color: '#2185d0';
 }
+
+.ui.menu {
+  border-bottom: 2px;
+  border-bottom-color: rgb(33, 133, 208);
+  border-bottom-style: solid;
+}
