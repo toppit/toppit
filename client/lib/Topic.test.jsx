@@ -18,6 +18,15 @@ describe('<Topic />', () => {
     let component = shallow(<Topic topic={exampleData[0]}/>);
     expect(component.exists('Card')).toBe(true);
   })
+
+  it('should dynamically render a Card color', () => {
+    let component = mount(<Topic topic={exampleData[0]}/>);
+    let componentTwo = mount(<Topic topic={exampleData[2]}/>);
+    let headerElement = component.find('Card').first();
+    let headerElementTwo = componentTwo.find('Card').first();
+    expect(headerElement.props().color).toBe('red');
+    expect(headerElementTwo.props().color).toBe('blue');
+  })
   
   it('should dynamically render a topic headline', () => {
     let component = mount(<Topic topic={exampleData[0]}/>);
