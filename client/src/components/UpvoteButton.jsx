@@ -8,18 +8,45 @@ class UpvoteButton extends React.Component {
     this.state = {
       upvoteState: 'grey',
       numberOfUpvotes: this.props.topic.upvotes,
-      currentUser: this.props.currentUser
+      currentUser: this.props.currentUser,
+      topic: this.props.topic
     };
   }
 
-  handleClick() {
-    var newUpvoteState = 'grey';
-    var increment = -1;
-    if (this.state.upvoteState === 'grey') {
+  componentDidMount () {
+    this.setState({
+      currentUser: this.props.currentUser
+    })
+    this.checkifUserHasUpvoted();
+  }
+  
+  checkifUserHasUpvoted () {
+    var newUpvoteState = 'grey'
+    console.log('user array', this.props.topic.upvoteUsers)
+    console.log('currentUSer in upvote component', this.props.currentUser.username)
+    console.log('you in upvotusersarray', this.props.topic.upvoteUsers.includes(this.state.currentUser.username))
+    if (this.props.topic.upvoteUsers.includes(this.props.currentUser.username)) {
+      console.log('change me blue')
       newUpvoteState = 'blue';
-      increment = 1;
     }
-    var IncrementUpvote = this.state.numberOfUpvotes + increment;
+    this.setState({
+      upvoteState: newUpvoteState,
+      numberOfUpvotes: this.props.topic.upvotes
+    }) 
+
+  }
+
+
+  handleClick() {
+
+    var newUpvoteState = 'blue';
+    var localIncrement = 0;
+    if (this.state.upvoteState === 'grey') {
+      localIncrement = 1;
+    }
+
+    var IncrementUpvote = this.state.numberOfUpvotes + localIncrement;
+
     this.setState ({
       upvoteState: newUpvoteState,
       numberOfUpvotes: IncrementUpvote
