@@ -15,7 +15,7 @@ const topicSchema = mongoose.Schema({
   commentId:     [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   authorId:      { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   emotion:       String
-  });
+});
 
 const commentSchema = mongoose.Schema({
   _id:        mongoose.Schema.Types.ObjectId,
@@ -29,7 +29,10 @@ const commentSchema = mongoose.Schema({
 const userSchema = mongoose.Schema({
   username:    String,
   password:    String,
+  googleId:    String,
+  githubId:    String,
   fullName:    String,
+  photo:       String,
   topicId:     [{ type: mongoose.Schema.Types.ObjectId, ref: 'Topic' }],
   listId:      Number,
   commentId:   [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
@@ -68,6 +71,17 @@ let getUser = (query, callback) => {
   });
 };
 
+let findOrCreateUser = (query, attributes, callback) => {
+  User.findOneAndUpdate(query, attributes, { new: true, upsert: true }, (err, user) => {
+    if (err) {
+      console.log(err.message);
+      callback(err, null);
+      return;
+    }
+    callback(null, user);
+  });
+}
+
 let getSelectTopics = (query, callback) => {
   var sortParams = {};
   var filterParams = {};
@@ -98,7 +112,6 @@ let getTopicById = (topicId, callback) => {
         callback(err, null);
         return;
       }
-      console.log('Topic Returned From DB: ', topic);
       callback(null, topic);
     });
 };
@@ -178,6 +191,7 @@ module.exports.getSelectTopics = getSelectTopics;
 module.exports.getTopicById = getTopicById;
 module.exports.User = User;
 module.exports.getUser = getUser;
+module.exports.findOrCreateUser = findOrCreateUser;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;
