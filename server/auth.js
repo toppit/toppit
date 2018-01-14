@@ -20,6 +20,7 @@ if (process.env.HEROKU_APP_NAME) {
 const port = 3000;
 const server = process.env.SERVER_IP || `http://localhost:${port}`;
 console.log('Server IP set to: ', server);
+console.log('GOOGLE_ID ', process.env.GOOGLE_ID)
 // Local Strategy (Username & Password)
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
@@ -33,7 +34,6 @@ passport.deserializeUser(function (id, done) {
 });
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
-console.log('GOOGLE_ID ', process.env.GOOGLE_ID)
 // Google OAuth2 Strategy
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_ID || require('../config/google.config').id,
