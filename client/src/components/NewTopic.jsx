@@ -1,17 +1,8 @@
 import React from 'react';
 import {Form, Dimmer, Button, Segment, Container, Grid, Header, Icon} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
+import emojis from '../emojis';
 
-const options = [
-  { key: '1', text: '😃 happy', value: '😃 happy' },
-  { key: '2', text: '🤩 impressed', value: '🤩 impressed' },
-  { key: '3', text: '🤪 party', value: '🤪 party' },
-  { key: '4', text: '😒 meh', value: '😒 meh' },
-  { key: '5', text: '🤮 disgusted', value: '🤮 disgusted' },
-  { key: '6', text: '🤬 angry', value: '🤬 angry' },
-  { key: '7', text: '🤯 mindblown', value: '🤯 mindblown' },
-  { key: '8', text: '🤯 excited', value: '🤯 excited' }
-];
 
 class NewTopic extends React.Component {
   constructor(props) {
@@ -49,6 +40,7 @@ class NewTopic extends React.Component {
     console.log('Description ', this.state.description);
     console.log('Emotion', this.state.emotion);
 
+    console.log(this.props.currentUser);
     if (this.state.headline.length > 0 && this.state.description.length > 0) {
       console.log('On New Topic');
       this.props.history.push('/');
@@ -56,7 +48,9 @@ class NewTopic extends React.Component {
         headline: this.state.headline,
         description: this.state.description,
         emotion: this.state.emotion,
-        timeStamp: Date.now()
+        timeStamp: Date.now(),
+        authorId: this.props.currentUser._id,
+        upvotes: 0
       });
     }
   }
@@ -95,7 +89,7 @@ class NewTopic extends React.Component {
                     <Form.Input label='Topic Headline' name='headline' onChange={this.onChange} value={this.state.headline} placeholder='Enter the headline of your topic' />
                     <Form.TextArea label='Short Description' name='description' onChange={this.onChange} value={this.state.description} placeholder='Tell us a little more about your idea' />
                     <Form.Group inline>
-                      <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={options} placeholder='Emotion' />
+                      <Form.Select label="I'm feeling ..." name='emotion' onChange={this.onEmotion} options={emojis} placeholder='Emotion' />
                       <Form.Button>Submit</Form.Button>
                     </Form.Group>
                   </Form>
