@@ -4,7 +4,7 @@
   },
   "env": {
     "HEROKU_APP_NAME": {
-      "require": true
+      "required": true
     },
     "GOOGLE_ID": {
       "require": true
