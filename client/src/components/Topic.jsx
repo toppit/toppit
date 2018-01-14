@@ -4,6 +4,17 @@ import http from 'axios';
 import TopicDetailed from './TopicDetailed.jsx';
 import UpvoteButton from './UpvoteButton.jsx';
 import moment from 'moment';
+import emojis from '../emojis';
+
+var colors = {};
+colors[emojis[0].value] = 'red';
+colors[emojis[1].value] = 'orange';
+colors[emojis[2].value] = 'olive';
+colors[emojis[3].value] = 'green';
+colors[emojis[4].value] = 'teal';
+colors[emojis[5].value] = 'blue';
+colors[emojis[6].value] = 'violet';
+colors[emojis[7].value] = 'purple';
 
 class Topic extends React.Component {
   constructor(props) {
@@ -20,18 +31,21 @@ class Topic extends React.Component {
 
   render () {
 
+    let color = colors[this.props.topic.emotion];
+
     return (
-      <Card color="teal" fluid>
-        <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} meta={moment(this.props.topic.timeStamp).fromNow()}/>
-        <Card.Content description={this.props.topic.description}/>
+      <Card color={color} fluid>
+        <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} />
+        <Card.Content 
+          description={this.props.topic.description} 
+          meta={moment(this.props.topic.timeStamp).fromNow()}/>
         <Card.Content extra>
-        <UpvoteButton topic={this.props.topic} upvote={this.props.upVote} />
+          <UpvoteButton 
+            topic={this.props.topic} upvote={this.props.upVote} />
           &nbsp;
-          <a onClick={this.renderTopicDetailedView}>
-            <Icon name='comments'/>
-            {this.props.topic.comments || 0} comments
-          </a>
-          &nbsp;&nbsp;
+          <Icon name='comments' />
+          {this.props.topic.comments || 0} comments
+            &nbsp;&nbsp;
           {this.props.topic.emotion ?
             <Button compact color="blue" content={this.props.topic.emotion}/> : ''}
         </Card.Content>
