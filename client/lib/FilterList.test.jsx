@@ -14,23 +14,23 @@ describe('<FilterList />', () => {
     expect(component).toHaveLength(1);
   })
 
-  it('should render a dropdown element', function() {
+  it('should render a dropdown element', () => {
     let component = shallow(<FilterList />);
-    expect(component.exists('.dropdown')).toBe(true);
+    expect(component.exists('dropdown')).toBe(true);
   });
 
-  it('should have length n for n number of emoji options', function() {
+  it('should have length n for n number of emoji options', () => {
     let component = render(<FilterList />);
     expect(component.find('.item').length).toBe(9);
   })
 
-  it('should contain the option 🤯 excited', function() {
+  it('should contain the option 🤯 excited', () => {
     let component = mount(<FilterList />);
     var items = component.find('.item');
     expect(items.contains('🤯 excited')).toBe(true);
   })
 
-  it('should trigger the onFilterChange function on click', function() {
+  it('should trigger the onFilterChange function on click', () => {
     let component = mount(<FilterList onFilterChange={handleChange}/>);
     component.find('.item').first().simulate('click');
     expect(count).toBe(1);
