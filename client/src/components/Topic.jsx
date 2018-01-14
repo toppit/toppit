@@ -40,8 +40,7 @@ class Topic extends React.Component {
           description={this.props.topic.description} 
           meta={moment(this.props.topic.timeStamp).fromNow()}/>
         <Card.Content extra>
-          <UpvoteButton 
-            topic={this.props.topic} upvote={this.props.upVote} />
+        <UpvoteButton topic={this.props.topic} upvote={this.props.upVote} currentUser={this.props.currentUser}/>
           &nbsp;
           <Icon name='comments' />
           {this.props.topic.comments || 0} comments

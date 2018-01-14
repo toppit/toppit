@@ -12,6 +12,7 @@ class TopicDetailed extends React.Component {
     super(props);
 
     this.state = {
+      currentUser: this.props.currentUser.username,
       topic: null,
       commentText: '',
       upvoteStateColor: 'grey'
@@ -45,7 +46,7 @@ class TopicDetailed extends React.Component {
 
   submitComment(commentText) {
     var newComment = {
-      username: this.state.username,
+      username: this.state.currentUser,
       description: commentText,
       timeStamp: new Date()
     }
@@ -80,7 +81,7 @@ class TopicDetailed extends React.Component {
             <Card.Content header={topic.headline} meta={moment(topic.timeStamp).fromNow()}/>
             <Card.Content description={topic.description} />
             <Card.Content extra>
-            <UpvoteButton topic={topic} upvote={this.props.upvote} />            
+            <UpvoteButton topic={topic} upvote={this.props.upvote} currentUser={this.state.currentUser}/>            
               <Icon name='comments' />
               {this.state.comments.length || 0} comments
               &nbsp;&nbsp;

@@ -14,8 +14,9 @@ const topicSchema = mongoose.Schema({
   upvotes:       Number,
   commentId:     [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   authorId:      { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  emotion:       String
-});
+  emotion:       String,
+  upvoteUsers:   []
+  });
 
 const commentSchema = mongoose.Schema({
   _id:        mongoose.Schema.Types.ObjectId,
@@ -132,14 +133,28 @@ let saveTopic = (topic, callback) => {
   });
 };
 
-const updateVoteCount = (id, plusOrMinus, callback) => {
-  Topic.findOneAndUpdate({_id: id}, {$inc: {'upvotes': plusOrMinus} }, {'new': true}, (err, doc) => {
-    if (err) {
-      callback(err, null);
-      return;
+const updateVoteCount = (id, plusOrMinus, currentUser, callback) => {
+console.log('id', id);
+console.log('currentUserobj', currentUser);
+  Topic.update(
+    {
+      "_id": id,
+      "upvoteUsers": {"$ne": currentUser.id} 
+    },
+    {
+      '$push': {'likes': currentUser.id},
+      '$inc': {'upvotes': 1}
+    }, 
+    (err, doc) => {
+      if (err) {
+        console.log(err)
+        callback(err, null);
+        return;
+      }
+      console.log('doc??', doc)
+      callback(null, doc)
     }
-    callback(null, doc);
-  });
+  )
 };
 
 // - Saves comment to Mongo DB

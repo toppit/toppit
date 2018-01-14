@@ -61,11 +61,13 @@ api.post('/topic', (req, res) => {
 // Update a topic
 api.patch('/topic/:topicId', (req, res) => {
 
-  db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
+
+  db.updateVoteCount(req.params.topicId, req.body.upvotes, req.body.currentUser, (error, result) => {
     if (error) {
       res.status(503).end();
       return;
     }
+    console.log('resultsss, ', result)
     res.status(200).send(result);
 
   });

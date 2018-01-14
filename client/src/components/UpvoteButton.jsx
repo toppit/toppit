@@ -7,7 +7,8 @@ class UpvoteButton extends React.Component {
 
     this.state = {
       upvoteState: 'grey',
-      numberOfUpvotes: this.props.topic.upvotes
+      numberOfUpvotes: this.props.topic.upvotes,
+      currentUser: this.props.currentUser
     };
   }
 
@@ -21,7 +22,7 @@ class UpvoteButton extends React.Component {
       upvoteState: newUpvoteState,
       numberOfUpvotes: IncrementUpvote
     });
-    this.props.upvote(this.props.topic._id)  
+    this.props.upvote(this.props.topic._id, this.state.currentUser)  
   }
 
   render() {

@@ -139,9 +139,11 @@ class App extends React.Component {
     });
   }
 
-  upVote (topicId) {
+  upVote (topicId, currentUser) {
+    console.log('upvote stuff', currentUser);
     http.patch(`/api/topic/${topicId}`, {
-      upvotes: 1
+      upvotes: 1,
+      currentUser: currentUser
     })      
       .then( ({data}) => {
         // function to be implemented to get all topics
