@@ -1,10 +1,11 @@
 import React from 'react';
 import {Container, Header, Card, Icon, Button, Form} from 'semantic-ui-react';
 import http from 'axios';
-import CommentList from './CommentList.jsx'
-import UpvoteButton from './UpvoteButton.jsx'
-import {exampleCommentData} from '../exampleData.js'
-import {exampleData} from '../exampleData.js' 
+import CommentList from './CommentList.jsx';
+import UpvoteButton from './UpvoteButton.jsx';
+import {exampleCommentData} from '../exampleData.js';
+import {exampleData} from '../exampleData.js';
+import moment from 'moment';
 
 class TopicDetailed extends React.Component {
   constructor(props) {
@@ -70,14 +71,13 @@ class TopicDetailed extends React.Component {
     if (!this.state.topic) {
       return null;
     }
-
     const {topic} = this.state;
 
     return (
       <div>
         <Container>      
-          <Card fluid>
-            <Card.Content header={topic.headline} />
+          <Card color="teal" fluid>
+            <Card.Content header={topic.headline} meta={moment(topic.timeStamp).fromNow()}/>
             <Card.Content description={topic.description} />
             <Card.Content extra>
             <UpvoteButton topic={topic} upvote={this.props.upvote} />            

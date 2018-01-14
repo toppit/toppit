@@ -11,7 +11,7 @@
     "start:debug": "nodemon --inspect server/index.js",
     "start": "node server/index.js",
     "react:dev": "webpack -d --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "postinstall": "webpack -p"
   },
   "dependencies": {
@@ -45,12 +45,19 @@
     "webpack": "^3.10.0"
   },
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor.git"
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor.git",
+    "jest": "^22.0.6"
   },
   "babel": {
     "presets": [
-      "es2015"
+      "es2015",
+      "react"
     ]
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/client/lib/setupTests.js"
   },
   "version": "0.0.1",
   "main": "server/index.js",
