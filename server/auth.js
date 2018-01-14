@@ -43,7 +43,7 @@ passport.use(new GoogleStrategy({
       photo: profile.photos[0].value
     }, function (err, user) {
       if (err) {
-        console.log(err.message);
+        console.log('Error: ', err.message);
       }
       return done(err, user);
     });

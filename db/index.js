@@ -72,7 +72,7 @@ let getUser = (query, callback) => {
 };
 
 let findOrCreateUser = (query, attributes, callback) => {
-  User.findOneAndUpdate(query, attributes, { upsert: true }, (err, user) => {
+  User.findOneAndUpdate(query, attributes, { new: true, upsert: true }, (err, user) => {
     if (err) {
       console.log(err.message);
       callback(err, null);

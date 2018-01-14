@@ -6,12 +6,11 @@ const db = require('../db');
 api.get('/topics', (req, res) => {
 
   if (Object.keys(req.query).length) {
-    console.log(req.query);
     
     db.getSelectTopics(req.query, (error, result) => {
       if (error) {
         res.status(503).end();
-        console.log(error.message);
+        console.log('Error: ', error.message);
         return;
       }
       res.status(200).send(result);
@@ -20,7 +19,7 @@ api.get('/topics', (req, res) => {
     db.getTopics((error, result) => {
       if (error) {
         res.status(503).end();
-        console.log(error.message);
+        console.log('Error: ', error.message);
         return;
       }
       res.status(200).send(result);
@@ -46,12 +45,12 @@ api.get('/topic/:topicId', (req, res) => {
 
 // Create a new topic
 api.post('/topic', (req, res) => {
-  console.log(req.body);
+  console.log('Creating new topic ', req.body);
 
   db.saveTopic(req.body, (error, result) => {
     if (error) {
       res.status(503).end();
-      console.log(error.message);
+      console.log('Error: ', error.message);
       return;
     }
     res.status(200).send(result);
@@ -61,8 +60,6 @@ api.post('/topic', (req, res) => {
 
 // Update a topic
 api.patch('/topic/:topicId', (req, res) => {
-  console.log('req body', req.body);
-  console.log(req.params);
 
   db.updateVoteCount(req.params.topicId, req.body.upvotes, (error, result) => {
     if (error) {
@@ -100,7 +97,7 @@ api.get('/user/:userId', (req, res) => {
 
   let query = {};
   if (req.params.userId === 'current') {
-    query.username = req.session.passport.user;
+    query._id = req.session.passport.user;
   } else {
     query[Object.keys(req.params.userId)[0]] = req.params.userId;
   }
@@ -108,10 +105,9 @@ api.get('/user/:userId', (req, res) => {
   db.getUser(query, (err, user) => {
     if (err) {
       res.status(400).send('Unable to retrieve user');
-      console.log(err.message);
+      console.log('Error: ', err.message);
       return;
     }
-    console.log(user);
 
     res.status(200).send(user);
   });
