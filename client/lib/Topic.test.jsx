@@ -59,7 +59,7 @@ describe('<Topic />', () => {
   })
 
   it('should dynamically render an upvote button you can click', () => {
-    let component = mount(<Topic topic={exampleData[0]} upVote={clickHandler}/>);
+    let component = mount(<Topic topic={exampleData[0]} upVote={clickHandler} currentUser={'Jimmy'}/>);
     let button = component.find('Button').at(0);
     button.simulate('click');
     expect(count).toBe(1);
