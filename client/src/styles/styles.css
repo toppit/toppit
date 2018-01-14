@@ -2,6 +2,14 @@ body {
   background-color: #f9f9f9
 }
 
+div#app {
+  height: 100%;
+}
+
+div.loginpage {
+  background-image: url(./background.jpg);
+  height: 100%;
+}
 .ui.menu.nav {
   border-bottom: 1px solid #2185d0;
 }

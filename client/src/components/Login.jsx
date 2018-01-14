@@ -66,7 +66,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='loginpage'>
         <Menu className='nav'>
           <Menu.Header className='toppit-logo' as='h1'>Toppit</Menu.Header>
         </Menu>
