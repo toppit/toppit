@@ -7,7 +7,6 @@ import emojis from '../emojis';
 class NewTopic extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       headline: '',
       description: '',
@@ -36,13 +35,7 @@ class NewTopic extends React.Component {
 
   onSubmit(e, { value }) {
 
-    console.log('Headline: ', this.state.headline);
-    console.log('Description ', this.state.description);
-    console.log('Emotion', this.state.emotion);
-
-    console.log(this.props.currentUser);
     if (this.state.headline.length > 0 && this.state.description.length > 0) {
-      console.log('On New Topic');
       this.props.history.push('/');
       this.props.onNewTopic({
         headline: this.state.headline,
@@ -57,7 +50,6 @@ class NewTopic extends React.Component {
     
 
   render() {
-    console.log(this.state.headline);
     return (
       <Dimmer.Dimmable as={Form} blurring dimmed={this.props.active}>
         <Dimmer active={this.props.active} inverted page>

@@ -121,11 +121,7 @@ class App extends React.Component {
     http.post('/api/topic', topic)
 
       .then(({data}) => {
-        let list = this.state.topicList;
-        list.push(data);
-        this.setState({
-          topicList: list
-        });
+        this.getSelectTopics();
       })
 
       .catch((err) => {
