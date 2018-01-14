@@ -11,6 +11,10 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 const db = require('../db');
 
+if (process.env.HEROKU_APP_NAME) {
+  process.env.SERVER_IP = `https://${process.env.HEROKU_APP_NAME}`;
+}
+
 const port = 3000;
 const server = process.env.SERVER_IP || `http://localhost:${port}`;
 // Local Strategy (Username & Password)

@@ -3,6 +3,21 @@
   "scripts": {
   },
   "env": {
+    "HEROKU_APP_NAME": {
+      "require": true
+    },
+    "GOOGLE_ID": {
+      "require": true
+    },
+    "GOOGLE_SECRET": {
+      "require": true
+    },
+    "GITHUB_ID": {
+      "require": true
+    },
+    "GITHUB_SECRET": {
+      "require": true
+    }
   },
   "formation": {
   },
