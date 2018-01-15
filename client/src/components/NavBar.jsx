@@ -55,8 +55,8 @@ export default class NavBar extends React.Component {
     return (
       <Menu attached='top' className='nav'>
         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.onHome} >
-                    <img className="logo" src={Logo} />
-          </Menu.Item>
+            <img className="logo" src={Logo} />
+        </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
             <Button primary onClick={this.onNewTopic}>Create Topic</Button>
