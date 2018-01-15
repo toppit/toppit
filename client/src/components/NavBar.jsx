@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Menu, Image, Button, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import Logo from '../images/logo.png';
 
 import defaultPhoto from '../images/defaultPhoto.jpg';
 
@@ -46,7 +47,9 @@ export default class NavBar extends React.Component {
 
     return (
       <Menu attached='top' className='nav'>
-        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.onHome} />
+        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.onHome} >
+                    <img className="logo" src={Logo} />
+          </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
             <Button primary onClick={this.onNewTopic}>Create Topic</Button>

@@ -7,7 +7,7 @@ div#app {
 }
 
 div.loginpage {
-  background-image: url(./background.jpg);
+  background-image: url(../images/bg.png);
   height: 100%;
 }
 .ui.menu.nav {
@@ -47,3 +47,54 @@ div.loginpage {
   color: 'white';
 }
 
+.logo {
+  width: 100px;
+}
+
+.ui.menu .item>img:not(.ui) {
+    display: inline-block;
+    vertical-align: middle;
+    margin: -.3em 0;
+    width: 100px;
+}
+
+.ui.menu .item {
+    position: relative;
+    vertical-align: middle;
+    line-height: 1;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: 0 0;
+    padding: 5px;
+    text-transform: none;
+    color: rgba(0,0,0,.87);
+    font-weight: 400;
+    -webkit-transition: background .1s ease,box-shadow .1s ease,color .1s ease;
+    transition: background .1s ease,box-shadow .1s ease,color .1s ease;
+}
+
+.ui.icon.header {
+    display: inline-block;
+    text-align: center;
+    margin: 2rem 0 1rem;
+    padding-left: 19%;
+}
+
+.ui.grid>.row>[class*="twelve wide"].column, .ui.grid>[class*="twelve wide"].column {
+    width: 75%!important;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.ui.inverted.dimmer>.content>* {
+    background-color: #f9f9f9;
+    color: #fff;
+}
