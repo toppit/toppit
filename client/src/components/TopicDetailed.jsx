@@ -1,11 +1,13 @@
 import React from 'react';
-import {Container, Header, Card, Icon, Button, Form} from 'semantic-ui-react';
+import {Container, Item, Header, Card, Icon, Button, Form} from 'semantic-ui-react';
 import http from 'axios';
 import CommentList from './CommentList.jsx';
 import UpvoteButton from './UpvoteButton.jsx';
 import {exampleCommentData} from '../exampleData.js';
 import {exampleData} from '../exampleData.js';
 import moment from 'moment';
+
+
 
 class TopicDetailed extends React.Component {
   constructor(props) {
@@ -46,9 +48,10 @@ class TopicDetailed extends React.Component {
 
   submitComment(commentText) {
     var newComment = {
-      username: this.state.currentUser.username,
+      authorId: this.state.currentUser._id,
       text: commentText,
-      timeStamp: new Date()
+      timeStamp: new Date(),
+      upvotes: 0
     }
     //http request to database to add comment to topic
 
@@ -77,7 +80,7 @@ class TopicDetailed extends React.Component {
 
     return (
       <div>
-        <Container>      
+        <Container className='detailedtopic'>      
           <Card color="teal" fluid>
             <Card.Content header={topic.headline} meta={moment(topic.timeStamp).fromNow()}/>
             <Card.Content description={topic.description} />
@@ -96,12 +99,16 @@ class TopicDetailed extends React.Component {
           <CommentList 
           handleCommentSubmitClick= {this.submitComment.bind(this)}
           comments={this.state.comments}/>
-        </div>        
-        <Form  reply>
-          <Form.TextArea value={this.state.commentText} onChange={this.handleInputText.bind(this)}/>
-          <Button 
-          onClick={ () => this.submitComment(this.state.commentText) }content="Add Reply" labelPosition='left' icon='edit' primary />
-        </Form>    
+        </div> 
+        <Container className='newcommentcontainer' text>
+          <Item>
+            <Form  reply>
+              <Form.TextArea value={this.state.commentText} onChange={this.handleInputText.bind(this)}/>
+              <Button 
+              onClick={ () => this.submitComment(this.state.commentText) }content="Add Reply" labelPosition='left' icon='edit' primary />
+            </Form>
+          </Item>   
+        </Container> 
       </div>  
     );
   }
