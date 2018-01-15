@@ -10,6 +10,7 @@ pids
 *.seed
 
 # Config Files
+config/
 config/google.config.js
 config/facebookAuth.config.js
 config/github.config.js

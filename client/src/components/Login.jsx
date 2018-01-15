@@ -3,7 +3,7 @@ import { Segment, Button, Divider, Menu, Form, Header, Container, Card, Grid } f
 import http from 'axios';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
-
+import Logo from '../images/logo.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -67,8 +67,10 @@ class Login extends React.Component {
   render() {
     return (
       <div className='loginpage'>
-        <Menu className='nav'>
-          <Menu.Header className='toppit-logo' as='h1'>Toppit</Menu.Header>
+        <Menu>
+          <Menu.Item href='/login' >
+            <img className="logo" src={Logo} />
+          </Menu.Item>
         </Menu>
         <Container>
           <Grid>
