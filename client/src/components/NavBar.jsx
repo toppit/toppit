@@ -1,12 +1,16 @@
 import React from 'react';
-import { Input, Menu, Button } from 'semantic-ui-react';
+import { Input, Menu, Image, Button, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+
+import defaultPhoto from '../images/defaultPhoto.jpg';
 
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { activeItem: 'home' };
+    this.state = { 
+      activeItem: 'home',
+    };
 
     this.handleItemClick = (e, { name }) => {
       this.setState({ activeItem: name });
@@ -26,12 +30,22 @@ export default class NavBar extends React.Component {
     this.props.createNewTopic();
   }
 
+ 
+
 
   render() {
     const { activeItem } = this.state;
+    let name = (this.props.currentUser && (this.props.currentUser.fullName || this.props.currentUser.username) || '');
+    let photoUrl = (this.props.currentUser && this.props.currentUser.photo) || defaultPhoto;
+
+    const trigger = (
+      <span>
+        <Image avatar src={photoUrl} /> {name}
+      </span>
+    )
 
     return (
-      <Menu className='nav'>
+      <Menu attached='top' className='nav'>
         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.onHome} />
         <Menu.Menu position='right'>
           <Menu.Item>
@@ -40,7 +54,11 @@ export default class NavBar extends React.Component {
           <Menu.Item>
             <Input icon='search' placeholder='Search...' />
           </Menu.Item>
-          <Menu.Item href='/logout' name='logout' active={activeItem === 'logout'} />
+          <Dropdown trigger={trigger} item simple>
+              <Dropdown.Menu>
+              <Dropdown.Item as='a' href='/login' >Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
         </Menu.Menu>
       </Menu>
     );

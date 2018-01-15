@@ -156,9 +156,14 @@ class App extends React.Component {
   }  
 
   render() {
+    console.log('Current User ', this.state.currentUser);
     return (
       <div className='mainapp'>
-        <NavBar history={this.props.history} home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
+        <NavBar 
+          currentUser={this.state.currentUser}
+          history={this.props.history} 
+          home={this.getAllTopics} 
+          createNewTopic={this.createNewTopic}/>
         <Switch>
           <Route path='/share' render={(props) => (
             <Container>
