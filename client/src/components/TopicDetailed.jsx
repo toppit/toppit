@@ -1,13 +1,32 @@
 import React from 'react';
-import {Container, Item, Header, Card, Icon, Button, Form} from 'semantic-ui-react';
+import {Container, Item, Header, Grid, Image, Card, Icon, Button, Form} from 'semantic-ui-react';
 import http from 'axios';
 import CommentList from './CommentList.jsx';
 import UpvoteButton from './UpvoteButton.jsx';
 import {exampleCommentData} from '../exampleData.js';
 import {exampleData} from '../exampleData.js';
 import moment from 'moment';
+import defaultPhoto from '../images/defaultPhoto.jpg';
+import anonPhoto1 from '../images/anonPhoto1.png';
+import anonPhoto2 from '../images/anonPhoto2.png';
+import anonPhoto3 from '../images/anonPhoto3.png';
+import anonPhoto4 from '../images/anonPhoto4.png';
 
+const anonPhotos = [
+  anonPhoto1,
+  anonPhoto2,
+  anonPhoto3,
+  anonPhoto4
+];
 
+const test = {
+  topic: {
+    authorId: {
+      fullName: 'Test User',
+      photo: 'https://semantic-ui.com/images/avatar/large/elliot.jpg'
+    }
+  }
+}
 
 class TopicDetailed extends React.Component {
   constructor(props) {
@@ -73,26 +92,55 @@ class TopicDetailed extends React.Component {
   }  
   
   render() {
+    
+    let name, photoUrl;
+    
+
+
     if (!this.state.topic) {
       return null;
     }
-    const {topic} = this.state;
+
+    const { topic } = this.state;
+
+    if (topic.authorId) {
+      name = (test.topic.authorId && (test.topic.authorId.fullName || test.topic.authorId.username) || '');
+      photoUrl = (test.topic.authorId && test.topic.authorId.photo) || defaultPhoto;
+    } else {
+      name = 'Anonymous';
+      photoUrl = anonPhotos[Math.floor(Math.random() * anonPhotos.length)];
+    }
+
+    let meta = (
+      <span>
+        <span className='ui meta topicauthorname'>{name} | </span>
+        <span className='ui meta topictime'>{moment(topic.timeStamp).fromNow()}</span>
+      </span>
+    );
+
 
     return (
       <div>
-        <Container className='detailedtopic'>      
-          <Card color="teal" fluid>
-            <Card.Content header={topic.headline} meta={moment(topic.timeStamp).fromNow()}/>
-            <Card.Content description={topic.description} />
-            <Card.Content extra>
-            <UpvoteButton topic={topic} upvote={this.props.upvote} currentUser={this.state.currentUser}/>            
-              <Icon name='comments' />
-              {this.state.comments.length || 0} comments
-              &nbsp;&nbsp;
-              {topic.emotion ?
-                <Button compact color="blue" content={topic.emotion}/> : ''}                
-            </Card.Content>
-          </Card>
+        <Container className='detailedtopic'>   
+          <Grid columns={2}>   
+            <Grid.Column verticalAlign='top' width={1}>
+              <Image className='topicavatar' size='small' rounded src={photoUrl}/>
+            </Grid.Column>
+            <Grid.Column width={14}>
+              <Card color="teal" fluid>
+                <Card.Content header={topic.headline} meta={meta}/>
+                <Card.Content description={topic.description} />
+                <Card.Content extra>
+                <UpvoteButton topic={topic} upvote={this.props.upvote} currentUser={this.state.currentUser}/>            
+                  <Icon name='comments' />
+                  {this.state.comments.length || 0} comments
+                  &nbsp;&nbsp;
+                  {topic.emotion ?
+                    <Button compact color="blue" content={topic.emotion}/> : ''}                
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          </Grid>
         </Container>
         <div>
         &nbsp;&nbsp;

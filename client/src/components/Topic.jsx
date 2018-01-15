@@ -7,6 +7,17 @@ import moment from 'moment';
 import emojis from '../emojis';
 import defaultPhoto from '../images/defaultPhoto.jpg';
  
+import anonPhoto1 from '../images/anonPhoto1.png';
+import anonPhoto2 from '../images/anonPhoto2.png';
+import anonPhoto3 from '../images/anonPhoto3.png';
+import anonPhoto4 from '../images/anonPhoto4.png';
+
+const anonPhotos = [
+  anonPhoto1,
+  anonPhoto2,
+  anonPhoto3,
+  anonPhoto4
+];
 
 const test = {
   topic: {
@@ -43,10 +54,14 @@ class Topic extends React.Component {
   }
 
   render () {
-
-    let name = (test.topic.authorId && (test.topic.authorId.fullName || test.topic.authorId.username) || '');
-    let photoUrl = (test.topic.authorId && test.topic.authorId.photo) || defaultPhoto;
-
+    let name, photoUrl;
+    if (this.props.topic.authorId) {
+      name = (test.topic.authorId && (test.topic.authorId.fullName || test.topic.authorId.username) || '');
+      photoUrl = (test.topic.authorId && test.topic.authorId.photo) || defaultPhoto;
+    } else {
+      name = 'Anonymous';
+      photoUrl = anonPhotos[Math.floor(Math.random() * anonPhotos.length)];
+    }
     let color = colors[this.props.topic.emotion];
     let headline = /^([.]+)\s[.]+$/.exec(this.props.topic.emotion) + this.props.topic.headline 
 

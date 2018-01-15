@@ -32,6 +32,11 @@ div.loginpage {
   box-shadow: 3px 3px 11px 2px #d4d4d5, 0 0 0 1px #d4d4d5;
 }
 
+.ui.tiny.circular.image,topicavatar {
+  margin-top: 1rem;
+  box-shadow: 3px 3px 11px 2px #d4d4d5, 0 0 0 1px #d4d4d5;
+}
+
 .ui.inverted.dimmer {
   background-color: rgba(255,255,255,1.0);
 }
