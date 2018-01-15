@@ -133,7 +133,7 @@ let saveTopic = (topic, callback) => {
   });
 };
 
-const updateVoteCount = (id, plusOrMinus, currentUser, callback) => {
+const updateVoteCount = (id, currentUser, callback) => {
 
   Topic.update(
     {
@@ -154,6 +154,29 @@ const updateVoteCount = (id, plusOrMinus, currentUser, callback) => {
     }
   )
 };
+
+const removeUpvote = (id, currentUser, callback) => {
+  console.log('current user on remove', currentUser);
+  Topic.update(
+    {
+      "_id": id,
+      "upvoteUsers": currentUser
+    },
+    {
+      "$pull": {"upvoteUsers": currentUser},
+      "$inc": {"upvotes": -1}
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err);
+        callback(err, null);
+        return;
+      }
+      console.log('doc on remove: ', doc)
+      callback(null, doc);
+    }
+  )
+}
 
 // - Saves comment to Mongo DB
 let saveComment = (commentObj, topicId, callback) => {
@@ -205,6 +228,7 @@ module.exports.getTopicById = getTopicById;
 module.exports.User = User;
 module.exports.getUser = getUser;
 module.exports.findOrCreateUser = findOrCreateUser;
+module.exports.removeUpvote = removeUpvote;
 // module.exports.users = User;
 // module.exports.comments = Comment;
 // module.exports.lists = List;
