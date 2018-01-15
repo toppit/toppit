@@ -5,6 +5,18 @@
   "env": {
     "HEROKU_APP_NAME": {
       "required": true
+    },
+    "GOOGLE_ID": {
+      "required": true
+    },
+    "GOOGLE_SECRET": {
+      "required": true
+    },
+    "GITHUB_ID": {
+      "required": true
+    },
+    "GITHUB_SECRET": {
+      "required": true
     }
   },
   "formation": {

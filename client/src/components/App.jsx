@@ -22,7 +22,7 @@ class App extends React.Component {
     this.state = {
       topicList: [],
       filterBy: '',
-      sortBy: ''
+      sortBy: 'timeStamp'
     };
 
     this.createNewTopic = this.createNewTopic.bind(this);
@@ -60,7 +60,7 @@ class App extends React.Component {
     http.get('/api/user/current')
 
       .then(({data}) => {
-        console.log('Current User ', data.username);
+        console.log('Current User ', data);
         this.setState({ 
           currentUser: data 
         });
@@ -121,11 +121,7 @@ class App extends React.Component {
     http.post('/api/topic', topic)
 
       .then(({data}) => {
-        let list = this.state.topicList;
-        list.push(data);
-        this.setState({
-          topicList: list
-        });
+        this.getSelectTopics();
       })
 
       .catch((err) => {
@@ -160,9 +156,14 @@ class App extends React.Component {
   }  
 
   render() {
+    console.log('Current User ', this.state.currentUser);
     return (
       <div className='mainapp'>
-        <NavBar history={this.props.history} home={this.getAllTopics} createNewTopic={this.createNewTopic}/>
+        <NavBar 
+          currentUser={this.state.currentUser}
+          history={this.props.history} 
+          home={this.getAllTopics} 
+          createNewTopic={this.createNewTopic}/>
         <Switch>
           <Route path='/share' render={(props) => (
             <Container>
@@ -177,7 +178,10 @@ class App extends React.Component {
           <Route exact path='/' render={(props) => (
             <div>
               <Container>
-                <UtilsBar onDropdownChange={this.getSelectTopics.bind(this)}/>
+                <UtilsBar 
+                  defaultFilter={this.state.filterBy} 
+                  defaultSort={this.state.sortBy} 
+                  onDropdownChange={this.getSelectTopics.bind(this)}/>
                 <TopicList {...props} 
                   currentUser={this.state.currentUser}
                   upVote={this.upVote} 
