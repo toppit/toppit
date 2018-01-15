@@ -57,15 +57,27 @@ api.post('/topic', (req, res) => {
 
 // Update a topic
 api.patch('/topic/:topicId', (req, res) => {
+  if (req.body.upvotes === 1) {
+    db.updateVoteCount(req.params.topicId, req.body.currentUser, (error, result) => {
+      if (error) {
+        res.status(503).end();
+        return;
+      }
+      res.status(200).send(result);
 
-  db.updateVoteCount(req.params.topicId, req.body.upvotes, req.body.currentUser, (error, result) => {
-    if (error) {
-      res.status(503).end();
-      return;
-    }
-    res.status(200).send(result);
+    });
+    
+  } else {
+    db.removeUpvote(req.params.topicId, req.body.currentUser, (error, result) => {
+      if (error) {
+        res.status(503).end();
+        return;
+      }
+      res.status(200).send(result);
 
-  });
+    });
+  }
+
 });
 
 
