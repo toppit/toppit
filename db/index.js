@@ -49,15 +49,17 @@ let Comment = db.model('Comment', commentSchema);
 
 let getTopics = (callback) => {
 
-  Topic.find({}, null, {sort: '-timeStamp'}, function(err, result) {
-    if (err) {
-      console.log(err.message);
-      callback(err, null);
-      return;
-    }
+  Topic.find({}, null, {sort: '-timeStamp'})
+    .populate('authorId')
+    .exec(function(err, result) {
+      if (err) {
+        console.log(err.message);
+        callback(err, null);
+        return;
+      }
 
-    callback(null, result);
-  });
+      callback(null, result);
+    });
 };
 
 //query key should be either username or _id
@@ -92,7 +94,7 @@ let getSelectTopics = (query, callback) => {
   if (query.filterBy.length > 0) {
     filterParams['emotion'] = query.filterBy;
   }
-  Topic.find(filterParams).sort(sortParams).exec(function (err, results) {
+  Topic.find(filterParams).sort(sortParams).populate('authorId').exec(function (err, results) {
     if (err) {
       console.log(err.message);
       callback(err, null);
