@@ -1,11 +1,24 @@
 import React from 'react';
-import { Card, Button, Icon } from 'semantic-ui-react';
+import { Card, Grid, Button, Image, Header,  Icon } from 'semantic-ui-react';
 import http from 'axios';
 import TopicDetailed from './TopicDetailed.jsx';
 import UpvoteButton from './UpvoteButton.jsx';
 import moment from 'moment';
 import emojis from '../emojis';
+import defaultPhoto from '../images/defaultPhoto.jpg';
  
+import anonPhoto1 from '../images/anonPhoto1.png';
+import anonPhoto2 from '../images/anonPhoto2.png';
+import anonPhoto3 from '../images/anonPhoto3.png';
+import anonPhoto4 from '../images/anonPhoto4.png';
+
+const anonPhotos = [
+  anonPhoto1,
+  anonPhoto2,
+  anonPhoto3,
+  anonPhoto4
+];
+
 var colors = {};
 colors[emojis[0].value] = 'yellow';
 colors[emojis[1].value] = 'orange';
@@ -34,24 +47,48 @@ class Topic extends React.Component {
 
   render () {
 
+    console.log('Topic ', this.props);
+    let name, photoUrl;
+    if (this.props.topic.authorId) {
+      name = (this.props.topic.authorId && (this.props.topic.authorId.fullName || this.props.topic.authorId.username) || '');
+      photoUrl = (this.props.topic.authorId && this.props.topic.authorId.photo) || defaultPhoto;
+    } else {
+      name = 'Anonymous';
+      photoUrl = anonPhotos[Math.floor(Math.random() * anonPhotos.length)];
+    }
     let color = colors[this.props.topic.emotion];
+    let headline = /^([.]+)\s[.]+$/.exec(this.props.topic.emotion) + this.props.topic.headline 
+
+    let meta = (
+      <span>
+        <span className='ui meta topicauthorname'>{name} | </span>
+        <span className='ui meta topictime'>{moment(this.props.topic.timeStamp).fromNow()}</span>
+      </span>
+    );
 
     return (
-      <Card color={color} fluid>
-        <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} meta={moment(this.props.topic.timeStamp).fromNow()}/>
-        <Card.Content description={this.props.topic.description}/>
-        <Card.Content extra>
-          <UpvoteButton topic={this.props.topic} upvote={this.props.upVote} currentUser={this.state.currentUser}/>
-          &nbsp;
-          <a onClick={this.renderTopicDetailedView}>
-            <Icon name='comments'/>
-            {this.props.topic.commentId.length || 0} comments
-          </a>
-          &nbsp;&nbsp;
-          {this.props.topic.emotion ?
-            <Button compact color="blue" content={this.props.topic.emotion}/> : ''}
-        </Card.Content>
-      </Card>
+      <Grid columns={2}>
+        <Grid.Column verticalAlign='top' width={1}>
+          <Image className='topicavatar' size='small'rounded src={photoUrl}/>
+        </Grid.Column>
+        <Grid.Column width={14}>
+          <Card className='topiccard' color={color} fluid>
+            <Card.Content onClick={this.renderTopicDetailedView} header={this.props.topic.headline} meta={meta}/>
+            <Card.Content description={this.props.topic.description}/>
+            <Card.Content extra>
+              <UpvoteButton topic={this.props.topic} upvote={this.props.upVote} currentUser={this.state.currentUser}/>
+              &nbsp;
+              <a onClick={this.renderTopicDetailedView}>
+                <Icon name='comments'/>
+                {this.props.topic.commentId.length || 0} comments
+              </a>
+              &nbsp;&nbsp;
+              {this.props.topic.emotion ?
+              <Button compact color="blue" content={this.props.topic.emotion}/> : ''}
+            </Card.Content>
+          </Card>
+        </Grid.Column>
+      </Grid>
     );
   }  
 }

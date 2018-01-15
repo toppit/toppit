@@ -50,7 +50,7 @@ export default class NavBar extends React.Component {
       <span>
         <Image avatar src={photoUrl} /> {name}
       </span>
-    )
+    );
 
     return (
       <Menu attached='top' className='nav'>
@@ -66,7 +66,7 @@ export default class NavBar extends React.Component {
           </Menu.Item>
           <Dropdown trigger={trigger} item simple>
               <Dropdown.Menu>
-              <Dropdown.Item as='a' href='/login' >Logout</Dropdown.Item>
+                <Dropdown.Item as='a' href='/login' >Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
         </Menu.Menu>
