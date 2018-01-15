@@ -122,44 +122,57 @@ class TopicDetailed extends React.Component {
     return (
       <div>
         <Container className='detailedtopic'>   
-          <Grid columns={2}>   
-            <Grid.Column verticalAlign='top' width={1}>
-              <Image className='topicavatar' size='small' rounded src={photoUrl}/>
-            </Grid.Column>
-            <Grid.Column width={14}>
-              <Card color="teal" fluid>
-                <Card.Content header={topic.headline} meta={meta}/>
-                <Card.Content description={topic.description} />
-                <Card.Content extra>
-                <UpvoteButton topic={topic} upvote={this.props.upvote} currentUser={this.state.currentUser}/>            
-                  <Icon name='comments' />
-                  {this.state.comments.length || 0} comments
+          <Grid columns={2}>  
+            <Grid.Row> 
+              <Grid.Column verticalAlign='top' width={1}>
+                <Image className='topicavatar' size='small' rounded src={photoUrl}/>
+              </Grid.Column>
+              <Grid.Column width={14}>
+                <Card color="teal" fluid>
+                  <Card.Content header={topic.headline} meta={meta}/>
+                  <Card.Content description={topic.description} />
+                  <Card.Content extra>
+                  <UpvoteButton topic={topic} upvote={this.props.upvote} currentUser={this.state.currentUser}/>            
+                    <Icon name='comments' />
+                    {this.state.comments.length || 0} comments
+                    &nbsp;&nbsp;
+                    {topic.emotion ?
+                      <Button compact color="blue" content={topic.emotion}/> : ''}                
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={1}>
+              </Grid.Column>
+              <Grid.Column width={14}>
+                <div>
                   &nbsp;&nbsp;
-                  {topic.emotion ?
-                    <Button compact color="blue" content={topic.emotion}/> : ''}                
-                </Card.Content>
-              </Card>
-            </Grid.Column>
+                  <CommentList
+                    handleCommentSubmitClick={this.submitComment.bind(this)}
+                    comments={this.state.comments} />
+                </div>
+                <Container className='newcommentcontainer' text>
+                  <Item>
+                    <Form reply>
+                      <Form.TextArea value={this.state.commentText} onChange={this.handleInputText.bind(this)} />
+                      <Button
+                        onClick={() => this.submitComment(this.state.commentText)} content="Add Reply" labelPosition='left' icon='edit' primary />
+                    </Form>
+                  </Item>
+                </Container>
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
-        </Container>
-        <div>
-        &nbsp;&nbsp;
-          <CommentList 
-          handleCommentSubmitClick= {this.submitComment.bind(this)}
-          comments={this.state.comments}/>
-        </div> 
-        <Container className='newcommentcontainer' text>
-          <Item>
-            <Form  reply>
-              <Form.TextArea value={this.state.commentText} onChange={this.handleInputText.bind(this)}/>
-              <Button 
-              onClick={ () => this.submitComment(this.state.commentText) }content="Add Reply" labelPosition='left' icon='edit' primary />
-            </Form>
-          </Item>   
-        </Container> 
+        </Container>   
       </div>  
     );
   }
 }
 
 export default TopicDetailed;
+
+/* */
+
+                /*                 
+                */
