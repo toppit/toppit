@@ -22,7 +22,7 @@ class UpvoteButton extends React.Component {
   
   checkifUserHasUpvoted () {
     var newUpvoteState = 'grey'
-    if (this.props.topic.upvoteUsers.includes(this.props.currentUser.username)) {
+    if (this.props.currentUser && this.props.topic.upvoteUsers.includes(this.props.currentUser.username)) {
       newUpvoteState = 'blue';
     }
     this.setState({

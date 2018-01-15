@@ -147,7 +147,7 @@ class App extends React.Component {
     })      
       .then( ({data}) => {
         // function to be implemented to get all topics
-        this.getAllTopics();
+        this.getSelectTopics();
       })
       .catch( (error) => {
         console.log(error);
