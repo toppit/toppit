@@ -77,7 +77,7 @@ api.post('/topic/:topicId', (req, res) => {
       res.status(503).end();
       return;
     }
-    res.send(result); // .send(result);
+    res.send(result);
   });
 });
 

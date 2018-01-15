@@ -103,16 +103,18 @@ let getSelectTopics = (query, callback) => {
 };
 
 let getTopicById = (topicId, callback) => {
-  // create reference from topic.commentId property to comment objects
+  // find topic instancy by topicId, populate commentId, then inside commentId Values, populate authorId
   Topic.
     findById(topicId).
-    populate('commentId').
+    populate('authorId').
+    populate({path : 'commentId', populate : {path : 'authorId'}}).
     exec(function (err, topic) {
       if (err) {
         console.log(err.message);
         callback(err, null);
         return;
       }
+      console.log('Topic Returned From DB: ', topic);
       callback(null, topic);
     });
 };
@@ -155,7 +157,6 @@ const updateVoteCount = (id, plusOrMinus, currentUser, callback) => {
   )
 };
 
-// - Saves comment to Mongo DB
 let saveComment = (commentObj, topicId, callback) => {
   let id = mongoose.Types.ObjectId();
 
@@ -163,21 +164,53 @@ let saveComment = (commentObj, topicId, callback) => {
     _id:        id,
     text:       commentObj.text,
     timeStamp:  commentObj.timeStamp,
-    // authorId:   { type: db.Schema.Types.ObjectId, ref: 'User' },
     username:   commentObj.username,
     upvotes:    commentObj.upvotes
+  });
+  // find User instance by username
+  User.findOne({ username: commentObj.username}, (err, doc) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    // then add that instances object id 'doc._id' to the comments authorId property
+    comment = {
+      _id:        id,
+      text:       commentObj.text,
+      timeStamp:  commentObj.timeStamp,
+      authorId:   doc._id,
+      username:   commentObj.username,
+      upvotes:    commentObj.upvotes
+    };
+    Comment.create(comment, (err, result) => {
+      if (err) {
+        console.log(err.message);
+        callback(err, null);
+      }
+      console.log("Comment Save Success");
+  
+      // create reference from authorId property to user object
+      Comment.populate(comment, {path:"authorId"}, (err, commentData) => {
+        if (err) {
+          console.log(err.message);
+          callback(err, null);
+          return;
+        }
+        callback(null, commentData);
+      });
+    });
   });
 
   // Add 'comment._id' to topic instance for comment-object reference
   // - Find topic by topicId  
-  Topic.findById(topicId, function (err, doc){
+  Topic.findById(topicId, (err, doc) => {
     if(err){
       console.log(err);
     } else {
       // - Insert comment._id into Topic
       doc.commentId.push(comment._id);      
       // - Update Database
-      Topic.update({_id: topicId}, doc, function(err, raw) {
+      Topic.update({_id: topicId}, doc, (err, raw) => {
         if (err) {
           console.log(err);
         }
@@ -186,14 +219,6 @@ let saveComment = (commentObj, topicId, callback) => {
     }
   });
 
-  Comment.create(comment, (err, result) => {
-    if (err) {
-      console.log(err.message);
-      callback(err, null);
-    }
-    console.log("Comment Save Success");
-    callback(null, comment);
-  });
 };
 
 module.exports.saveComment = saveComment;
