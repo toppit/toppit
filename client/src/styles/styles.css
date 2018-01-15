@@ -116,6 +116,7 @@ div.loginpage {
     background-color: #f9f9f9;
     color: #fff;
 }
+
 .ui.card.meta.topicauthorname {
   font-size: 1em;
   color: rgba(0,0,0,.4);
@@ -126,3 +127,19 @@ div.loginpage {
   color: rgba(0,0,0,.4);
   font-style: italic;
 }
+
+.ui.bottom.attached.menu>.item:first-child {
+    border-radius: 0 0 0 .28571429rem;
+    padding-left: 35%;
+    border: none;
+}
+
+.ui[class*="bottom attached"].menu:last-child {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+a.item.toTop.button {
+    margin-left: auto;
+}
+

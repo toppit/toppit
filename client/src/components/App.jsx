@@ -7,6 +7,8 @@ import NavBar from './NavBar.jsx';
 import UtilsBar from './UtilsBar.jsx';
 import TopicDetailed from './TopicDetailed.jsx';
 import axios from 'axios';
+import { Menu, Image, Sticky } from 'semantic-ui-react';
+import Logo from '../images/logo.png';
 
 var http = axios.create({
   withCredentials: true,
@@ -162,7 +164,13 @@ class App extends React.Component {
 
   }  
 
+  topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
   render() {
+    const { contextRef } = this.state
 
     return (
       <div className='mainapp'>
@@ -207,7 +215,18 @@ class App extends React.Component {
                 upvote={this.upVote}/>
             </Container>
           )}/>
-        </Switch>    
+        </Switch> 
+        <Menu attached='bottom' className='footer'>
+          <Menu.Item >
+          <i className="copyright icon"></i><p>2018 Prospective Technologies, Inc. All Rights Reserved.</p>
+          </Menu.Item> 
+          <Menu.Item className="toTop button" onClick={this.topFunction} >
+            <i class="arrow up icon"></i>
+          </Menu.Item>
+          <Menu.Item >
+            <img className="logo" src={Logo} />
+          </Menu.Item> 
+        </Menu>  
       </div>
     );
   }
