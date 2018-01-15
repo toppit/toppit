@@ -22,7 +22,8 @@ class App extends React.Component {
     this.state = {
       topicList: [],
       filterBy: '',
-      sortBy: 'timeStamp'
+      sortBy: 'timeStamp',
+      // search: ''
     };
 
     this.createNewTopic = this.createNewTopic.bind(this);
@@ -31,6 +32,7 @@ class App extends React.Component {
     this.getAllTopics = this.getAllTopics.bind(this);
     this.upVote = this.upVote.bind(this);
     this.onDetailedTopic = this.onDetailedTopic.bind(this);
+    this.getSelectTopics = this.getSelectTopics.bind(this);
   }
 
   componentDidMount() {
@@ -73,7 +75,7 @@ class App extends React.Component {
       });
   }
   
-  getSelectTopics(query) {
+  getSelectTopics(query, search) {
     if (query) {
       this.setState({
         filterBy: query.filterBy,
@@ -82,14 +84,18 @@ class App extends React.Component {
     } else {
       query = {
         filterBy: this.state.filterBy,
-        sortBy: this.state.sortBy
+        sortBy: this.state.sortBy,
       };
     }
     http.get('/api/topics', {params: query})
 
       .then(({data}) => {
+        if (search) {
+          var filteredData = data.filter((item) => item.headline.toLowerCase().includes(search.toLowerCase()))
+        }
         this.setState({
-          topicList: data
+          topicList: filteredData || data,
+          // search: search
         });
       })
 
@@ -164,7 +170,9 @@ class App extends React.Component {
           currentUser={this.state.currentUser}
           history={this.props.history} 
           home={this.getAllTopics} 
-          createNewTopic={this.createNewTopic}/>
+          createNewTopic={this.createNewTopic}
+          onSearch={this.getSelectTopics}
+          />
         <Switch>
           <Route path='/share' render={(props) => (
             <Container>
@@ -182,7 +190,7 @@ class App extends React.Component {
                 <UtilsBar 
                   defaultFilter={this.state.filterBy} 
                   defaultSort={this.state.sortBy} 
-                  onDropdownChange={this.getSelectTopics.bind(this)}/>
+                  onDropdownChange={this.getSelectTopics}/>
                 <TopicList {...props} 
                   currentUser={this.state.currentUser}
                   upVote={this.upVote} 

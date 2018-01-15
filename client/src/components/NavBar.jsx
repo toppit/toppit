@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../images/logo.png';
 
 import defaultPhoto from '../images/defaultPhoto.jpg';
+import Search from './Search.jsx';
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -19,6 +20,12 @@ export default class NavBar extends React.Component {
 
     this.onHome = this.onHome.bind(this);
     this.onNewTopic = this.onNewTopic.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(e, {value}) {
+    console.log(e);
+    console.log('data ' + value);
   }
 
   onHome() {
@@ -55,7 +62,7 @@ export default class NavBar extends React.Component {
             <Button primary onClick={this.onNewTopic}>Create Topic</Button>
           </Menu.Item>
           <Menu.Item>
-            <Input icon='search' placeholder='Search...' />
+            <Search onSearch={this.props.onSearch}/>
           </Menu.Item>
           <Dropdown trigger={trigger} item simple>
               <Dropdown.Menu>
