@@ -13,13 +13,9 @@ const test = {
 };
 
 const MyComment = (props) => {
-console.log(props.timeStamp);
-console.log(typeof props);
 
-console.log(props);
-
-let name = (test.comment.authorId && (test.comment.authorId.fullName || test.comment.authorId.username) || '');
-let photoUrl = (test.comment.authorId && test.comment.authorId.photo) || defaultPhoto;
+let name = (props.comment.authorId && (props.comment.authorId.fullName || props.comment.authorId.username) || '');
+let photoUrl = (props.comment.authorId && props.comment.authorId.photo) || defaultPhoto;
 
 
 return(

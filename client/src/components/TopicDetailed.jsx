@@ -95,8 +95,6 @@ class TopicDetailed extends React.Component {
     
     let name, photoUrl;
     
-
-
     if (!this.state.topic) {
       return null;
     }
@@ -104,8 +102,8 @@ class TopicDetailed extends React.Component {
     const { topic } = this.state;
 
     if (topic.authorId) {
-      name = (test.topic.authorId && (test.topic.authorId.fullName || test.topic.authorId.username) || '');
-      photoUrl = (test.topic.authorId && test.topic.authorId.photo) || defaultPhoto;
+      name = (topic.authorId && (topic.authorId.fullName || topic.authorId.username) || '');
+      photoUrl = (topic.authorId && topic.authorId.photo) || defaultPhoto;
     } else {
       name = 'Anonymous';
       photoUrl = anonPhotos[Math.floor(Math.random() * anonPhotos.length)];
