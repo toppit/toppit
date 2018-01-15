@@ -6,6 +6,7 @@ import moment from 'moment';
 const MyComment = (props) => {
 console.log(props.timeStamp);
 console.log(typeof props);
+console.log('props:', props);
 return(
 
   <Comment>
