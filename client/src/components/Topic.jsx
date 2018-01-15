@@ -19,14 +19,6 @@ const anonPhotos = [
   anonPhoto4
 ];
 
-const test = {
-  topic: {
-    authorId: {
-      fullName: 'Mike Sutherland',
-      photo: 'https://semantic-ui.com/images/avatar/large/elliot.jpg'
-    }
-  }
-}
 var colors = {};
 colors[emojis[0].value] = 'yellow';
 colors[emojis[1].value] = 'orange';

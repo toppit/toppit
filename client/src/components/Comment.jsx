@@ -3,14 +3,6 @@ import { Button, Comment, Form, Card, Header } from 'semantic-ui-react';
 import moment from 'moment';
 import defaultPhoto from '../images/defaultPhoto.jpg';
 
-const test = {
-  comment: {
-    authorId: {
-      fullName: 'Test User',
-      photo: 'https://semantic-ui.com/images/avatar/large/elliot.jpg'
-    }
-  }
-};
 
 const MyComment = (props) => {
 

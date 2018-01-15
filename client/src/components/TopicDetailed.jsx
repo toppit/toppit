@@ -19,15 +19,6 @@ const anonPhotos = [
   anonPhoto4
 ];
 
-const test = {
-  topic: {
-    authorId: {
-      fullName: 'Test User',
-      photo: 'https://semantic-ui.com/images/avatar/large/elliot.jpg'
-    }
-  }
-}
-
 class TopicDetailed extends React.Component {
   constructor(props) {
     super(props);
