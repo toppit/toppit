@@ -34,8 +34,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllTopics();
-    this.getCurrentUser();
+    this.getCurrentUser()
+    .then(() => (
+      this.getAllTopics()))
+    .catch( (err) => console.log(err.message))
   }
 
   getAllTopics() {
@@ -43,7 +45,7 @@ class App extends React.Component {
       filterBy: '',
       sortBy: 'timeStamp'
     });
-    http.get('/api/topics')
+    return http.get('/api/topics')
 
       .then(({ data }) => {
         this.setState({
@@ -57,7 +59,7 @@ class App extends React.Component {
   }
 
   getCurrentUser() {
-    http.get('/api/user/current')
+    return http.get('/api/user/current')
 
       .then(({data}) => {
         console.log('Current User ', data);
@@ -135,10 +137,9 @@ class App extends React.Component {
     });
   }
 
-  upVote (topicId, currentUser) {
-    console.log('upvote stuff', currentUser);
+  upVote (topicId, currentUser, increment) {
     http.patch(`/api/topic/${topicId}`, {
-      upvotes: 1,
+      upvotes: increment,
       currentUser: currentUser
     })      
       .then( ({data}) => {
@@ -156,7 +157,7 @@ class App extends React.Component {
   }  
 
   render() {
-    console.log('Current User ', this.state.currentUser);
+
     return (
       <div className='mainapp'>
         <NavBar 

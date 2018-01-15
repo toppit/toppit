@@ -45,7 +45,7 @@ class Topic extends React.Component {
           &nbsp;
           <a onClick={this.renderTopicDetailedView}>
             <Icon name='comments'/>
-            {this.props.topic.comments || 0} comments
+            {this.props.topic.commentId.length || 0} comments
           </a>
           &nbsp;&nbsp;
           {this.props.topic.emotion ?

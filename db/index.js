@@ -134,7 +134,6 @@ let saveTopic = (topic, callback) => {
 };
 
 const updateVoteCount = (id, currentUser, callback) => {
-
   Topic.update(
     {
       "_id": id,
@@ -156,7 +155,6 @@ const updateVoteCount = (id, currentUser, callback) => {
 };
 
 const removeUpvote = (id, currentUser, callback) => {
-  console.log('current user on remove', currentUser);
   Topic.update(
     {
       "_id": id,
@@ -172,7 +170,6 @@ const removeUpvote = (id, currentUser, callback) => {
         callback(err, null);
         return;
       }
-      console.log('doc on remove: ', doc)
       callback(null, doc);
     }
   )

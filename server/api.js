@@ -57,7 +57,6 @@ api.post('/topic', (req, res) => {
 
 // Update a topic
 api.patch('/topic/:topicId', (req, res) => {
-
   if (req.body.upvotes === 1) {
     db.updateVoteCount(req.params.topicId, req.body.currentUser, (error, result) => {
       if (error) {
